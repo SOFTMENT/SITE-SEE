@@ -7,8 +7,19 @@ import colors from "../../theme/colors";
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:colors.backgroundColor,
-        padding:spacing.large
+        backgroundColor: colors.backgroundColor,
+        //padding:spacing.large
+    },
+    loginBack: {
+        width: "100%",
+        height: Util.getHeight(30),
+        backgroundColor: colors.backgroundColor,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    logo: {
+        height: Util.getHeight(15),
+        width: Util.getHeight(15)
     },
     // onboardImage:{
     //     width:"80%",
@@ -28,47 +39,79 @@ export default StyleSheet.create({
     //     backgroundColor:'white',
     //     padding:spacing.extraLarge
     // },
-    areYou:{
-        fontFamily:fonts.bold,
-        fontSize:fontSizes.medium,
-        textAlign:'center',
-        color:"#333",
+    mainView: {
+        padding: spacing.extraExtraLarge,
+        paddingTop: 0,
+        minHeight: Util.getHeight(70)
+    },
+    areYou: {
+        fontFamily: fonts.bold,
+        fontSize: fontSizes.medium,
+        textAlign: 'center',
+        color: "white",
         //marginBottom:spacing.large
+        marginTop: spacing.extraExtraLarge,
     },
-    subText:{
-        fontFamily:fonts.semiBold,
-        marginTop:spacing.semiMedium,
-        marginBottom:spacing.extraExtraLarge,
-        fontSize:responsiveSize(11.5),
-        textAlign:'center',
-        color:"grey",
+    subText: {
+        fontFamily: fonts.semiBold,
+        marginTop: spacing.semiMedium,
+        marginBottom: spacing.extraExtraLarge,
+        fontSize: responsiveSize(11.5),
+        textAlign: 'center',
+        color: "white",
     },
-    btn:{
-        marginTop:spacing.medium
+    btn: {
+        marginTop: spacing.medium
     },
-    or:{
-        color:"grey",
-        textAlign:"center",
-        marginVertical:spacing.extraExtraLarge,
-        fontFamily:fonts.semiBold,
-        fontSize:fontSizes.extraExtraSmall
+    borderViewContainer: {
+        width: "100%",
+        alignItems: "center",
+        flexDirection: "row",
+        //backgroundColor:'red'
     },
-    forgot:{ 
-        marginVertical:spacing.small,
-        marginHorizontal: spacing.small, 
-        color: colors.appPrimaryDark ,
-        fontFamily:fonts.semiBold,
-        fontSize:fontSizes.extraExtraSmall,
-        textAlign:"right"
+    borderView: {
+        height: 0.5,
+        flex: 1,
+        // width:"100%",
+        backgroundColor: "grey",
+
     },
-    socialView:{
-        flexDirection:"row",
-        justifyContent:"center"
+    or: {
+        color: colors.btnColor,
+        textAlign: "center",
+        marginVertical: spacing.extraExtraLarge,
+        fontFamily: fonts.regular,
+        fontSize: fontSizes.extraExtraSmall,
+        marginHorizontal: spacing.small
     },
-    btnContainer:{ 
+    register: {
+        color: colors.btnColor,
+        textAlign: "center",
+        marginVertical: spacing.extraExtraLarge,
+        fontFamily: fonts.medium,
+        fontSize: fontSizes.extraExtraSmall,
+        marginHorizontal: spacing.small
+    },
+    forgot: {
+        marginVertical: spacing.small,
+        marginHorizontal: spacing.small,
+        color: colors.appPrimaryDark,
+        fontFamily: fonts.semiBold,
+        fontSize: fontSizes.extraExtraSmall,
+        textAlign: "right"
+    },
+    socialView: {
+        flexDirection: "row",
+        justifyContent: "center"
+    },
+    btnContainer: {
         marginHorizontal: spacing.extraLarge,
-        backgroundColor:"white",
-        padding:spacing.semiMedium,
-        borderRadius:spacing.small
-    }
+        backgroundColor: "white",
+        padding: spacing.semiMedium,
+        borderRadius: spacing.small
+    },
+    icon: {
+        width: itemSizes.item15,
+        height: itemSizes.item15
+    },
 })

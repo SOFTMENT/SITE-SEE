@@ -55,17 +55,6 @@ export default StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
     },
-    userBox1:{
-        padding:10,
-        width:Util.getWidth(38),
-        height:Util.getWidth(35),
-        backgroundColor:"transparent",
-        borderRadius:spacing.large,
-        justifyContent:'center',
-        alignItems:'center',
-        borderColor:"#686767",
-        borderWidth:2,
-    },
     typeText:{
         color:"#686767",
         fontFamily:fonts.semiBold,

@@ -29,10 +29,10 @@ const theme = extendTheme({
         normal:"Montserrat-Medium"
       },
       700: {
-        normal: '"Montserrat-SemiBold',
+        normal: 'Montserrat-SemiBold',
       },
       800: {
-        normal: '"Montserrat-SemiBold',
+        normal: 'Montserrat-SemiBold',
       },
       900: {
         normal:"Montserrat-Bold"

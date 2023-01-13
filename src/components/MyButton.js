@@ -26,7 +26,7 @@ export default MyButton
 const styles = StyleSheet.create({
     container: {
         flexDirection:"row",
-        backgroundColor: colors.appSecondary,
+        backgroundColor:colors.btnColor,
         justifyContent: 'center',
         alignItems: "center",
         padding: spacing.medium,
@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
         borderRadius: spacing.small
     },
     next:{
-        color:"white",
-        fontFamily:fonts.semiBold,
+        color:"black",
+        fontFamily:fonts.bold,
         fontSize:fontSizes.extraExtraSmall
     },
 })

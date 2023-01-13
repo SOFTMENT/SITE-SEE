@@ -1,14 +1,14 @@
-import { Button, Icon, Text } from 'native-base';
+import { Icon, Text } from 'native-base';
 import React, { useState } from 'react';
 import { Image, TouchableOpacity, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import images from "../../assets/images";
-import styles from "./styles";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import MyButton from '../../components/MyButton';
+import styles from "./styles";
 const UserSelectScreen = (props) => {
     const { navigation } = props
     const [selectedTab, setSelectedTab] = useState(1)
-    const handleNavigation = (tab) => {
+    const handleNavigation = () => {
         navigation.navigate("UserLogin", { selectedTab })
     }
     return (
@@ -75,7 +75,6 @@ const UserSelectScreen = (props) => {
                 </View>
                 <MyButton
                     title={"Next"}
-                    containerStyle={{backgroundColor:"#D9D9D9"}}
                     txtStyle={{color:"black"}}
                     icon={<Icon 
                         as={MaterialCommunityIcons} 
@@ -83,6 +82,7 @@ const UserSelectScreen = (props) => {
                         color="black"  
                         size={"lg"}
                     />}
+                    onPress={()=>handleNavigation()}
                 />
             </View>
         </View>

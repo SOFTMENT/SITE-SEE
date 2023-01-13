@@ -8,7 +8,23 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor:colors.backgroundColor,
-        padding:spacing.large
+        //padding:spacing.large
+    },
+    loginBack:{
+        width:"100%",
+        height:Util.getHeight(30),
+        backgroundColor:colors.backgroundColor,
+        justifyContent:"center",
+        alignItems:"center"
+    },
+    logo:{
+        height:Util.getHeight(15),
+        width:Util.getHeight(15)
+    },
+    mainView:{ 
+        padding: spacing.extraExtraLarge,
+        paddingTop:0,
+        minHeight:Util.getHeight(70) 
     },
     // onboardImage:{
     //     width:"80%",
@@ -32,8 +48,9 @@ export default StyleSheet.create({
         fontFamily:fonts.bold,
         fontSize:fontSizes.medium,
         textAlign:'center',
-        color:"#333",
+        color:"white",
         //marginBottom:spacing.large
+        marginTop:spacing.extraExtraLarge,
     },
     subText:{
         fontFamily:fonts.semiBold,
@@ -41,34 +58,63 @@ export default StyleSheet.create({
         marginBottom:spacing.extraExtraLarge,
         fontSize:responsiveSize(11.5),
         textAlign:'center',
-        color:"grey",
+        color:"white",
     },
     btn:{
         marginTop:spacing.medium
     },
     or:{
-        color:"grey",
+        color:colors.btnColor,
         textAlign:"center",
         marginVertical:spacing.extraExtraLarge,
-        fontFamily:fonts.semiBold,
-        fontSize:fontSizes.extraExtraSmall
+        fontFamily:fonts.regular,
+        fontSize:fontSizes.extraExtraSmall,
+        marginHorizontal:spacing.small
+    },
+    register:{
+        color:colors.btnColor,
+        textAlign:"center",
+        marginVertical:spacing.extraExtraLarge,
+        fontFamily:fonts.medium,
+        fontSize:fontSizes.extraExtraSmall,
+        marginHorizontal:spacing.small
     },
     forgot:{ 
         marginVertical:spacing.small,
         marginHorizontal: spacing.small, 
-        color: colors.appPrimaryDark ,
+        color: colors.borderColor ,
         fontFamily:fonts.semiBold,
         fontSize:fontSizes.extraExtraSmall,
-        textAlign:"right"
+        textAlign:"right",
+        // borderBottomColor:colors.borderColor,
+        // borderBottomWidth:7,
+    },
+    borderViewContainer:{
+     width:"100%",
+     alignItems:"center",
+     flexDirection:"row",
+     //backgroundColor:'red'
+    },
+    borderView:{
+     height:0.5,
+     flex:1,
+    // width:"100%",
+     backgroundColor:"grey",
+     
     },
     socialView:{
         flexDirection:"row",
-        justifyContent:"center"
+        justifyContent:"space-evenly"
     },
     btnContainer:{ 
         marginHorizontal: spacing.extraLarge,
         backgroundColor:"white",
         padding:spacing.semiMedium,
         borderRadius:spacing.small
-    }
+    },
+    icon:{
+        width:itemSizes.item15,
+        height:itemSizes.item15
+    },
+    socialBtn:{ backgroundColor: colors.darkGreyBtn, flex: 1 }
 })

@@ -9,11 +9,11 @@ const SplashScreen = (props) => {
     const {navigation} = props
     let authState = true
     useEffect(()=>{
-        // let subscriber  = auth().onAuthStateChanged(onAuthStateChanged);
-        // return subscriber
-        setTimeout(()=>{
-            navigateAndReset("UserSelectScreen")
-        },2000)
+        let subscriber  = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber
+        // setTimeout(()=>{
+        //     navigateAndReset("UserSelectScreen")
+        // },2000)
     },[])
     function onAuthStateChanged(user) {
         const timeout = setTimeout(async()=>{

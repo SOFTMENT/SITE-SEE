@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import React from "react";
 import auth from '@react-native-firebase/auth';
 import { navigateAndReset } from "../navigators/RootNavigation";
+import { Icon } from "native-base";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import colors from "../theme/colors";
 export const Back = (props) => {
     const {navigation} = props
     return(
@@ -24,10 +27,16 @@ export const Back = (props) => {
                 }
             }}
         >
-            <Image
+            {/* <Image
                 resizeMode="contain"
                 source={images.backArrow}
                 style={{width:itemSizes.item30,height:itemSizes.item30,tintColor:"#333"}}
+            /> */}
+            <Icon
+                  as={MaterialCommunityIcons} 
+                  name="chevron-left" 
+                  color={colors.appPrimary}
+                  size={"4xl"}
             />
         </TouchableOpacity>
     )
