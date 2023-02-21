@@ -28,5 +28,9 @@ export default {
     splashBg:require("./splash-bg.png"),
     userSelect:require("./userSelect.png"),
     select1:require("./select1.png"),
-    select2:require("./select2.png")
+    select2:require("./select2.png"),
+    defaultUser:require("./user.png"),
+    trainer:require("./trainer.png"),
+    chatsBack : require("./chatsBack.png"),
+    imagePlaceholder:require("./image-placehodler.png")
 }

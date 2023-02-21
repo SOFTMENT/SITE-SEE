@@ -12,8 +12,8 @@ const MyButton = (props) => {
             onPress={onPress}
             style={[styles.container,containerStyle]}>
             <Text style={[styles.next,txtStyle]}>{title}</Text>
-            {loading&&<ActivityIndicator size={"small"} color={"white"} style={{marginLeft:5}}/>}
-            {icon}
+            {loading&&<ActivityIndicator size={"small"} color={colors.backgroundColor} style={{marginLeft:5}}/>}
+            {!loading && icon}
         </TouchableOpacity>
     )
 }

@@ -55,7 +55,11 @@ const SplashScreen = (props) => {
                                 })
                             }
                             else{
-                                navigateAndReset("HomeScreen",{uid:user.uid})
+                                // if(userDoc.profileUpdated)
+                                if(true)
+                                    navigateAndReset("HomeScreen",{uid:user.uid})
+                                else
+                                    navigateAndReset("UserSelectScreen")
                             }
                         }
                     })

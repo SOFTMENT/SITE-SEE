@@ -76,14 +76,14 @@ const styles = StyleSheet.create({
         //flex:1,
         flexDirection:"row",
         justifyContent:"space-between",
-        marginBottom:spacing.small
+       // marginBottom:spacing.small
         //backgroundColor:"white"
     },
     title:{
         color:colors.greyText,
         fontFamily:fonts.semiBold,
         fontSize:fontSizes.tiny,
-        marginTop:spacing.large,
+        marginTop:spacing.medium,
         marginBottom:spacing.extraExtraSmall
     },
     txt:{

@@ -1,10 +1,11 @@
 import { View } from "react-native"
 import React from "react"
-const UserNotifications = ()=> {
-    return(
-        <View>
+import styles from './styles'
+const UserNotifications = () => {
+  return(
+    <View style={styles.container}>
 
-        </View>
-    )
+    </View>
+  )
 }
 export default UserNotifications

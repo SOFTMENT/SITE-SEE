@@ -10,20 +10,22 @@ import { Text } from "react-native"
 import { Icon } from "native-base"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 const MyTextInput = (props) => {
-    const { containerStyle, iconName, isPass, placeholder, onChangeText, value, keyboardType,subPlace } = props
+    const { containerStyle,lowerBorder,nonEditable , iconName, isPass, placeholder, onChangeText, value, keyboardType,subPlace, placeholderTextColor } = props
     const [secureText, setSecureText] = useState(true)
     return (
         <View style={[containerStyle]}>
-            <Text style={styles.placeholderText}>{placeholder}</Text>
-            <View style={[styles.container]}>
+            <Text style={[styles.placeholderText,placeholderTextColor&&{color:placeholderTextColor},lowerBorder&&{marginLeft:spacing.small,marginBottom:0}]}>
+                {placeholder}</Text>
+            <View style={[styles.container,lowerBorder?styles.lowerBorderStyle:{borderWidth:1}]}>
                 <TextInput
                     style={styles.input}
                     secureTextEntry={isPass ? secureText : false}
                     autoCapitalize="none"
                     autoCorrect={false}
                     placeholder={subPlace}
+                    editable={!nonEditable}
                     // placeholder={placeholder}
-                    placeholderTextColor="rgba(256,256,256,0.3)"
+                    placeholderTextColor={placeholderTextColor?placeholderTextColor:"rgba(256,256,256,0.3)"}
                     onChangeText={onChangeText}
                     value={value}
                     keyboardType={keyboardType ? keyboardType : "default"}
@@ -61,13 +63,19 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         borderRadius: spacing.small,
-        borderWidth: 1,
+       // borderWidth: 1,
         paddingVertical: Platform.OS == "ios" ? spacing.medium : spacing.small,
         paddingHorizontal:spacing.small,
         //paddingVertical:0,
         borderColor: colors.borderColor,
         alignItems: "center",
         backgroundColor: "transparent"
+    },
+    lowerBorderStyle:{
+        borderBottomWidth:1,
+        paddingVertical: Platform.OS == "ios" ? spacing.small : spacing.extraExtraSmall,
+        paddingHorizontal:0,
+        paddingRight:10
     },
     icon: {
         width: itemSizes.item15,

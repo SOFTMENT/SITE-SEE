@@ -11,26 +11,36 @@ import styles from "./styles"
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { navigateAndReset } from "../../../navigators/RootNavigation"
+import Helper from "../../../common/Helper"
 const UserOnBoardThird = (props) => {
     const { navigation,route} = props
     const [selectedTab, setSelectedTab] = useState(0)
     const {data} = route.params
+    const {profilePic} = data
     const uid = auth().currentUser.uid
-    const handleNavigation = () => {
+    const [loading,setLoading] = useState(false)
+    const handleNavigation = async() => {
         try {
+            setLoading(true)
+            const profileUrl = await Helper.uploadImage(`ProfilePic/${uid}`,profilePic)
             firestore()
             .collection("Users")
             .doc(uid)
             .update({
                 physicalActivityLevel:physicalLevel[selectedTab].name,
                 ...data,
-                profileCompleted:true
+                profileCompleted:true,
+                profilePic:profileUrl
             })  
             .then(()=>{
-                navigateAndReset("UserBottomTab")
+                navigateAndReset("HomeScreen")
+            })
+            .finally(()=>{
+                setLoading(false)
             })
         } catch (error) {
-            
+            setLoading(false)
+            console.log(error)
         }
     }
     return (
@@ -72,6 +82,7 @@ const UserOnBoardThird = (props) => {
                         position: "absolute",
                         bottom: spacing.large
                     }}
+                    loading={loading}
                     icon={<Icon
                         as={MaterialCommunityIcons}
                         name="chevron-right"

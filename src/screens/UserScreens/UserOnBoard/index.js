@@ -1,41 +1,44 @@
+import { Icon, Select } from "native-base"
 import React, { useState } from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
-import images from "../../../assets/images"
-import Header from "../../../components/Header"
-import styles from "./styles"
-import { Icon, Select } from "native-base"
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import DatePicker from "react-native-date-picker"
-import MyTextInput from "../../../components/MyTextInput"
-import { spacing } from "../../../common/variables"
-import MyButton from "../../../components/MyButton"
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+import images from "../../../assets/images"
 import Util from "../../../common/util"
+import { spacing } from "../../../common/variables"
+import Header from "../../../components/Header"
+import MyButton from "../../../components/MyButton"
+import colors from "../../../theme/colors"
+import styles from "./styles"
 const UserOnBoard = (props) => {
-    const { navigation } = props
+    const { navigation ,route} = props
+    const {data} = route.params
     const [selectedTab, setSelectedTab] = useState(1)
     const [dob, setDob] = useState(new Date())
-    const [weight,setWeight] = useState("")
-    const [height,setHeight] = useState("")
+    const [weight, setWeight] = useState("60")
+    const [height, setHeight] = useState("180")
     const [show, setShow] = useState(false)
     const toggleDateFilter = () => {
         setShow(true)
     }
-    const handleNavigation = ()=> {
-        if(!height){
-            Util.showMessage("error","Please provide height","")
+    const handleNavigation = () => {
+        if (!height) {
+            Util.showMessage("error", "Please provide height", "")
         }
-        else if(!weight){
-            Util.showMessage("error","Please provide weight")
+        else if (!weight) {
+            Util.showMessage("error", "Please provide weight")
         }
-        else{
-            const data = {
+        else {
+            const newData = {
+                ...data,
                 weight,
                 height,
-                dob:dob.toDateString()
+                dob: Util.getFormattedDate(dob),
+                gender:selectedTab ==1 ? "female" : "male"
             }
-            navigation.navigate("UserOnBoardSecond",{data})
+            navigation.navigate("UserOnBoardSecond", { data:newData })
         }
-        
+
     }
     return (
         <View style={styles.container}>
@@ -79,9 +82,9 @@ const UserOnBoard = (props) => {
                     </TouchableOpacity>
 
                 </View>
-                <Text style={styles.title}>Date of Birth</Text>
+                <Text style={[styles.title,{marginTop:spacing.large}]}>Date of Birth</Text>
                 <TouchableOpacity style={styles.datePicker} onPress={toggleDateFilter}>
-                    <Text style={styles.txt}>22/22/22</Text>
+                    <Text style={styles.txt}>{Util.getFormattedDate(dob)}</Text>
                     <Icon
                         as={MaterialCommunityIcons}
                         name="calendar-range-outline"
@@ -102,38 +105,62 @@ const UserOnBoard = (props) => {
                     maximumDate={new Date()}
                     mode="date"
                 />
-                <MyTextInput
-                    containerStyle={{ marginVertical: spacing.small }}
-                    iconName={"weight-kilogram"}
-                    placeholder={"Your Weight"}
-                    subPlace="In KG"
-                    value={weight}
-                    onChangeText={(txt) => setWeight(txt)}
-                    keyboardType="numeric"
-                />
-                 <MyTextInput
-                    containerStyle={{ marginVertical: spacing.small }}
-                    iconName={"human-male-height-variant"}
-                    placeholder={"Your Height"}
-                    subPlace="In CM"
-                    value={height}
-                    onChangeText={(txt) => setHeight(txt)}
-                    keyboardType="numeric"
-                />
+                <Text style={styles.title}>Your Weight</Text>
+                <Select
+                    accessibilityLabel="Select Weight"
+                    placeholder="Select Weight"
+                    p={4}
+                    borderRadius={spacing.small}
+                    borderWidth={1}
+                    borderColor={colors.borderColor}
+                    dropdownIcon={<Icon name="weight-kilogram" as={MaterialCommunityIcons} size="md" marginRight={3} />}
+                    selectedValue={weight}
+                    color={"white"}
+                    onValueChange={(itemValue)=>setWeight(itemValue)}
+                >
+                    {
+                        Array.from({length:100},(_,i)=>i+31).map((item,index)=>{
+                            return(
+                                <Select.Item key={index} value={item.toString()} label={`${item} KG`} />
+                            )
+                        })
+                    }
+                </Select>
+                 <Text style={styles.title}>Your Height</Text>
+                 <Select
+                    accessibilityLabel="Select Height"
+                    placeholder="Select Height"
+                    padding={4}
+                    borderRadius={spacing.small}
+                    borderWidth={1}
+                    borderColor={colors.borderColor}
+                    dropdownIcon={<Icon name="human-male-height-variant" as={MaterialCommunityIcons} size="md" marginRight={3} />}
+                    selectedValue={height}
+                    color={"white"}
+                    onValueChange={(itemValue)=>setHeight(itemValue)}
+                >
+                    {
+                        Array.from({length:300},(_,i)=>i+31).map((item,index)=>{
+                            return(
+                                <Select.Item key={index} value={item.toString()} label={`${item} CM`} />
+                            )
+                        })
+                    }
+                </Select>
                 <MyButton
                     title={"Next"}
-                    txtStyle={{color:"black"}}
+                    txtStyle={{ color: "black" }}
                     containerStyle={{
-                        position:"absolute",
-                        bottom:spacing.large
+                        position: "absolute",
+                        bottom: spacing.large
                     }}
-                    icon={<Icon 
-                        as={MaterialCommunityIcons} 
-                        name="chevron-right" 
-                        color="black"  
+                    icon={<Icon
+                        as={MaterialCommunityIcons}
+                        name="chevron-right"
+                        color="black"
                         size={"lg"}
                     />}
-                    onPress={()=>handleNavigation()}
+                    onPress={() => handleNavigation()}
                 />
             </View>
         </View>
