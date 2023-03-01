@@ -1,4 +1,4 @@
-import { Icon, Text } from 'native-base';
+import { Icon, ScrollView, Text } from 'native-base';
 import React, { useState } from 'react';
 import { Image, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -12,9 +12,7 @@ const UserSelectScreen = (props) => {
         navigation.navigate("UserLogin", { selectedTab })
     }
     return (
-        <View
-            style={styles.container}
-        >
+        <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
             <View
                 style={styles.imageView}>
                 <Image
@@ -85,7 +83,7 @@ const UserSelectScreen = (props) => {
                     onPress={()=>handleNavigation()}
                 />
             </View>
-        </View>
+        </ScrollView>
     )
 }
 export default UserSelectScreen

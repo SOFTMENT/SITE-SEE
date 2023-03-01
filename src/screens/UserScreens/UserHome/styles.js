@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
     },
     topView:{
         flexDirection:"row",
-        justifyContent:"space-between"
+        justifyContent:"space-between",
+        alignItems:"center"
     },
     hello:{
         color:"white",

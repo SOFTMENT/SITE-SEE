@@ -1,4 +1,4 @@
-import { Icon } from "native-base"
+import { Icon, ScrollView } from "native-base"
 import React, { useState } from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
@@ -44,7 +44,7 @@ const UserOnBoardThird = (props) => {
         }
     }
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
             <Header navigation={navigation} back />
             <View style={styles.mainView}>
                 <Text style={styles.areYou}>{"Your regular physical \nactivity level?"}</Text>
@@ -92,7 +92,7 @@ const UserOnBoardThird = (props) => {
                     onPress={() => handleNavigation()}
                 />
             </View>
-        </View>
+        </ScrollView>
     )
 }
 export default UserOnBoardThird

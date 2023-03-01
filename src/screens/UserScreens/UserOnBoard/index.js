@@ -1,4 +1,4 @@
-import { Icon, Select } from "native-base"
+import { Icon, ScrollView, Select } from "native-base"
 import React, { useState } from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 import DatePicker from "react-native-date-picker"
@@ -41,7 +41,7 @@ const UserOnBoard = (props) => {
 
     }
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
             <Header navigation={navigation} />
             <View style={styles.mainView}>
                 <Text style={styles.areYou}>Let's complete your profile</Text>
@@ -163,7 +163,7 @@ const UserOnBoard = (props) => {
                     onPress={() => handleNavigation()}
                 />
             </View>
-        </View>
+        </ScrollView>
     )
 }
 export default UserOnBoard

@@ -1,4 +1,4 @@
-import { Icon } from "native-base"
+import { Icon, ScrollView } from "native-base"
 import React, { useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
@@ -39,7 +39,7 @@ const ProOnBoardThird = (props) => {
         navigation.navigate("ProOnBoardFourth", { data: newData })
     }
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
             <Header navigation={navigation} back />
             <View style={styles.mainView}>
                 <Text style={styles.areYou}>Professional details</Text>
@@ -142,7 +142,7 @@ const ProOnBoardThird = (props) => {
                     onPress={() => handleNavigation()}
                 />
             </View>
-        </View>
+        </ScrollView>
     )
 }
 export default ProOnBoardThird

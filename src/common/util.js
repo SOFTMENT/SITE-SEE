@@ -1,3 +1,4 @@
+import { forEach } from 'lodash';
 import { Dimensions, PixelRatio, Platform } from 'react-native';
 
 import Toast from 'react-native-toast-message';
@@ -73,6 +74,14 @@ const Util = {
     },
     getCapitalName: () => {
         
+    },
+    calculateRating : (ratingObj,ratingCount) => {
+        let rating = 0
+        Object.keys(ratingObj).map(key=>{
+            rating+=key*ratingObj[key]
+        })
+        rating = rating / ratingCount
+        return Math.round(rating * 10) / 10
     }
 }
 export default Util

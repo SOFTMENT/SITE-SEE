@@ -204,7 +204,7 @@ const UserLogin = (props) => {
                     profileCompleted:false,
                     // phoneVerified: false,
                     uid: user.uid,
-                    // ...(tab == 1 && { uniqueCode: Util.genRandomId(), rating: 5, ratingCount: 3 }),
+                    ...(tab == 1 && { ratingObj: {1:0,2:0,3:0,4:0,5:0}, ratingCount: 0 }),
                     // status: "pending"
                 })
             // if (tab != 1)

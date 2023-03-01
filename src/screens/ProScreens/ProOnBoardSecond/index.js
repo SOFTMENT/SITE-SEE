@@ -1,5 +1,5 @@
 import { find, remove } from "lodash"
-import { Icon } from "native-base"
+import { Icon, ScrollView } from "native-base"
 import React, { useState } from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
@@ -41,7 +41,7 @@ const ProOnBoardSecond = (props) => {
         }
     }
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
             <Header navigation={navigation} back />
             <View style={styles.mainView}>
                 <Text style={styles.areYou}>Select your best skills</Text>
@@ -89,7 +89,7 @@ const ProOnBoardSecond = (props) => {
                     onPress={() => handleNavigation()}
                 />
             </View>
-        </View>
+        </ScrollView>
     )
 }
 export default ProOnBoardSecond

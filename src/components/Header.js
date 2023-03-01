@@ -40,7 +40,7 @@ const Header = (props) => {
                     :
                 <View/>
             }
-            <Text style={styles.title}>{title}</Text>
+            <Text style={[styles.title,back&&{marginLeft:0}]}>{title}</Text>
             {
                 rightIcon?
                 <IconButton 
@@ -50,7 +50,7 @@ const Header = (props) => {
                     icon={
                         <Icon
                         as={MaterialCommunityIcons}
-                        size="xl"
+                        size="lg"
                         name={rightIcon}
                         color={"white"}
                     />
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         fontFamily:fonts.semiBold,
         fontSize:fontSizes.small,
         flex:1,
-        //marginLeft:spacing.medium
+        marginLeft:40,
         textAlign:"center",
     },
     icon:{

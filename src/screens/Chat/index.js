@@ -17,8 +17,38 @@ const Chat = (props) => {
     const [chats, setChats] = useState([])
     const uid = auth().currentUser.uid
     const [chatText, setChatText] = useState("")
+    const [chatActive,setChatActive] = useState(false)
     const { profilePic, name } = userData
+    const checkForBooking = () => {
+        if(userData.isUser){
+            firestore()
+            .collection("bookings")
+            .where("status","==","Active")
+            .where("trainerId","==",lastMessage.senderUid)
+            .where("userId","==",auth().currentUser.uid)    
+            .get()
+            .then((sanpShot)=>{
+                if(sanpShot.size>0){
+                    setChatActive(true)
+                }
+            })
+        }
+        else{
+            firestore()
+            .collection("bookings")
+            .where("status","==","Active")
+            .where("trainerId","==",uid)
+            .where("userId","==",lastMessage.senderUid)
+            .get()
+            .then((sanpShot)=>{
+                if(sanpShot.size>0){
+                    setChatActive(true)
+                }
+            })
+        }
+    }
     useEffect(() => {
+        checkForBooking()
         if (lastMessage) {
             const { senderUid } = lastMessage
             const unsubscribe = firestore()
@@ -114,6 +144,8 @@ const Chat = (props) => {
                         data={chats}
                         keyExtractor={keyExtractor}
                         contentContainerStyle={styles.flatList}
+                        bounces={false}
+                        showsVerticalScrollIndicator={false}
                     />
                     :
                     <Center flex={1} ><Text style={styles.noData}>No Chats</Text></Center>
@@ -129,6 +161,7 @@ const Chat = (props) => {
                     placeholder={"Type Here"}
                     returnKeyType="send"
                     placeholderTextColor={"gray"}
+                    editable={chatActive}
                 />
                 <IconButton
                     icon={<Icon

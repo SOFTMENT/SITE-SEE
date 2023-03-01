@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import CenteredLoader from '../../components/CenteredLoader';
-import { View } from 'react-native';
-import { navigateAndReset } from '../../navigators/RootNavigation';
-import styles from './styles';
-import { setUserData } from '../../store/userSlice';
+import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import auth, { firebase } from '@react-native-firebase/auth';
+import CenteredLoader from '../../components/CenteredLoader';
+import { navigateAndReset } from '../../navigators/RootNavigation';
+import { setUserData } from '../../store/userSlice';
 const HomeScreen = (props) => {
     const { route, navigation} = props
     console.log(setUserData)

@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         flexDirection: "row",
         paddingHorizontal: 13,
-        borderBottomWidth: 0.2,
-        borderBottomColor: "#cccccc"
+        borderBottomWidth: 0.4,
+        borderBottomColor: colors.borderColor
     },
 
     title: {

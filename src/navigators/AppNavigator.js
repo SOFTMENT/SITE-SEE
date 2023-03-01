@@ -4,6 +4,7 @@ import React from 'react';
 import HomeScreen from '../screens/HomeScreen';
 import ProOnBoard from '../screens/ProScreens/ProOnBoard';
 import ProOnBoardFourth from '../screens/ProScreens/ProOnBoardFourth';
+import ProOnBoardPhoto from '../screens/ProScreens/ProOnBoardPhoto';
 import ProOnBoardSecond from '../screens/ProScreens/ProOnBoardSecond';
 import ProOnBoardThird from '../screens/ProScreens/ProOnBoardThird';
 import SplashScreen from '../screens/SplashScreen';
@@ -42,6 +43,7 @@ const MyProOnBoardStack = () => {
                 headerShown:false
             }}
         >
+            <UserOnBoardStack.Screen name='ProOnBoardPhoto' component={ProOnBoardPhoto}/>
             <ProOnBoardStack.Screen name='ProOnBoard' component={ProOnBoard}/>
             <ProOnBoardStack.Screen name='ProOnBoardSecond' component={ProOnBoardSecond}/>
             <ProOnBoardStack.Screen name='ProOnBoardThird' component={ProOnBoardThird}/>

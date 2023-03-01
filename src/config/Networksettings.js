@@ -1,5 +1,5 @@
 import { getBaseUrl } from "./appConfig";
-const baseUrl = "https://softment.in/cheapstack/"
+const baseUrl = "https://softment.in/ktr/"
 export const PAYMENT_INTENT = `${baseUrl}payment-intent.php`
 export const REFUND = `${baseUrl}refund.php`
 export const SOFTMENT = "https://softment.in/"

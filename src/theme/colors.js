@@ -1,3 +1,5 @@
+import { Platform } from "react-native";
+
 export default {
     backgroundColor:"#1C1B1B",
     appPrimary:'#D9D9D9',
@@ -13,5 +15,6 @@ export default {
     subText:"#A8A8A8",
     transparent:"transparent",
     white:"white",
-    black:"black"
+    black:"black",
+    modalBackgraound:Platform.OS=="ios"? 'rgba(0, 0, 0,0.6)':'rgba(0, 0, 0,0.5)',
 }

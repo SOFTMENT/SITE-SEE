@@ -2,30 +2,26 @@ import { startCase } from "lodash"
 import { HStack, Icon, Image, VStack } from "native-base"
 import React from "react"
 import { Pressable, Text } from "react-native"
+import FastImage from "react-native-fast-image"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import images from "../../../../../assets/images"
+import Util from "../../../../../common/util"
 import colors from "../../../../../theme/colors"
 import styles from "./styles"
 const TrainerCard = (props) => {
     const { data, navigation } = props
-    const { profileUrl, name, skills, experience } = data
+    const { profilePic, name, skills, experience, ratingObj, ratingCount } = data
     const handleNavigation = () => {
         navigation.navigate("TrainerProfile",{data})
     }
     return (
         <Pressable style={styles.container} onPress={handleNavigation}>
             <HStack space={2} justifyContent="space-evenly" alignItems={"center"}>
-                <Image
-                    source={profileUrl ? { uri: profileUrl } : images.trainer}
-                    loadingIndicatorSource={images.trainer}
-                    resizeMode="contain"
-                    size={70}
-                    alt={name}
-                    borderRadius={6}
-                //borderWidth={5}
-                //borderColor={"rgb(99,99,99)"}
-                //bgColor={profileUrl?"none":"white"}
-                //tintColor={profileUrl?"none"}
+                <FastImage
+                    source={profilePic ? { uri: profilePic } : images.trainer}
+                    defaultSource={images.imagePlaceholder}
+                    resizeMode="cover"
+                    style={{borderRadius:6,width:70,height:70}}
                 />
                 <VStack space={1} flex={1}>
                     <HStack space={1}>
@@ -36,7 +32,7 @@ const TrainerCard = (props) => {
                                 color={colors.ratingColor}
                                 size={4}
                             />
-                            <Text style={styles.rating}>{0}</Text>
+                            <Text style={styles.rating}>{Util.calculateRating(ratingObj,ratingCount)}</Text>
                         </HStack>
                     </HStack>
                     <Text style={styles.skill}>

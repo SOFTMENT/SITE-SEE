@@ -7,6 +7,7 @@ import fonts from "../../assets/fonts"
 import { fontSizes, itemSizes, spacing } from "../common/variables"
 import { navigateAndReset } from "../navigators/RootNavigation"
 import colors from "../theme/colors"
+import AvatarIcon from "./AvatarIcon"
 const AvatarHeader = (props) => {
     const {navigation,title,extraStyle,back, rightIcon,onRightIconPress,icon} = props
     const insets = useSafeAreaInsets()
@@ -41,8 +42,8 @@ const AvatarHeader = (props) => {
                     :
                 <View/>
             }
-            <Avatar
-                source={{uri:icon}}
+            <AvatarIcon
+                uri={icon}
             />
             <Text style={styles.title}>{title}</Text>
             {

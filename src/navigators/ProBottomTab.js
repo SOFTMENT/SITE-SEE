@@ -1,16 +1,30 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Icon } from 'native-base';
 import React from 'react';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import HomeSvg from '../components/SvgIcons/HomeSvg';
 import Chat from '../screens/Chat';
 import Inbox from '../screens/Inbox';
+import EditProProfile from '../screens/ProScreens/EditProProfile';
 import ProHome from '../screens/ProScreens/ProHome';
 import ProNotifications from '../screens/ProScreens/ProNotifications';
 import ProProfile from '../screens/ProScreens/ProProfile';
 const Tab = createBottomTabNavigator();
 
-
+const ProfileStack = createNativeStackNavigator()
+const MyProfileHomeStack = () => {
+    return (
+        <ProfileStack.Navigator
+            screenOptions={{
+                headerShown: false
+            }}
+        >
+            <ProfileStack.Screen name='Profile' component={ProProfile} />
+            <ProfileStack.Screen name='EditProProfile' component={EditProProfile} />
+        </ProfileStack.Navigator>
+    )
+}
 function ProBottomTab() {
   return (
     <Tab.Navigator
@@ -66,7 +80,7 @@ function ProBottomTab() {
             }
         }}
       />
-      <Tab.Screen name="ProProfile" component={ProProfile} 
+      <Tab.Screen name="ProProfile" component={MyProfileHomeStack} 
          options={{
             tabBarIcon:({color,size})=>{
                 return (

@@ -6,6 +6,7 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import { Avatar, Center } from "native-base";
 import Header from "../../components/Header";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import AvatarIcon from "../../components/AvatarIcon";
 const Inbox = (props) => {
     const {navigation} = props
     const [lastChats, setLastChats] = useState([])
@@ -44,7 +45,9 @@ const Inbox = (props) => {
             <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("ChatScreen",{lastMessage})}>
                 <View style={styles.rightBox}>
                     <View style={styles.profile}>
-                        <Avatar source={{uri:item.senderImage}}/>
+                        <AvatarIcon
+                            uri={item.senderImage}
+                        />
                     </View>
                     <View style={styles.chatBox}>
 
@@ -61,7 +64,8 @@ const Inbox = (props) => {
         return item.id
     }
     return (
-        <View style={[styles.container,{paddingTop:insets.top}]}>
+        <View style={[styles.container]}>
+            <Header title="Inbox"/>
             {
                 lastChats.length > 0 ?
                     <FlatList

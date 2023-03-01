@@ -8,7 +8,7 @@ export default StyleSheet.create({
     container:{
         backgroundColor:"#272729",
         borderColor:colors.borderColor,
-        borderWidth:2,
+        borderWidth:1,
         borderRadius:spacing.small,
         padding:spacing.medium
     },

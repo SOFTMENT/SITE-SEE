@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent"
     },
     lowerBorderStyle:{
-        borderBottomWidth:1,
+        borderBottomWidth:0.3,
         paddingVertical: Platform.OS == "ios" ? spacing.small : spacing.extraExtraSmall,
         paddingHorizontal:0,
         paddingRight:10

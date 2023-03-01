@@ -8,12 +8,13 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { connect } from "react-redux"
 import Util from "../../../common/util"
 import { spacing } from "../../../common/variables"
+import AvatarIcon from '../../../components/AvatarIcon'
 import TrainerCard from "./components/TrainerCard"
 import styles from "./styles"
 const ProHome = (props) => {
     const insets = useSafeAreaInsets()
     const { userData, navigation } = props
-    const { profileUrl, name } = userData
+    const { profilePic, name } = userData
     const [trainers, setTrainers] = useState([])
     useEffect(() => {
         getData()
@@ -52,13 +53,14 @@ const ProHome = (props) => {
                     <Text style={styles.hello}>Hello,</Text>
                     <Text style={styles.name}>{startCase(name)}</Text>
                 </View>
-                <Avatar
-                    size={"lg"}
-                    source={{ uri: profileUrl }}
-                    bg={"gray.700"}
-                >
-                    {Util.getNameInitial(name)}
-                </Avatar>
+                <AvatarIcon
+                    size={60}
+                    uri={profilePic}
+                    style={{borderWidth:1,borderColor:"gray"}}
+                    //borderWidth={1}   
+                />
+                    {/* {Util.getNameInitial(name)}
+                </Avatar> */}
             </View>
             <HStack space={2} my={5}>
                 <Input
@@ -66,17 +68,17 @@ const ProHome = (props) => {
                     variant="outlined"
                     flex={1}
                     borderRadius={10}
-                    py={5}
+                    py={Platform.OS=="ios"?4:2}
                     color={"white"}
                     bg={"gray.800"}
                     //borderWidth={0}
-                    InputLeftElement={
-                        <Icon size={"xl"}
-                            name="magnify"
-                            color="gray.300"
-                            marginLeft={spacing.extraExtraSmall}
-                            as={MaterialCommunityIcons} />
-                    }
+                    // InputLeftElement={
+                    //     <Icon size={"xl"}
+                    //         name="magnify"
+                    //         color="gray.300"
+                    //         marginLeft={spacing.extraExtraSmall}
+                    //         as={MaterialCommunityIcons} />
+                    // }
                 />
                 <IconButton
                     variant={"solid"}
@@ -84,7 +86,7 @@ const ProHome = (props) => {
                     borderRadius={10}
                     _icon={{
                         size: "xl",
-                        name: "filter-variant",
+                        name: "magnify",
                         color: "gray.300",
                         marginLeft: spacing.extraExtraSmall,
                         as: MaterialCommunityIcons

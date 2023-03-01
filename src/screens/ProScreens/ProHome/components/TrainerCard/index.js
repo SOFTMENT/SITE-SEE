@@ -8,19 +8,18 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { startCase } from "lodash"
 import colors from "../../../../../theme/colors"
 import { spacing } from "../../../../../common/variables"
+import FastImage from "react-native-fast-image"
 const TrainerCard = (props) => {
     const { data,disabled } = props
-    const { profileUrl, name, skills, experience, } = data
+    const { profilePic, name, skills, experience, ratingObj, ratingCount} = data
     return (
         <TouchableOpacity style={styles.container} disabled={disabled}>
             <HStack space={2} justifyContent="space-evenly" alignItems={"center"}>
-                <Image
-                    source={profileUrl ? { uri: profileUrl } : images.trainer}
-                    loadingIndicatorSource={images.trainer}
-                    resizeMode="contain"
-                    size={70}
-                    alt={name}
-                    borderRadius={6}
+                <FastImage
+                    source={profilePic ? { uri: profilePic } : images.trainer}
+                    defaultSource={images.trainer}
+                    resizeMode="cover"
+                    style={{borderRadius:6,width:70,height:70}}
                 //borderWidth={5}
                 //borderColor={"rgb(99,99,99)"}
                 //bgColor={profileUrl?"none":"white"}
@@ -35,7 +34,7 @@ const TrainerCard = (props) => {
                                 color={colors.ratingColor}
                                 size={4}
                             />
-                            <Text style={styles.rating}>{0}</Text>
+                            {/* <Text style={styles.rating}>{Util.calculateRating(ratingObj,ratingCount)}</Text> */}
                         </HStack>
                     </HStack>
                     <Text style={styles.skill}>

@@ -109,23 +109,36 @@ export default AccountMenuList = (props) => {
     }
     const driverMenu = [
         {
+            id: "settings",
+            label: "Settings",
+            subMenu: [
+                {
+                    label: "Profile",
+                    icon: "account-outline",
+                    onClick: () => {
+                        navigation.navigate("EditProProfile")
+                    }
+                }
+            ]
+        },
+        {
             id: "about",
             label: "About Us",
             subMenu: [
+                // {
+                //     label:"Privacy Policy",
+                //     icon:images.privacyPolicy
+                // },
                 {
-                    label: "Privacy Policy",
-                    icon: images.privacyPolicy,
+                    label: "Terms & Conditions",
+                    icon: "file-document-outline",
                     onClick: () => {
                         linkingUtil.openBrowser("https://www.cheap-skate.us/")
                     }
                 },
-                // {
-                //     label:"Terms & Conditions",
-                //     icon:images.tAndC
-                // },
                 {
-                    label: "App Development",
-                    icon: images.development,
+                    label: "App Developer",
+                    icon: "code-tags",
                     onClick: () => {
                         linkingUtil.openBrowser(SOFTMENT)
                     }
@@ -138,18 +151,19 @@ export default AccountMenuList = (props) => {
             subMenu: [
                 {
                     label: "Rate Us",
-                    icon: images.rating,
+                    icon: "star-check-outline",
                     onClick: rateUs
                 },
                 {
                     label: "Contact Us",
-                    icon: images.contactUs,
+                    icon: "email-outline",
                     onClick: () => {
                         linkingUtil.openMail(AppConstant.MAIL)
                     }
-                }
+                },
             ]
         },
+
 
     ]
     const menu = [

@@ -1,7 +1,9 @@
 import { Icon } from "native-base"
 import React, { useState } from "react"
 import { Image, Pressable, Text, View } from "react-native"
+import FastImage from "react-native-fast-image"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+import images from "../../../assets/images"
 import Helper from "../../../common/Helper"
 import Util from "../../../common/util"
 import { spacing } from "../../../common/variables"
@@ -44,8 +46,9 @@ const UserOnBoardPhoto = (props) => {
                         <View style={styles.center}>
                             {
                                 profilePic?
-                                <Image
+                                <FastImage
                                     source={{uri:profilePic.uri}}
+                                    defaultSource={images.imagePlaceholder}
                                     resizeMode="cover"
                                     style={{width:200,height:200}}
                                 />:

@@ -1,5 +1,5 @@
 import auth from '@react-native-firebase/auth'
-import { Icon } from "native-base"
+import { Icon, ScrollView } from "native-base"
 import React, { useState } from "react"
 import { Pressable, Text, View } from "react-native"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
@@ -17,6 +17,7 @@ const ProOnBoardFourth = (props) => {
     const { navigation,route} = props
     const [selectedTab, setSelectedTab] = useState(0)
     const {data} = route.params
+    const {profilePic} = data
     const uid = auth().currentUser.uid
     const [video,setVideo] = useState(null)
     const [thumbnail,setThumbnail] = useState(null)
@@ -36,6 +37,7 @@ const ProOnBoardFourth = (props) => {
             console.log(thumbnail)
             const videoUrl = await Helper.uploadImage(`ShortVideo/${uid}`,video)
             const thumbnailUrl = await Helper.uploadImage(`ShortVideoThumbnail/${uid}`,thumbnail)
+            const profileUrl = await Helper.uploadImage(`ProfilePic/${uid}`,profilePic)
             firestore()
             .collection("Users")
             .doc(uid)
@@ -46,7 +48,8 @@ const ProOnBoardFourth = (props) => {
                 profileCompleted:true,
                 rating:0,
                 ratedBy:0,
-                status:"pending"
+                status:"pending",
+                profilePic:profileUrl
             })  
             .then(()=>{
                 navigateAndReset("HomeScreen")
@@ -83,7 +86,7 @@ const ProOnBoardFourth = (props) => {
         })
     }
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
             <Header navigation={navigation} back />
             <View style={styles.mainView}>
                 <Text style={styles.areYou}>{"Upload your short video"}</Text>
@@ -130,7 +133,7 @@ const ProOnBoardFourth = (props) => {
                     onPress={() => handleNavigation()}
                 />
             </View>
-        </View>
+        </ScrollView>
     )
 }
 export default ProOnBoardFourth

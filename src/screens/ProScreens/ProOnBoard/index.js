@@ -13,8 +13,9 @@ import WorkingTimeModal from "../../../components/WorkingTimeModal"
 import colors from "../../../theme/colors"
 import styles from "./styles"
 const ProOnBoard = (props) => {
-    const { navigation } = props
+    const { navigation, route } = props
     const [selectedTab, setSelectedTab] = useState(1)
+    const {data} = route.params
     const [dob, setDob] = useState(new Date())
     const [weight, setWeight] = useState("60")
     const [height, setHeight] = useState("180")
@@ -46,7 +47,8 @@ const ProOnBoard = (props) => {
             Util.showMessage("error","Please provide working time","")
         }
         else {
-            const data = {
+            const newData = {
+                ...data,
                 weight,
                 height,
                 dob: Util.getFormattedDate(dob),
@@ -54,7 +56,7 @@ const ProOnBoard = (props) => {
                 workingTime:Object.values(workingTime),
                 gender:selectedTab ==1 ? "female" : "male"
             }
-            navigation.navigate("ProOnBoardSecond", { data })
+            navigation.navigate("ProOnBoardSecond", { data:newData })
         }
 
     }

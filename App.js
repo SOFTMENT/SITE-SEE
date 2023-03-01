@@ -55,7 +55,7 @@ const App = () => {
   });
   return (
     <StripeProvider
-      publishableKey={"pk_test_51KFL8tSDWf0JstBgTpxm7DyeiqmojL5nG5gixy7TZG4saXVyDijctKS2axplOrpupagx03wcIAxT7P83kby4neaE00xYu35VZJ"}
+      publishableKey={"pk_test_51KX1ZmKZ1tCPc5ZWIwoMsl66CYpVIISPQiUF70YqYjfqACMCf1bSGGcW3FKRa7mOTOpGl1jizbxRDzcV2sY8JnKC00bXANkDmT"}
     // merchantIdentifier="merchant.identifier" // required for Apple Pay
     //urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
     >

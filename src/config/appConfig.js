@@ -271,4 +271,44 @@ export const mapStyles = [
     ]
   }
 ]
-export const hours = ["12AM","1AM","2AM","3AM","4AM","5AM","6AM","7AM","8AM","9AM","10AM","11AM","12PM","1PM","2PM","3PM","4PM","5PM","6PM","7PM","8PM","9PM","10PM","11PM"]
+export const hours = [
+  {label:"12AM",key:0}, 
+  {label:"1AM",key:1}, 
+  {label:"2AM",key:2},
+  {label:"3AM",key:3},
+  {label:"4AM",key:4},
+  {label:"5AM",key:5},
+  {label:"6AM",key:6},
+  {label:"7AM",key:7},
+  {label:"8AM",key:8},
+  {label:"9AM",key:9},
+  {label:"10AM",key:10},
+  {label:"11AM",key:11},
+  {label:"12PM",key:12},
+  {label:"1PM",key:13},
+  {label:"2PM",key:14},
+  {label:"3PM",key:15},
+  {label:"4PM",key:16},
+  {label:"5PM",key:17},
+  {label:"6PM",key:18},
+  {label:"7PM",key:19},
+  {label:"8PM",key:20},
+  {label:"9PM",key:21},
+  {label:"10PM",key:22},
+  {label:"11PM",key:23},
+]
+export const userBookingFilter =
+  [
+    {
+      label: "Active",
+      id: 0,
+    },
+    {
+      label: "Completed",
+      id: 1
+    },
+    {
+      label: "Cancelled",
+      id: 2
+    }
+  ]

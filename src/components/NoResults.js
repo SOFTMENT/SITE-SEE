@@ -5,7 +5,7 @@ import { fontSizes } from "../common/variables"
 const NoResults  = (props)=>{
     return(
         <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-            <Text style={{color:"black",fontSize:fontSizes.extraExtraSmall,fontFamily:fonts.regular}}>
+            <Text style={{color:"white",fontSize:fontSizes.extraExtraSmall,fontFamily:fonts.regular}}>
                {props.title?props.title:"Nothing Found"}
             </Text>
         </View>
