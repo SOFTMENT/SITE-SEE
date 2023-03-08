@@ -10,7 +10,7 @@ import { Text } from "react-native"
 import { Icon } from "native-base"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 const MyTextInput = (props) => {
-    const { containerStyle,lowerBorder,nonEditable , iconName, isPass, placeholder, onChangeText, value, keyboardType,subPlace, placeholderTextColor } = props
+    const { containerStyle,lowerBorder,nonEditable , iconName, isPass,rightTitle,  placeholder, onChangeText, value, keyboardType,subPlace, placeholderTextColor } = props
     const [secureText, setSecureText] = useState(true)
     return (
         <View style={[containerStyle]}>
@@ -30,12 +30,19 @@ const MyTextInput = (props) => {
                     value={value}
                     keyboardType={keyboardType ? keyboardType : "default"}
                 />
-               <Icon 
+                {
+                    iconName &&
+                    <Icon 
                     as={MaterialCommunityIcons} 
                     name={iconName} 
                     color={colors.borderColor}  
                     size={"lg"}
-                />
+                    />
+                }
+                {
+                    rightTitle &&
+                    <Text style={styles.placeholderText}>{rightTitle}</Text>
+                }
                 {/* {
                 isPass
                 &&

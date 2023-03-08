@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import AdminScreen from '../screens/AdminScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ProOnBoard from '../screens/ProScreens/ProOnBoard';
 import ProOnBoardFourth from '../screens/ProScreens/ProOnBoardFourth';
@@ -61,6 +62,7 @@ const AppNavigator = () => {
             }}>
                 <Stack.Screen name="SplashScreen" component={SplashScreen} />
                 <Stack.Screen name='UserSelectScreen' component={UserSelectScreen} />
+                <Stack.Screen name='AdminScreen' component={AdminScreen} />
                 <Stack.Screen name='HomeScreen' component={HomeScreen} />
                 <Stack.Screen name='UserLogin' component={UserLogin} />
                 <Stack.Screen name='UserRegister' component={UserRegister} />

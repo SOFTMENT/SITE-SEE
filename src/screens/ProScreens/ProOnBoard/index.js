@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash"
 import { Icon, ScrollView, Select } from "native-base"
 import React, { useState } from "react"
-import { Image, Platform, Text, TouchableOpacity, View } from "react-native"
+import { Image, Platform, Text, TextInput, TouchableOpacity, View } from "react-native"
 import DatePicker from "react-native-date-picker"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import images from "../../../assets/images"
@@ -9,6 +9,7 @@ import Util from "../../../common/util"
 import { spacing } from "../../../common/variables"
 import Header from "../../../components/Header"
 import MyButton from "../../../components/MyButton"
+import MyTextInput from "../../../components/MyTextInput"
 import WorkingTimeModal from "../../../components/WorkingTimeModal"
 import colors from "../../../theme/colors"
 import styles from "./styles"
@@ -23,6 +24,7 @@ const ProOnBoard = (props) => {
     const [workingTime,setWorkingTime] = useState({})
     const [show, setShow] = useState(false)
     const [showModal,setShowModal] = useState(false)
+    const [about,setAbout] = useState("")
     const toggleDateFilter = () => {
         setShow(true)
     }
@@ -34,7 +36,10 @@ const ProOnBoard = (props) => {
         setShowModal(false)
     }
     const handleNavigation = () => {
-        if (!height) {
+        if(!about){
+            Util.showMessage("error","Please tell us about yourself","")
+        }
+        else if (!height) {
             Util.showMessage("error", "Please provide height", "")
         }
         else if (!weight) {
@@ -54,7 +59,8 @@ const ProOnBoard = (props) => {
                 dob: Util.getFormattedDate(dob),
                 experience,
                 workingTime:Object.values(workingTime),
-                gender:selectedTab ==1 ? "female" : "male"
+                gender:selectedTab ==1 ? "female" : "male",
+                about
             }
             navigation.navigate("ProOnBoardSecond", { data:newData })
         }
@@ -102,7 +108,17 @@ const ProOnBoard = (props) => {
                     </TouchableOpacity>
 
                 </View>
-                <Text style={[styles.title,{marginTop:spacing.large}]}>Date of Birth</Text>
+                <Text style={styles.placeholderText}>About</Text>
+                <TextInput
+                    style={styles.textArea}
+                    numberOfLines={5}
+                    multiline={true}
+                    //placeholder="About"
+                    placeholderTextColor={"gray"}
+                    value={about}
+                    onChangeText={(txt) => setAbout(txt)}
+                />
+                <Text style={[styles.title]}>Date of Birth</Text>
                 <TouchableOpacity style={styles.datePicker} onPress={toggleDateFilter}>
                     <Text style={styles.txt}>{Util.getFormattedDate(dob)}</Text>
                     <Icon

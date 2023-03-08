@@ -24,6 +24,20 @@ const styles = StyleSheet.create({
         color:"white",
         fontSize:fontSizes.medium,
         fontFamily:fonts.bold
+    },
+    searchBox:{
+        // borderWidth:1,
+        // borderColor:colors.borderColor,
+        borderRadius:spacing.small,
+        padding:spacing.medium,
+        marginVertical:spacing.medium,
+        flexDirection:"row",
+        alignItems:"center",
+    },
+    placeholder:{
+        color:"gray",
+        fontSize:fontSizes.extraExtraSmall,
+        fontFamily:fonts.regular
     }
 })
 export default styles

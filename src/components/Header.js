@@ -40,7 +40,7 @@ const Header = (props) => {
                     :
                 <View/>
             }
-            <Text style={[styles.title,back&&{marginLeft:0}]}>{title}</Text>
+            <Text style={[styles.title,back&&{marginLeft:-5}]}>{title}</Text>
             {
                 rightIcon?
                 <IconButton 

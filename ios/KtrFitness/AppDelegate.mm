@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import "RNFBMessagingModule.h"
 #import <Firebase.h>
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -14,7 +15,6 @@
 #import <React/RCTSurfacePresenterBridgeAdapter.h>
 #import <ReactCommon/RCTTurboModuleManager.h>
 #import <react/config/ReactNativeConfig.h>
-
 static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
 @interface AppDelegate () <RCTCxxBridgeDelegate, RCTTurboModuleManagerDelegate> {
@@ -42,7 +42,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   _bridgeAdapter = [[RCTSurfacePresenterBridgeAdapter alloc] initWithBridge:bridge contextContainer:_contextContainer];
   bridge.surfacePresenter = _bridgeAdapter.surfacePresenter;
 #endif
-
+  NSDictionary *appProperties = [RNFBMessagingModule addCustomPropsToUserProps:nil withLaunchOptions:launchOptions];
   NSDictionary *initProps = [self prepareInitialProps];
   UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"KtrFitness", initProps);
 

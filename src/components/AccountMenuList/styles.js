@@ -10,8 +10,8 @@ export default StyleSheet.create({
         paddingVertical:Platform.OS=="ios"?spacing.semiMedium:spacing.small,
         paddingLeft:spacing.medium,
         fontSize:responsiveSize(13),
-        fontFamily:fonts.bold,
-        color:colors.appPrimaryLight
+        fontFamily:fonts.semiBold,
+        color:"white"
      },
      subMenu:{
         flexDirection:"row",
@@ -27,8 +27,8 @@ export default StyleSheet.create({
      },
      subMenuTitle:{
         fontSize:responsiveSize(13),
-        fontFamily:fonts.medium,
-        color:colors.appPrimaryLight,
+        fontFamily:fonts.regular,
+        color:"white",
      },
      subMenuContainer:{
          flex:1,
@@ -38,7 +38,7 @@ export default StyleSheet.create({
      },
      subsubtitle:{
          marginTop:spacing.extraExtraSmall,
-         fontSize:responsiveSize(12),
+         fontSize:responsiveSize(11),
          fontFamily:fonts.regular,
          color:colors.appPrimaryLight,
          marginRight:spacing.small,

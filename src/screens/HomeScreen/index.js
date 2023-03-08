@@ -5,13 +5,28 @@ import { connect, useDispatch } from 'react-redux';
 import CenteredLoader from '../../components/CenteredLoader';
 import { navigateAndReset } from '../../navigators/RootNavigation';
 import { setUserData } from '../../store/userSlice';
+import messaging from '@react-native-firebase/messaging'
 const HomeScreen = (props) => {
     const { route, navigation} = props
     console.log(setUserData)
     const dispatch = useDispatch()
     const uid = auth().currentUser.uid
+    async function requestUserPermission() {
+        const authStatus = await messaging().requestPermission();
+        const enabled =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+      
+        if (enabled) {
+          console.log('Authorization status:', authStatus);
+        }
+        messaging()
+        .subscribeToTopic('all')
+        .then(() => console.log('Subscribed to topic!'));
+      }
     useEffect(() => {
         try {
+            requestUserPermission()
             firestore()
                 .collection("Users")
                 .doc(uid)

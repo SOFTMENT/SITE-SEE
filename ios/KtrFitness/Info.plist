@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>KtrFitness</string>
+	<string>Ktr Fitness</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -33,7 +33,17 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.334454353855-v3t06lrdhjqaa8nngts9bmo9rios65rk</string>
+				<string>com.googleusercontent.apps.334454353855-64d6s18f993orifgqaml630r5kefrr8m</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>Bundle Id</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>in.softment.ktrfitness</string>
 			</array>
 		</dict>
 	</array>
@@ -65,6 +75,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Ktr Fitness requires location access to show nearby trainers</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Ktr Fitness requires location access to show nearby trainers</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Ktr Fitness requires camera access to get pictures</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>
@@ -74,6 +88,11 @@
 		<string>Montserrat-Medium.ttf</string>
 		<string>Montserrat-Regular.ttf</string>
 		<string>Montserrat-SemiBold.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

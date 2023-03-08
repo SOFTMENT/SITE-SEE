@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     userTypeView:{
         flexDirection:'column',
         //justifyContent:"space-between",
-        alignItems:'center',
         marginTop:spacing.large
     },
     upload:{
@@ -61,6 +60,44 @@ const styles = StyleSheet.create({
     },
     center:{
         alignItems:"center"
-    }
+    },
+    uploadView:{
+        borderColor:colors.borderColor,
+        borderWidth:1,
+        borderRadius:spacing.small,
+        padding:15,
+        paddingHorizontal:spacing.small,
+        justifyContent:"space-between",
+        alignItems:"center",
+        marginVertical:spacing.extraSmall,
+        flexDirection:"row",
+    },
+    thumbnailView:{
+        borderColor:colors.borderColor,
+        borderWidth:1,
+        borderRadius:spacing.small,
+        height:Util.getHeight(25),
+        justifyContent:"center",
+        alignItems:"center",
+        marginVertical:spacing.extraSmall,
+        overflow:"hidden"
+    },
+    updateText:{
+        color:"white",
+        fontSize:fontSizes.extraExtraSmall,
+        fontFamily:fonts.regular
+    },
+    subtitle:{
+        color:"gray",
+        fontSize:fontSizes.extraExtraSmall,
+        fontFamily:fonts.regular,
+        marginTop:spacing.small
+    },
+    title:{
+        color:"white",
+        fontSize:fontSizes.extraSmall,
+        fontFamily:fonts.semiBold,
+        marginTop:spacing.small
+    },
 })
 export default styles

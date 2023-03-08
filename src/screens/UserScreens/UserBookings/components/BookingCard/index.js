@@ -10,14 +10,25 @@ import MyButton from "../../../../../components/MyButton"
 import { hours } from "../../../../../config/appConfig"
 import colors from "../../../../../theme/colors"
 import styles from "./styles"
+import firestore from '@react-native-firebase/firestore'
+import { navigateAndReset } from "../../../../../navigators/RootNavigation"
 const BookingCard = (props) => {
     const { item,disabled, navigation } = props
     const { bookingId,trainerPic,amount,appointmentDate, appointmentTime, createTime, status, trainerId, trainingType,userId, trainerName,reviewDone } = item
+    const handleTrainer = () => {
+        firestore()
+        .collection("Users")
+        .doc(trainerId)
+        .get()
+        .then((res)=>{
+            navigation.navigate("TrainerProfile",{data:res.data()})
+        })
+    }
     const handleNav = () => {
         navigation.navigate("WriteReview",{bookingData:item})
     }
     return (
-        <TouchableOpacity style={styles.container} disabled={disabled}>
+        <TouchableOpacity style={styles.container} onPress={handleTrainer}>
             <HStack space={2} justifyContent="space-evenly" alignItems={"center"}>
                 <FastImage
                     source={{uri:trainerPic}}
@@ -49,7 +60,7 @@ const BookingCard = (props) => {
                     </Text>
                 </VStack>
                 <VStack>
-                    <Text style={styles.status}>${amount}</Text>
+                    <Text style={styles.status}>AED {amount}</Text>
                     {/* <Text style={styles.skill}>{status}</Text> */}
                 </VStack>
             </HStack>

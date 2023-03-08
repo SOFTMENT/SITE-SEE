@@ -15,7 +15,21 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: "white",
         //marginBottom:spacing.large
-        marginTop: spacing.extraExtraLarge,
+        //marginTop: spacing.extraExtraLarge,
+    },
+    textArea:{
+        //backgroundColor:"rgba(217,217,217,0.2)",
+        borderRadius:spacing.small,
+        padding:spacing.medium,
+        paddingTop:20,
+        paddingBottom:20,
+        height:100,
+        color:"white",
+        //marginBottom:spacing.medium,
+        fontSize:responsiveSize(11.5),
+        fontFamily:fonts.regular,
+        borderColor:"#686767",
+        borderWidth:2,
     },
     subText: {
         fontFamily: fonts.semiBold,
@@ -27,11 +41,18 @@ const styles = StyleSheet.create({
     },
     gender: {
         fontFamily: fonts.semiBold,
-        marginTop: spacing.medium,
+        //marginTop: spacing.small,
         marginBottom: spacing.large,
         fontSize: fontSizes.extraExtraSmall,
         textAlign: 'center',
         color: "white",
+    },
+    placeholderText: {
+        fontSize: fontSizes.tiny,
+        color: "white",
+        fontFamily: fonts.semiBold,
+        marginBottom:spacing.extraExtraSmall,
+        marginTop:10
     },
     mainView:{
         padding: spacing.extraExtraLarge,

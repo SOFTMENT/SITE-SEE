@@ -312,3 +312,18 @@ export const userBookingFilter =
       id: 2
     }
   ]
+  export const proBookingFilter =
+  [
+    {
+      label: "Active",
+      id: 0,
+    },
+    {
+      label: "Completed",
+      id: 1
+    },
+    {
+      label: "Cancelled",
+      id: 2
+    }
+  ]

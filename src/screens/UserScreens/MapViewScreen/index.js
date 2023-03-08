@@ -60,6 +60,8 @@ const MapViewScreen = (props) => {
                 .firestore()
                 .collection('Users')
                 .where("trainingType","==","offline")
+                .where("status","==","approved")
+                .where("accountStatus", "==", true)
                 .orderBy('geohash')
                 .startAt(b[0])
                 .endAt(b[1]);
@@ -82,7 +84,6 @@ const MapViewScreen = (props) => {
                     }
                 }
             }
-
             return matchingDocs;
         }).then((matchingDocs) => {
             const newArray = uniqBy(matchingDocs.map((doc) => ({ ...doc.data() })), (item) => item.id)
@@ -176,7 +177,7 @@ const MapViewScreen = (props) => {
                     {
                         trainers.map((item,index)=>{
                             return(
-                                <TrainerCard data={item} navigation={navigation} key={index} />
+                                <TrainerCard data={item} navigation={navigation} key={index} isMap={true}/>
                             )
                         })
                     }

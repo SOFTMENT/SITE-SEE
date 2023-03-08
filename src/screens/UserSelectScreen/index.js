@@ -12,7 +12,7 @@ const UserSelectScreen = (props) => {
         navigation.navigate("UserLogin", { selectedTab })
     }
     return (
-        <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
+        <View style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
             <View
                 style={styles.imageView}>
                 <Image
@@ -83,7 +83,7 @@ const UserSelectScreen = (props) => {
                     onPress={()=>handleNavigation()}
                 />
             </View>
-        </ScrollView>
+        </View>
     )
 }
 export default UserSelectScreen

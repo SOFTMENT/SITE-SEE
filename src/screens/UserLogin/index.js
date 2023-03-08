@@ -18,10 +18,16 @@ import colors from "../../theme/colors";
 import styles from "./styles";
 GoogleSignin.configure({
     webClientId: '1021031487843-3oejvl3a6ekc7i6bq9pal6mv0qem51u1.apps.googleusercontent.com',
+    // scopes:[
+    //     `https://www.googleapis.com/auth/drive.readonly`,
+    //     `https://www.googleapis.com/auth/youtube`,
+    //     `https://www.googleapis.com/auth/youtube.upload`,
+    //     `https://www.googleapis.com/auth/plus.login`
+    //     ],
 });
 const UserLogin = (props) => {
     const { navigation, route } = props
-    const tab = route.params?.tab ?? 1
+    const tab = route.params?.selectedTab ?? 1
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
     const [loading, setLoading] = useState(false)
@@ -204,7 +210,7 @@ const UserLogin = (props) => {
                     profileCompleted:false,
                     // phoneVerified: false,
                     uid: user.uid,
-                    ...(tab == 1 && { ratingObj: {1:0,2:0,3:0,4:0,5:0}, ratingCount: 0 }),
+                    ...(tab == 2 && { ratingObj: {1:0,2:0,3:0,4:0,5:0}, ratingCount: 0,accountStatus:false,balance:0 }),
                     // status: "pending"
                 })
             // if (tab != 1)

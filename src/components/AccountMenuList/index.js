@@ -1,29 +1,101 @@
-import firestore from '@react-native-firebase/firestore'
+import firestore, { firebase } from '@react-native-firebase/firestore'
 import axios from "axios"
 import React, { useState } from "react"
 import { Image, Linking, Text, TouchableOpacity, View } from "react-native"
 import images from "../../assets/images"
 import linkingUtil from "../../common/linkingUtil"
-import { ACCOUNT_LINK, CREATE_ACCOUNT, SOFTMENT } from "../../config/Networksettings"
+import { ACCOUNT_LINK, CREATE_ACCOUNT, PAYMENT_TRANSFER, SOFTMENT } from "../../config/Networksettings"
 import AppConstant from "../../config/Constants"
 import styles from "./styles"
 import Util from '../../common/util'
 import { Icon } from 'native-base'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+import { useDispatch, useSelector } from 'react-redux'
+import auth from '@react-native-firebase/auth'
+import LoaderComponent from '../LoaderComponent'
+import PopupMessage from '../PopupMessage'
+import { setUserData } from '../../store/userSlice'
 export default AccountMenuList = (props) => {
     const { navigation, isUser } = props
     const [loaderVisibility, setLoaderVisibility] = useState(false)
+    const [successPopup, setSuccessPopup] = useState(false)
+    const { accountStatus, accountId, balance } = useSelector(state => state.user.userData)
+    const uid = auth().currentUser.uid
+    const dispatch = useDispatch()
     const rateUs = () => {
         if (Platform.OS != 'ios') {
             //To open the Google Play Store
-            Linking.openURL(`market://details?id=com.cheapskate`).catch(err =>
+            Linking.openURL(`market://details?id=in.softment.ktrfitness`).catch(err =>
                 alert('Please check for the Google Play Store')
             );
         } else {
             //To open the Apple App Store
             Linking.openURL(
-                `itms://itunes.apple.com/in/app/apple-store/1605414265`
+                `https://apps.apple.com/us/app/ktr-fitness/id6446055641`
             ).catch(err => alert('Please check for the App Store'));
+        }
+    }
+    const handleSuccess = () => {
+        setSuccessPopup(false)
+    }
+    const getUserData = () => {
+        firestore()
+        .collection("Users")
+        .doc(uid)
+        .get()
+        .then(userData=>{
+            if(userData.exists)
+            dispatch(setUserData(userData.data()))
+        })
+    }
+    const handleWithdraw = async () => {
+        const latestData = await firestore().collection("Users").doc(uid).get()
+        const latestBalance = latestData.data().balance
+        if (latestBalance <=0) {
+            Util.showMessage("error", "Insufficient balance")
+        }
+        else {
+            setLoaderVisibility(true)
+            try {
+                var body = new FormData()
+                body.append('account_id', accountId)
+                body.append('amount', Math.round(latestBalance * 100))
+                var response = await axios({
+                    method: AppConstant.POST,
+                    url: PAYMENT_TRANSFER,
+                    data: body
+                })
+                if (response.status === 400)
+                    Util.showMessage("error", "Something went wrong", "danger")
+                else if(response.data.error == true){
+                    Util.showMessage("error", "Something went wrong, try again later.", "danger")
+                }
+                else {
+                    const batch = firestore().batch()
+                    const pHistoryRef = firestore().collection("PaymentHistory").doc()
+                    batch.set(pHistoryRef,{
+                        withdrawDetails: response.data,
+                        uid,
+                        createTime: firebase.firestore.FieldValue.serverTimestamp(),
+                        balance,
+                        accountId
+                    })
+                    const userRef = firestore().collection("Users").doc(uid)
+                    batch.update(userRef,{
+                        balance : 0
+                    })
+                    await batch.commit()
+                    getUserData()
+                    setSuccessPopup(true)
+                }
+                setLoaderVisibility(false)
+            } catch (error) {
+                console.log(error)
+                Util.showMessage("error", "Something went wrong", "danger")
+            }
+            finally {
+                setLoaderVisibility(false)
+            }
         }
     }
     const bankFlow = async () => {
@@ -52,7 +124,7 @@ export default AccountMenuList = (props) => {
                 linkingUtil.openBrowser(linkResponse.url)
             } catch (error) {
                 console.log(error)
-                showTopPopup("error", "Something went wrong", "")
+                Util.showMessage("error", "Something went wrong", "")
             }
             setLoaderVisibility(false)
         }
@@ -85,7 +157,7 @@ export default AccountMenuList = (props) => {
     }
     const updateAccountId = async (id) => {
         try {
-            await firestore().collection("drivers").doc(uid)
+            await firestore().collection("Users").doc(uid)
                 .update({
                     accountId: id
                 })
@@ -95,22 +167,10 @@ export default AccountMenuList = (props) => {
         }
 
     }
-    const getDocStatus = () => {
-        switch (docsStatus) {
-            case "approved":
-                return userProfileLocalization.verified
-            case "pending":
-                return userProfileLocalization.notVerified
-            case "rejected":
-                return userProfileLocalization.rejected
-            case "reupload":
-                return userProfileLocalization.reuploadNeeded
-        }
-    }
     const driverMenu = [
         {
-            id: "settings",
-            label: "Settings",
+            id: "account",
+            label: "Account",
             subMenu: [
                 {
                     label: "Profile",
@@ -118,7 +178,35 @@ export default AccountMenuList = (props) => {
                     onClick: () => {
                         navigation.navigate("EditProProfile")
                     }
-                }
+                },
+                {
+                    label: "Bank Details",
+                    icon: "bank",
+                    subLabel: accountStatus ? "Verified" : "Not Verified",
+                    subImage: accountStatus ? "check-circle-outline" : "cancel",
+                    status: accountStatus,
+                    onClick: () => {
+                        bankFlow()
+                    }
+                },
+                {
+                    label: "Balance",
+                    icon: "wallet-outline",
+                    subLabel: `AED ${balance?.toString()}`,
+                    onClick: () => {
+
+                    },
+                    disabled: true
+                },
+                {
+                    label: "Withdraw",
+                    icon: "cash",
+                    //subLabel:`AED ${balance?.toString()}`,
+                    onClick: () => {
+                        handleWithdraw()
+                    },
+                    //disabled:true
+                },
             ]
         },
         {
@@ -133,7 +221,7 @@ export default AccountMenuList = (props) => {
                     label: "Terms & Conditions",
                     icon: "file-document-outline",
                     onClick: () => {
-                        linkingUtil.openBrowser("https://www.cheap-skate.us/")
+                        linkingUtil.openBrowser("https://www.softment.in/about-us/")
                     }
                 },
                 {
@@ -168,8 +256,8 @@ export default AccountMenuList = (props) => {
     ]
     const menu = [
         {
-            id: "settings",
-            label: "Settings",
+            id: "account",
+            label: "Account",
             subMenu: [
                 {
                     label: "Profile",
@@ -239,12 +327,13 @@ export default AccountMenuList = (props) => {
                                             style={styles.subMenu}
                                             onPress={subItem.onClick}
                                             key={subItem.label}
+                                            disabled={loaderVisibility || subItem.disabled}
                                         >
                                             <Icon
                                                 // style={styles.subMenuImage}
                                                 name={subItem.icon}
                                                 as={MaterialCommunityIcons}
-                                                size={"lg"}
+                                                size={"md"}
                                                 color="white"
                                             />
                                             <View style={styles.subMenuContainer}>
@@ -253,11 +342,16 @@ export default AccountMenuList = (props) => {
                                                     subItem.subLabel &&
                                                     <View style={styles.subsubView}>
                                                         <Text style={styles.subsubtitle}>{subItem.subLabel}</Text>
-                                                        <Image
-                                                            source={subItem.subImage}
-                                                            style={[styles.subImage]}
-                                                            resizeMode="contain"
-                                                        />
+                                                        {
+                                                            subItem.subImage &&
+                                                            <Icon
+                                                                // style={styles.subMenuImage}
+                                                                name={subItem.subImage}
+                                                                as={MaterialCommunityIcons}
+                                                                size={"sm"}
+                                                                color="white"
+                                                            />
+                                                        }
                                                     </View>
                                                 }
                                             </View>
@@ -269,6 +363,8 @@ export default AccountMenuList = (props) => {
                     )
                 })
             }
+            <LoaderComponent visible={loaderVisibility} />
+            <PopupMessage visible={successPopup} title="Payment Successful" subtitle="Great" onPress={handleSuccess}/>
         </View>
     )
 }

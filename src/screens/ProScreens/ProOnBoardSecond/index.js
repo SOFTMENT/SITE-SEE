@@ -41,7 +41,7 @@ const ProOnBoardSecond = (props) => {
         }
     }
     return (
-        <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
+        <View style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
             <Header navigation={navigation} back />
             <View style={styles.mainView}>
                 <Text style={styles.areYou}>Select your best skills</Text>
@@ -89,7 +89,7 @@ const ProOnBoardSecond = (props) => {
                     onPress={() => handleNavigation()}
                 />
             </View>
-        </ScrollView>
+        </View>
     )
 }
 export default ProOnBoardSecond

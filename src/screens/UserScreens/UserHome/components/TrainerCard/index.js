@@ -6,16 +6,17 @@ import FastImage from "react-native-fast-image"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import images from "../../../../../assets/images"
 import Util from "../../../../../common/util"
+import { spacing } from "../../../../../common/variables"
 import colors from "../../../../../theme/colors"
 import styles from "./styles"
 const TrainerCard = (props) => {
     const { data, navigation } = props
-    const { profilePic, name, skills, experience, ratingObj, ratingCount } = data
+    const { profilePic, name, skills, experience, ratingObj, ratingCount, isMap } = data
     const handleNavigation = () => {
         navigation.navigate("TrainerProfile",{data})
     }
     return (
-        <Pressable style={styles.container} onPress={handleNavigation}>
+        <Pressable style={[styles.container,isMap&&{marginHorizontal:spacing.small,marginVertical:0}]} onPress={handleNavigation}>
             <HStack space={2} justifyContent="space-evenly" alignItems={"center"}>
                 <FastImage
                     source={profilePic ? { uri: profilePic } : images.trainer}
@@ -32,7 +33,7 @@ const TrainerCard = (props) => {
                                 color={colors.ratingColor}
                                 size={4}
                             />
-                            <Text style={styles.rating}>{Util.calculateRating(ratingObj,ratingCount)}</Text>
+                            <Text style={styles.rating}>{ratingCount == 0 ? " No reviews yet" : Util.calculateRating(ratingObj,ratingCount)}</Text>
                         </HStack>
                     </HStack>
                     <Text style={styles.skill}>

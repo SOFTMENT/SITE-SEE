@@ -22,6 +22,26 @@ export default {
         }
 
     },
+    async pickVideo(image) {
+        try {
+            const result = await DocumentPicker.pick({
+                allowMultiSelection: false,
+                type: image ? [types.images] : [types.video],
+                copyTo: "documentDirectory"
+
+            })
+            console.log(result[0].fileCopyUri)
+            return result[0]
+        } catch (error) {
+            console.log(error)
+            if (DocumentPicker.isCancel(error)) {
+                throw "Please select a file"
+                // User cancelled the picker, exit any dialogs or menus and move on
+            }
+            throw "something went wrong"
+        }
+
+    },
     uploadImage : async(imageLoc,source)=>{
         const reference = storage().ref(imageLoc); 
         const data = await RNFS.readFile(decodeURI(source.uri), 'base64')

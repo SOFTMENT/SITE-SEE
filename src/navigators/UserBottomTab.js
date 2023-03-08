@@ -18,6 +18,8 @@ import EditUserPorfile from '../screens/UserScreens/EditUserPorfile';
 import ReviewScreen from '../screens/UserScreens/ReviewScreen';
 import UserBookings from '../screens/UserScreens/UserBookings';
 import WriteReview from '../screens/UserScreens/WriteReview';
+import TrainerVideoLibrary from '../screens/UserScreens/TrainerVideoLibrary';
+import SearchScreen from '../screens/SearchScreen';
 const Tab = createBottomTabNavigator();
 const MapStackProfileStack = createNativeStackNavigator()
 const UserHomeStack = createNativeStackNavigator()
@@ -77,6 +79,8 @@ const MyUserHomeStack = () => {
             <UserHomeStack.Screen name='ChatScreen' component={Chat} />
             <UserHomeStack.Screen name='ReviewScreen' component={ReviewScreen} />
             <UserHomeStack.Screen name='WriteReview' component={WriteReview} />
+            <UserHomeStack.Screen name='TrainerVideoLibrary' component={TrainerVideoLibrary} />
+            <UserHomeStack.Screen name='SearchScreen' component={SearchScreen} />
         </UserHomeStack.Navigator>
     )
 }

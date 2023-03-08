@@ -1,13 +1,11 @@
 import firestore from '@react-native-firebase/firestore'
 import { startCase } from "lodash"
-import { Avatar, HStack, Icon, IconButton, Input } from "native-base"
+import { Icon, Pressable } from "native-base"
 import React, { useEffect, useState } from "react"
 import { FlatList, Platform, Text, View } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import { connect } from "react-redux"
-import Util from "../../../common/util"
-import { spacing } from "../../../common/variables"
 import AvatarIcon from '../../../components/AvatarIcon'
 import TrainerCard from "./components/TrainerCard"
 import styles from "./styles"
@@ -24,6 +22,8 @@ const ProHome = (props) => {
             firestore()
                 .collection("Users")
                 .where("isUser", "==", false)
+                .where("status","==","approved")
+                .where("accountStatus", "==", true)
                 .get()
                 .then(snapshot => {
                     const data = []
@@ -62,37 +62,15 @@ const ProHome = (props) => {
                     {/* {Util.getNameInitial(name)}
                 </Avatar> */}
             </View>
-            <HStack space={2} my={5}>
-                <Input
-                    placeholder="Search"
-                    variant="outlined"
-                    flex={1}
-                    borderRadius={10}
-                    py={Platform.OS=="ios"?4:2}
-                    color={"white"}
-                    bg={"gray.800"}
-                    //borderWidth={0}
-                    // InputLeftElement={
-                    //     <Icon size={"xl"}
-                    //         name="magnify"
-                    //         color="gray.300"
-                    //         marginLeft={spacing.extraExtraSmall}
-                    //         as={MaterialCommunityIcons} />
-                    // }
+            <Pressable style={styles.searchBox} backgroundColor={"gray.800"} onPress={()=>navigation.navigate("SearchScreen")}>
+                <Icon
+                    as={MaterialCommunityIcons}
+                    size="lg"
+                    name='magnify'
+                    mr={5}
                 />
-                <IconButton
-                    variant={"solid"}
-                    bg={"gray.800"}
-                    borderRadius={10}
-                    _icon={{
-                        size: "xl",
-                        name: "magnify",
-                        color: "gray.300",
-                        marginLeft: spacing.extraExtraSmall,
-                        as: MaterialCommunityIcons
-                    }}
-                />
-            </HStack>
+                <Text style={styles.placeholder}>Search Trainers</Text>
+            </Pressable>
             <FlatList
                 data={trainers}
                 style={{ flex: 1 }}

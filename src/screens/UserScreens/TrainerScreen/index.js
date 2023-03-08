@@ -48,7 +48,9 @@ const TrainerScreen = (props) => {
             .where("userId","==",auth().currentUser.uid)
             .get()
             .then((sanpShot)=>{
+                console.log(sanpShot.size)
                 if(sanpShot.size>0){
+                    console.log("hereee")
                     setChatActive(true)
                 }
             })
@@ -73,6 +75,9 @@ const TrainerScreen = (props) => {
             senderName:name
         }
         navigation.navigate("ChatScreen",{lastMessage})
+    }
+    const handleVideoLibrary = () => {
+        navigation.navigate("TrainerVideoLibrary",{trainerId:uid})
     }
     return (
         <ScrollView style={styles.contaienr} bounces={false} showsVerticalScrollIndicator={false}>
@@ -105,7 +110,6 @@ const TrainerScreen = (props) => {
                 />
                 <Icon
                     name="play-circle"
-
                     size={"4xl"}
                     as={MaterialCommunityIcons}
                     style={styles.playIcon}
@@ -178,7 +182,7 @@ const TrainerScreen = (props) => {
                         {
                             reviews.map(rev=>{
                                 return(
-                                    <AvatarIcon uri={rev.userPic} size={40}/>
+                                    <AvatarIcon uri={rev.userPic} size={40} key={rev.id}/>
                                 )
                             })
                         }
@@ -193,6 +197,24 @@ const TrainerScreen = (props) => {
                         View Reviews
                     </Link>
                 </HStack>
+                <MyButton
+                 onPress={handleVideoLibrary}
+                 title={"Exclusive Video Library"}
+                 txtStyle={{color:"white"}}
+                 disabled={!chatActive}
+                 containerStyle={{backgroundColor:"transparent",borderColor:"white",borderWidth:1,marginTop:10}}
+                 icon={
+                    <Icon as={MaterialCommunityIcons}
+                        name={chatActive?"lock-open-variant-outline":"lock-outline"}
+                        color={"white"}
+                        size={4}
+                        style={{marginLeft:5}}
+                    />
+                }
+                 //containerStyle={styles.btn}
+                //onPress={handleRegister}
+                //loading={loading}
+                />
                 <MyButton
                     title={"Book Appointment"}
                     containerStyle={styles.btn}

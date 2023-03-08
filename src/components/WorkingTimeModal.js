@@ -1,14 +1,13 @@
 import { format } from "date-fns";
-import { cloneDeep } from "lodash";
-import { Button, Checkbox, HStack, Modal, View } from "native-base";
-import React, { useEffect, useState } from "react";
+import { Checkbox, HStack, Modal, View } from "native-base";
+import React, { useState } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import DatePicker from "react-native-date-picker";
 import fonts from "../../assets/fonts";
-import Util from "../common/util";
 import { fontSizes, spacing } from "../common/variables";
 import { workingTime } from "../config/appConfig";
 import colors from "../theme/colors";
+import MyButton from "./MyButton";
 const WorkingTimeModal = (props) => {
     const { showModal, setShowModal, handleWorkingTime } = props
     const [allState,setAllState] = useState({})
@@ -27,15 +26,19 @@ const WorkingTimeModal = (props) => {
            }
         }
     }
+    const closeModal = () => {
+        setAllState({})
+        handleWorkingTime({})
+    }
     const submit = () => {
         handleWorkingTime(allState)
     }
     return (
-        <Modal isOpen={showModal} onClose={() => handleWorkingTime({})} size="xl">
-            <Modal.Content>
-                <Modal.CloseButton />
-                <Modal.Header>Choose Working Time</Modal.Header>
-                <Modal.Body>
+        <Modal isOpen={showModal} onClose={closeModal} size="xl">
+            <Modal.Content backgroundColor={colors.backgroundColor}>
+                <Modal.CloseButton onPress={closeModal}/>
+                <Modal.Header backgroundColor={colors.backgroundColor} _text={{color:"white"}}>Choose Working Time</Modal.Header>
+                <Modal.Body backgroundColor={colors.backgroundColor}>
                     {/* <Button onPress={()=>setShow(true)}>Click</Button> */}
                     {
                         workingTime.map(item => {
@@ -46,8 +49,11 @@ const WorkingTimeModal = (props) => {
                     }
 
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button flex={1} onPress={submit}>Confirm</Button>
+                <Modal.Footer backgroundColor={colors.backgroundColor}>
+                    <MyButton
+                        title={"Confirm"}
+                        onPress={submit}
+                    />
                 </Modal.Footer>
             </Modal.Content>
         </Modal>
@@ -118,16 +124,18 @@ const styles = StyleSheet.create({
     time: {
         padding: spacing.extraSmall,
         borderWidth: 1,
-        borderColor: "rgba(0,0,0,0.5)",
+        borderColor: colors.borderColor,
         borderRadius: spacing.extraSmall,
         //backgroundColor: 'red'
     },
     timeTxt:{
         fontSize:fontSizes.extraExtraSmall,
-        fontFamily:fonts.medium
+        fontFamily:fonts.medium,
+        color:"white"
     },
     day:{
         fontSize:fontSizes.extraExtraSmall,
         fontFamily:fonts.semiBold,
+        color:"white"
     }
 })

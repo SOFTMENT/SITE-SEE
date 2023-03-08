@@ -1,30 +1,26 @@
 import auth from '@react-native-firebase/auth';
-import { Image, ScrollView } from 'native-base';
+import firestore from '@react-native-firebase/firestore';
+import { Icon, ScrollView } from 'native-base';
 import React, { useState } from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import FastImage from 'react-native-fast-image';
-import { connect } from "react-redux";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { connect, useDispatch } from "react-redux";
 import images from '../../../assets/images';
+import Helper from '../../../common/Helper';
 import Util from '../../../common/util';
 import { spacing } from '../../../common/variables';
-import AccountMenuList from '../../../components/AccountMenuList';
 import Header from '../../../components/Header';
 import MyTextInput from '../../../components/MyTextInput';
-import { navigateAndReset } from "../../../navigators/RootNavigation";
+import { setUserData } from '../../../store/userSlice';
 import styles from "./styles";
-import firestore from '@react-native-firebase/firestore'
 const EditUserProfile = (props) => {
     const { navigation, userData, state } = props
     const { profilePic, name, email, gender, dob, height, weight } = userData
     const [myName,setName] = useState(name)
     const [editable,setEditable] = useState(false)
-    const logout = () => {
-        auth().signOut()
-            .then(() => {
-                navigateAndReset("UserSelectScreen")
-            }
-            )
-    }
+    const [profileImage, setProfileImage] = useState(null)
+    const dispatch = useDispatch()
     const editPress = () => {
         setEditable(true)
        // logout()
@@ -40,13 +36,49 @@ const EditUserProfile = (props) => {
         updateProfile(auth().currentUser.uid,data)
         setEditable(false)
     }
+    const handleImageEdit = () => {
+        Helper.pickDocument(true)
+            .then(res => {
+                setProfileImage(res)
+                uploadImage()
+                //updateUserData()
+            })
+            .catch((error) => {
+                Util.showMessage("error", error, "")
+            })
+    }
+    const uploadImage = async() => {
+        try {
+            const profileUrl = await Helper.uploadImage(`ProfilePic/${auth().currentUser.uid}`, profileImage)
+            updateProfile(auth().currentUser.uid,{
+                profilePic:profileUrl
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const getUserData = () => {
+        firestore()
+        .collection("Users")
+        .doc(auth().currentUser.uid)
+        .get()
+        .then(res => {
+            dispatch(setUserData(res.data()))
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+    }
     const updateProfile = (uid,data) => {
         try {
             firestore()
             .collection("Users")
             .doc(uid)
             .update(data)
-            .then(()=>Util.showMessage("success","Profile updated successfully"))
+            .then(()=>{
+                Util.showMessage("success","Profile updated successfully")
+                getUserData()
+            })
         } catch (error) {
             Util.showMessage("error","Somthing went wrong")
         }
@@ -58,15 +90,22 @@ const EditUserProfile = (props) => {
                 onRightIconPress={editable?onSubmitEdit:editPress}
             />
             <View style={styles.topView}>
-                <FastImage
-                    source={profilePic ? { uri: profilePic } : images.defaultUser}
+            <FastImage
+                    source={{uri:profileImage?profileImage.uri:profilePic}}
                     defaultSource={images.imagePlaceholder}
-                    resizeMode="contain"
+                    resizeMode="cover"
                     alt={name}
                     style={styles.image}
-                //bgColor={"white"}
-                //tintColor={profileUrl?"none"}
-                />
+                >
+                    <TouchableOpacity style={styles.imageEdit} onPress={handleImageEdit}>
+                        <Icon
+                            as={MaterialCommunityIcons}
+                            name="pencil-outline"
+                            color={"white"}
+                            size="lg"
+                        />
+                    </TouchableOpacity>
+                </FastImage>
             </View>
             <View style={{ flex: 1,padding:spacing.mediumLarge }}>
                 <MyTextInput

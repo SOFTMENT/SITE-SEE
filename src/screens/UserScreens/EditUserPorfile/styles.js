@@ -22,5 +22,10 @@ export default StyleSheet.create({
         borderRadius:spacing.small,
         borderWidth:spacing.extraSmall,
         borderColor:"rgb(99,99,99)"
+    },
+    imageEdit:{
+        position:"absolute",
+        bottom:5,
+        right:5
     }
 })

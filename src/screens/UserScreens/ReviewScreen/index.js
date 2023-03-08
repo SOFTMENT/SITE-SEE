@@ -66,7 +66,7 @@ const ReviewScreen = (props) => {
             <Header title="Reviews" back navigation={navigation} />
             <View style={styles.mainView}>
                 <HStack alignItems={"center"}>
-                    <Text style={styles.left}>{Util.calculateRating(ratingObj,ratingCount)}</Text>
+                    <Text style={styles.left}>{ratingCount == 0 ? " No reviews yet" : Util.calculateRating(ratingObj,ratingCount)}</Text>
                     <VStack flex={0.7}>
                         {
                             Object.keys(ratingObj).map(key=>{

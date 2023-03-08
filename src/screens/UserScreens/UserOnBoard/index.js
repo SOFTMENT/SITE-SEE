@@ -41,7 +41,7 @@ const UserOnBoard = (props) => {
 
     }
     return (
-        <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
+        <View style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
             <Header navigation={navigation} />
             <View style={styles.mainView}>
                 <Text style={styles.areYou}>Let's complete your profile</Text>
@@ -163,7 +163,7 @@ const UserOnBoard = (props) => {
                     onPress={() => handleNavigation()}
                 />
             </View>
-        </ScrollView>
+        </View>
     )
 }
 export default UserOnBoard

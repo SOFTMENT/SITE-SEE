@@ -5,10 +5,10 @@ import fonts from "../../assets/fonts"
 import { fontSizes, spacing } from "../common/variables"
 import colors from "../theme/colors"
 const MyButton = (props) => {
-    const { containerStyle, onPress, title, loading, txtStyle,icon} = props
+    const { containerStyle, onPress, title, loading, txtStyle,icon,disabled} = props
     return (
         <TouchableOpacity
-            disabled={loading}
+            disabled={loading || disabled}
             onPress={onPress}
             style={[styles.container,containerStyle]}>
             <Text style={[styles.next,txtStyle]}>{title}</Text>

@@ -70,6 +70,7 @@
 		8004B8522961F93C008AA020 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		804C0ED92982DFC60071AB43 /* KtrFitness-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KtrFitness-Bridging-Header.h"; sourceTree = "<group>"; };
 		804C0EE02982E0FD0071AB43 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		805CA17929B49243000CFB5B /* KtrFitness.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = KtrFitness.entitlements; path = KtrFitness/KtrFitness.entitlements; sourceTree = "<group>"; };
 		80C6FB7E2963672A00F8567C /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		80C6FB7F2963672A00F8567C /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		80C6FB802963672A00F8567C /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -135,6 +136,7 @@
 		13B07FAE1A68108700A75B9A /* KtrFitness */ = {
 			isa = PBXGroup;
 			children = (
+				805CA17929B49243000CFB5B /* KtrFitness.entitlements */,
 				804C0EE02982E0FD0071AB43 /* File.swift */,
 				80C6FB7D2963672A00F8567C /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -615,6 +617,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = KtrFitness/KtrFitness.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F4UAJU6HLM;
 				ENABLE_BITCODE = NO;
@@ -631,9 +634,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = in.softment.ktrfitness;
 				PRODUCT_NAME = KtrFitness;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "KtrFitness-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -644,6 +651,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = KtrFitness/KtrFitness.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F4UAJU6HLM;
 				INFOPLIST_FILE = KtrFitness/Info.plist;
@@ -659,8 +667,12 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = in.softment.ktrfitness;
 				PRODUCT_NAME = KtrFitness;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "KtrFitness-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

@@ -10,7 +10,8 @@ export default StyleSheet.create({
         borderColor:colors.borderColor,
         borderWidth:1,
         borderRadius:spacing.small,
-        padding:spacing.medium
+        padding:spacing.medium,
+        marginVertical:spacing.extraSmall
     },
     name:{
         color:"white",

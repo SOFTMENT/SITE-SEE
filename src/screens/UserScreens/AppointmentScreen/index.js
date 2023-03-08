@@ -76,7 +76,7 @@ const AppointmentScreen = (props) => {
                     url: PAYMENT_INTENT,
                     data: {
                         amount: data.trainingFee,
-                        currency: "usd",
+                        currency: "aed",
                         description: "booking payment"
                     },
 
@@ -127,7 +127,9 @@ const AppointmentScreen = (props) => {
                 trainerPic: data.profilePic,
                 bookingId,
                 trainerName:data.name,
-                reviewDone:false
+                reviewDone:false,
+                userName:userData.name,
+                amountCredited:false
             }
             await firestore().collection("bookings").doc(bookingId).set(obj)
 
@@ -149,7 +151,7 @@ const AppointmentScreen = (props) => {
         bookingData.find(bData=>bData.appointmentTime == item.key && selectedDate == bData.appointmentDate) 
         || (format(appointmentDate,"dd/MM/yyyy") == format(new Date(),"dd/MM/yyyy") && item.key <= format(new Date(),"H"))
         || !(workingTime.find((cur)=>cur.day == selectedDay && (format(parse(cur.startTime,"p",appointmentDate),"H") <= item.key && format(parse(cur.endTime,"p",appointmentDate),"H") > item.key)))
-        const isSelected = item == appointmentTime
+        const isSelected = item.key == appointmentTime
         return (
             <TouchableOpacity
                 key={item.key}
@@ -252,9 +254,9 @@ const AppointmentScreen = (props) => {
             </View>
             <PopupMessage visible={successPopup} onPress={() => {
                 setSuccessPopup(false)
-                navigateAndReset("UserBookings")
+                navigation.navigate("UserBookingStack")
             }}
-                title={"Booking Successful"}
+                title={"Appointment Successful"}
                 subtitle={"Great"}
             />
         </KeyboardAwareScrollView>

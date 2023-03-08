@@ -8,6 +8,19 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const scale = SCREEN_WIDTH / 320;
 
 const Util = {
+    checkIfTablet : () => {
+        const pixelDensity = PixelRatio.get()
+        const adjustedWidth = SCREEN_WIDTH * pixelDensity
+        const adjustedHeight = SCREEN_WIDTH * pixelDensity
+        if (pixelDensity < 2 && (adjustedWidth >= 1000 || adjustedHeight >= 1000)) {
+            return true
+        } else {
+            return (
+                pixelDensity === 2 &&
+                (adjustedWidth >= 1920 || adjustedHeight >= 1920)
+            )
+        }
+        },    
     showMessage: (type, text1, text2, onPress) => {
         Toast.show({
             type: type,
@@ -76,6 +89,9 @@ const Util = {
         
     },
     calculateRating : (ratingObj,ratingCount) => {
+        if(ratingCount == 0) {
+            return 0
+        }
         let rating = 0
         Object.keys(ratingObj).map(key=>{
             rating+=key*ratingObj[key]
@@ -86,7 +102,9 @@ const Util = {
 }
 export default Util
 export function responsiveSize(size) {
-    const newSize = size * scale;
+    const isTablet = Util.checkIfTablet()
+   	// NOTE: Tablet scaling hasn't been fully tested.
+	const newSize = isTablet ? (size * scale) / 2 : size * scale
     if (Platform.OS === 'ios') {
         return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
     } else {

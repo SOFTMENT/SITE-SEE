@@ -50,7 +50,7 @@ const UserBookings = (props) => {
     }
     return (
         <View style={styles.container}>
-            <Header title="Bookings" navigation={navigation} />
+            <Header title="Appointments" navigation={navigation} />
             <TopTabComponent
                 selected={selected}
                 setSelected={filterChanged}

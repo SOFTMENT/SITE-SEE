@@ -39,7 +39,7 @@ const ProOnBoardThird = (props) => {
         navigation.navigate("ProOnBoardFourth", { data: newData })
     }
     return (
-        <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
+        <View style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
             <Header navigation={navigation} back />
             <View style={styles.mainView}>
                 <Text style={styles.areYou}>Professional details</Text>
@@ -116,7 +116,8 @@ const ProOnBoardThird = (props) => {
                 </View>
                 <MyTextInput
                     containerStyle={{ marginTop:spacing.mediumLarge}}
-                    iconName={"currency-usd"}
+                    //iconName={"currency-usd"}
+                    rightTitle={"AED"}
                     //isPass
                     placeholder={"Training Fee (Per Hour)"}
                     placeholderTextColor={"white"}
@@ -142,7 +143,7 @@ const ProOnBoardThird = (props) => {
                     onPress={() => handleNavigation()}
                 />
             </View>
-        </ScrollView>
+        </View>
     )
 }
 export default ProOnBoardThird

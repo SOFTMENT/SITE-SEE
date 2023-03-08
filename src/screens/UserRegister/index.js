@@ -240,7 +240,7 @@ const UserRegister = (props) => {
                     profileCompleted:false,
                     uid: user.uid,
                     // ...(tab == 1 && { uniqueCode: Util.genRandomId(), rating: 5, ratingCount: 3 }),
-                    ...(tab == 1 && { ratingObj: {1:0,2:0,3:0,4:0,5:0}, ratingCount: 0 }),
+                    ...(tab == 2 && { ratingObj: {1:0,2:0,3:0,4:0,5:0}, ratingCount: 0,accountStatus:false,balance:0 }),
                     // status: "pending"
                 })
             // if (tab != 1)

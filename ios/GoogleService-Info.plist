@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>334454353855-v3t06lrdhjqaa8nngts9bmo9rios65rk.apps.googleusercontent.com</string>
+	<string>334454353855-64d6s18f993orifgqaml630r5kefrr8m.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.334454353855-v3t06lrdhjqaa8nngts9bmo9rios65rk</string>
+	<string>com.googleusercontent.apps.334454353855-64d6s18f993orifgqaml630r5kefrr8m</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>334454353855-331465346ctr9memd6d8phj2p13a7dt9.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyC4EU-o9af4TGrOKquws_NbxHBUlkfjF6s</string>
 	<key>GCM_SENDER_ID</key>
