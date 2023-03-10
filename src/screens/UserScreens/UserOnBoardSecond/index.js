@@ -21,7 +21,7 @@ const UserOnBoardSecond = (props) => {
         navigation.navigate("UserOnBoardThird",{data:newData})
     }
     return (
-        <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
+        <View style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
             <Header navigation={navigation} back />
             <View style={styles.mainView}>
                 <Text style={styles.areYou}>What's your goal?</Text>
@@ -68,7 +68,7 @@ const UserOnBoardSecond = (props) => {
                     onPress={() => handleNavigation()}
                 />
             </View>
-        </ScrollView>
+        </View>
     )
 }
 export default UserOnBoardSecond
