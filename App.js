@@ -37,38 +37,38 @@ const App = () => {
     fontConfig: {
       Montserrat: {
         100: {
-          normal: "Montserrat-Light",
+          normal: "Mulish-Light",
           //italic: "Roboto-LightItalic",
         },
         200: {
-          normal: "Montserrat-Light",
+          normal: "Mulish-Light",
           //italic: "Roboto-LightItalic",
         },
         300: {
-          normal: "Montserrat-Regular",
+          normal: "Mulish-Regular",
           //italic: "Roboto-LightItalic",
         },
         400: {
-          normal: "Montserrat-Regular",
+          normal: "Mulish-Regular",
           //italic: "Roboto-Italic",
         },
         500: {
-          normal: "Montserrat-Medium"
+          normal: "Mulish-Medium"
         },
         600: {
-          normal: "Montserrat-Medium"
+          normal: "Mulish-Medium"
         },
         700: {
-          normal: 'Montserrat-SemiBold',
+          normal: 'Mulish-SemiBold',
         },
         800: {
-          normal: 'Montserrat-SemiBold',
+          normal: 'Mulish-SemiBold',
         },
         900: {
-          normal: "Montserrat-Bold"
+          normal: "Mulish-Bold"
         },
         1000: {
-          normal: "Montserrat-Bold"
+          normal: "Mulish-Bold"
         }
       },
     },

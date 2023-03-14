@@ -7,16 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* KtrFitnessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* KtrFitnessTests.m */; };
-		0565BB7B6B4F4D0AB0B789B5 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3DBDD40065749F1BBB0877D /* Montserrat-Light.ttf */; };
-		088642CEA73E4B5AB063C367 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 595313528C17431BA0D32055 /* Montserrat-SemiBold.ttf */; };
+		00E356F31AD99517003FC87E /* AppvertiseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AppvertiseTests.m */; };
+		1293331FD8EC962A0A0E903A /* Pods_Appvertise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC7972053596995698F0E053 /* Pods_Appvertise.framework */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		3490030AF03345E29F7D535D /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 746F7EC4FDA649869060F065 /* Montserrat-Regular.ttf */; };
-		4A42D98223774C85BAB2761C /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88DCD5E1682E44728052C1C8 /* Montserrat-Medium.ttf */; };
-		6A966B54B32562A8BFBE1492 /* Pods_KtrFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8781BA4EC820F861AD36259 /* Pods_KtrFitness.framework */; };
-		6E6B99356243E17E3E5F440F /* Pods_KtrFitness_KtrFitnessTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31841BE4FE9291A9B2A0658C /* Pods_KtrFitness_KtrFitnessTests.framework */; };
 		8004B8532961F93C008AA020 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8004B8522961F93C008AA020 /* GoogleService-Info.plist */; };
 		804C0EE12982E0FD0071AB43 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804C0EE02982E0FD0071AB43 /* File.swift */; };
 		80C6FB8E2963672A00F8567C /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80C6FB7E2963672A00F8567C /* Fontisto.ttf */; };
@@ -36,8 +31,13 @@
 		80C6FB9C2963672A00F8567C /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80C6FB8C2963672A00F8567C /* SimpleLineIcons.ttf */; };
 		80C6FB9D2963672A00F8567C /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80C6FB8D2963672A00F8567C /* MaterialIcons.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		C249F39D8340472DB5A19F62 /* index.js in Resources */ = {isa = PBXBuildFile; fileRef = FC5288260E394D8EB3F80A8A /* index.js */; };
-		F47C52EEEEC344D99AA161D7 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B3A7AD0ED2C4434901A4426 /* Montserrat-Bold.ttf */; };
+		A89621F87481DE7DE5F7D376 /* Pods_Appvertise_AppvertiseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C451BFDD52C717FA5365B917 /* Pods_Appvertise_AppvertiseTests.framework */; };
+		928BAF0E14BB421EB0627B2E /* Mulish-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F75F984AA794C1A82A132A0 /* Mulish-Bold.ttf */; };
+		17CCC5F1085F4C51BDDACB84 /* Mulish-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B0C31250D5C4949A42FD764 /* Mulish-Light.ttf */; };
+		F9B4437CA9D04C1C9F5B539D /* Mulish-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C3C5085B7C094678AE5B5676 /* Mulish-Medium.ttf */; };
+		8C9DAB2EAD4C4239BB156638 /* Mulish-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6651C38C464441D9C42EEBB /* Mulish-Regular.ttf */; };
+		3E750C671AA24EB891691C7F /* Mulish-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4E52E90B1DC4474BB37393B /* Mulish-SemiBold.ttf */; };
+		8A20166AE6FE416BAE8A4058 /* index.js in Resources */ = {isa = PBXBuildFile; fileRef = 876FE4F09819449F9CF07EB6 /* index.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,31 +46,27 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = KtrFitness;
+			remoteInfo = Appvertise;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* KtrFitnessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KtrFitnessTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* AppvertiseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppvertiseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* KtrFitnessTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KtrFitnessTests.m; sourceTree = "<group>"; };
-		0B3A7AD0ED2C4434901A4426 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* KtrFitness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KtrFitness.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = KtrFitness/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = KtrFitness/AppDelegate.mm; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = KtrFitness/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = KtrFitness/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = KtrFitness/main.m; sourceTree = "<group>"; };
-		2C656F9E22902D0809FB819F /* Pods-KtrFitness.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KtrFitness.debug.xcconfig"; path = "Target Support Files/Pods-KtrFitness/Pods-KtrFitness.debug.xcconfig"; sourceTree = "<group>"; };
-		31841BE4FE9291A9B2A0658C /* Pods_KtrFitness_KtrFitnessTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KtrFitness_KtrFitnessTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		49B39162791E2C03003FACB9 /* Pods-KtrFitness-KtrFitnessTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KtrFitness-KtrFitnessTests.release.xcconfig"; path = "Target Support Files/Pods-KtrFitness-KtrFitnessTests/Pods-KtrFitness-KtrFitnessTests.release.xcconfig"; sourceTree = "<group>"; };
-		595313528C17431BA0D32055 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../assets/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
-		746F7EC4FDA649869060F065 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
-		7AD7F12ACB4F2980A26F5841 /* Pods-KtrFitness-KtrFitnessTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KtrFitness-KtrFitnessTests.debug.xcconfig"; path = "Target Support Files/Pods-KtrFitness-KtrFitnessTests/Pods-KtrFitness-KtrFitnessTests.debug.xcconfig"; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* AppvertiseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppvertiseTests.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Appvertise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Appvertise.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Appvertise/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Appvertise/AppDelegate.mm; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Appvertise/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Appvertise/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Appvertise/main.m; sourceTree = "<group>"; };
+		2C656F9E22902D0809FB819F /* Pods-Appvertise.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appvertise.debug.xcconfig"; path = "Target Support Files/Pods-Appvertise/Pods-Appvertise.debug.xcconfig"; sourceTree = "<group>"; };
+		49B39162791E2C03003FACB9 /* Pods-Appvertise-AppvertiseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appvertise-AppvertiseTests.release.xcconfig"; path = "Target Support Files/Pods-Appvertise-AppvertiseTests/Pods-Appvertise-AppvertiseTests.release.xcconfig"; sourceTree = "<group>"; };
+		7AD7F12ACB4F2980A26F5841 /* Pods-Appvertise-AppvertiseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appvertise-AppvertiseTests.debug.xcconfig"; path = "Target Support Files/Pods-Appvertise-AppvertiseTests/Pods-Appvertise-AppvertiseTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8004B8522961F93C008AA020 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		804C0ED92982DFC60071AB43 /* KtrFitness-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KtrFitness-Bridging-Header.h"; sourceTree = "<group>"; };
+		804C0ED92982DFC60071AB43 /* Appvertise-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Appvertise-Bridging-Header.h"; sourceTree = "<group>"; };
 		804C0EE02982E0FD0071AB43 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		805CA17929B49243000CFB5B /* KtrFitness.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = KtrFitness.entitlements; path = KtrFitness/KtrFitness.entitlements; sourceTree = "<group>"; };
+		805CA17929B49243000CFB5B /* Appvertise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Appvertise.entitlements; path = Appvertise/Appvertise.entitlements; sourceTree = "<group>"; };
 		80C6FB7E2963672A00F8567C /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		80C6FB7F2963672A00F8567C /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		80C6FB802963672A00F8567C /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -87,13 +83,17 @@
 		80C6FB8B2963672A00F8567C /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		80C6FB8C2963672A00F8567C /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		80C6FB8D2963672A00F8567C /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = KtrFitness/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		88DCD5E1682E44728052C1C8 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
-		96FCF9A3BB7093752DA17AB7 /* Pods-KtrFitness.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KtrFitness.release.xcconfig"; path = "Target Support Files/Pods-KtrFitness/Pods-KtrFitness.release.xcconfig"; sourceTree = "<group>"; };
-		E3DBDD40065749F1BBB0877D /* Montserrat-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Light.ttf"; path = "../assets/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Appvertise/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		96FCF9A3BB7093752DA17AB7 /* Pods-Appvertise.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appvertise.release.xcconfig"; path = "Target Support Files/Pods-Appvertise/Pods-Appvertise.release.xcconfig"; sourceTree = "<group>"; };
+		AC7972053596995698F0E053 /* Pods_Appvertise.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Appvertise.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C451BFDD52C717FA5365B917 /* Pods_Appvertise_AppvertiseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Appvertise_AppvertiseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F8781BA4EC820F861AD36259 /* Pods_KtrFitness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KtrFitness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FC5288260E394D8EB3F80A8A /* index.js */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = index.js; path = ../assets/fonts/index.js; sourceTree = "<group>"; };
+		3F75F984AA794C1A82A132A0 /* Mulish-Bold.ttf */ = {isa = PBXFileReference; name = "Mulish-Bold.ttf"; path = "../assets/fonts/Mulish-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1B0C31250D5C4949A42FD764 /* Mulish-Light.ttf */ = {isa = PBXFileReference; name = "Mulish-Light.ttf"; path = "../assets/fonts/Mulish-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C3C5085B7C094678AE5B5676 /* Mulish-Medium.ttf */ = {isa = PBXFileReference; name = "Mulish-Medium.ttf"; path = "../assets/fonts/Mulish-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F6651C38C464441D9C42EEBB /* Mulish-Regular.ttf */ = {isa = PBXFileReference; name = "Mulish-Regular.ttf"; path = "../assets/fonts/Mulish-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E4E52E90B1DC4474BB37393B /* Mulish-SemiBold.ttf */ = {isa = PBXFileReference; name = "Mulish-SemiBold.ttf"; path = "../assets/fonts/Mulish-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		876FE4F09819449F9CF07EB6 /* index.js */ = {isa = PBXFileReference; name = "index.js"; path = "../assets/fonts/index.js"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E6B99356243E17E3E5F440F /* Pods_KtrFitness_KtrFitnessTests.framework in Frameworks */,
+				A89621F87481DE7DE5F7D376 /* Pods_Appvertise_AppvertiseTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,20 +109,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A966B54B32562A8BFBE1492 /* Pods_KtrFitness.framework in Frameworks */,
+				1293331FD8EC962A0A0E903A /* Pods_Appvertise.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* KtrFitnessTests */ = {
+		00E356EF1AD99517003FC87E /* AppvertiseTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* KtrFitnessTests.m */,
+				00E356F21AD99517003FC87E /* AppvertiseTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = KtrFitnessTests;
+			path = AppvertiseTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -133,10 +133,10 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* KtrFitness */ = {
+		13B07FAE1A68108700A75B9A /* Appvertise */ = {
 			isa = PBXGroup;
 			children = (
-				805CA17929B49243000CFB5B /* KtrFitness.entitlements */,
+				805CA17929B49243000CFB5B /* Appvertise.entitlements */,
 				804C0EE02982E0FD0071AB43 /* File.swift */,
 				80C6FB7D2963672A00F8567C /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -146,15 +146,15 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = KtrFitness;
+			name = Appvertise;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				F8781BA4EC820F861AD36259 /* Pods_KtrFitness.framework */,
-				31841BE4FE9291A9B2A0658C /* Pods_KtrFitness_KtrFitnessTests.framework */,
+				AC7972053596995698F0E053 /* Pods_Appvertise.framework */,
+				C451BFDD52C717FA5365B917 /* Pods_Appvertise_AppvertiseTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -162,12 +162,12 @@
 		44D612F624C04C7AB330662F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0B3A7AD0ED2C4434901A4426 /* Montserrat-Bold.ttf */,
-				E3DBDD40065749F1BBB0877D /* Montserrat-Light.ttf */,
-				88DCD5E1682E44728052C1C8 /* Montserrat-Medium.ttf */,
-				746F7EC4FDA649869060F065 /* Montserrat-Regular.ttf */,
-				595313528C17431BA0D32055 /* Montserrat-SemiBold.ttf */,
-				FC5288260E394D8EB3F80A8A /* index.js */,
+				3F75F984AA794C1A82A132A0 /* Mulish-Bold.ttf */,
+				1B0C31250D5C4949A42FD764 /* Mulish-Light.ttf */,
+				C3C5085B7C094678AE5B5676 /* Mulish-Medium.ttf */,
+				F6651C38C464441D9C42EEBB /* Mulish-Regular.ttf */,
+				E4E52E90B1DC4474BB37393B /* Mulish-SemiBold.ttf */,
+				876FE4F09819449F9CF07EB6 /* index.js */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -206,14 +206,14 @@
 			isa = PBXGroup;
 			children = (
 				8004B8522961F93C008AA020 /* GoogleService-Info.plist */,
-				13B07FAE1A68108700A75B9A /* KtrFitness */,
+				13B07FAE1A68108700A75B9A /* Appvertise */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* KtrFitnessTests */,
+				00E356EF1AD99517003FC87E /* AppvertiseTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
 				44D612F624C04C7AB330662F /* Resources */,
-				804C0ED92982DFC60071AB43 /* KtrFitness-Bridging-Header.h */,
+				804C0ED92982DFC60071AB43 /* Appvertise-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -223,8 +223,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* KtrFitness.app */,
-				00E356EE1AD99517003FC87E /* KtrFitnessTests.xctest */,
+				13B07F961A680F5B00A75B9A /* Appvertise.app */,
+				00E356EE1AD99517003FC87E /* AppvertiseTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -232,10 +232,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2C656F9E22902D0809FB819F /* Pods-KtrFitness.debug.xcconfig */,
-				96FCF9A3BB7093752DA17AB7 /* Pods-KtrFitness.release.xcconfig */,
-				7AD7F12ACB4F2980A26F5841 /* Pods-KtrFitness-KtrFitnessTests.debug.xcconfig */,
-				49B39162791E2C03003FACB9 /* Pods-KtrFitness-KtrFitnessTests.release.xcconfig */,
+				2C656F9E22902D0809FB819F /* Pods-Appvertise.debug.xcconfig */,
+				96FCF9A3BB7093752DA17AB7 /* Pods-Appvertise.release.xcconfig */,
+				7AD7F12ACB4F2980A26F5841 /* Pods-Appvertise-AppvertiseTests.debug.xcconfig */,
+				49B39162791E2C03003FACB9 /* Pods-Appvertise-AppvertiseTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -243,9 +243,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* KtrFitnessTests */ = {
+		00E356ED1AD99517003FC87E /* AppvertiseTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "KtrFitnessTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AppvertiseTests" */;
 			buildPhases = (
 				D2F4EED3C2A0B54F56517634 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -259,14 +259,13 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = KtrFitnessTests;
-			productName = KtrFitnessTests;
-			productReference = 00E356EE1AD99517003FC87E /* KtrFitnessTests.xctest */;
+			name = AppvertiseTests;
+			productReference = 00E356EE1AD99517003FC87E /* AppvertiseTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* KtrFitness */ = {
+		13B07F861A680F5B00A75B9A /* Appvertise */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "KtrFitness" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Appvertise" */;
 			buildPhases = (
 				A24C32FFC686249D95D44024 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -282,9 +281,9 @@
 			);
 			dependencies = (
 			);
-			name = KtrFitness;
-			productName = KtrFitness;
-			productReference = 13B07F961A680F5B00A75B9A /* KtrFitness.app */;
+			name = Appvertise;
+			productName = Appvertise;
+			productReference = 13B07F961A680F5B00A75B9A /* Appvertise.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -304,7 +303,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "KtrFitness" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Appvertise" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -317,8 +316,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* KtrFitness */,
-				00E356ED1AD99517003FC87E /* KtrFitnessTests */,
+				13B07F861A680F5B00A75B9A /* Appvertise */,
+				00E356ED1AD99517003FC87E /* AppvertiseTests */,
 			);
 		};
 /* End PBXProject section */
@@ -352,14 +351,14 @@
 				80C6FB972963672A00F8567C /* FontAwesome5_Solid.ttf in Resources */,
 				80C6FB922963672A00F8567C /* FontAwesome5_Brands.ttf in Resources */,
 				8004B8532961F93C008AA020 /* GoogleService-Info.plist in Resources */,
-				F47C52EEEEC344D99AA161D7 /* Montserrat-Bold.ttf in Resources */,
 				80C6FB912963672A00F8567C /* Entypo.ttf in Resources */,
-				0565BB7B6B4F4D0AB0B789B5 /* Montserrat-Light.ttf in Resources */,
-				4A42D98223774C85BAB2761C /* Montserrat-Medium.ttf in Resources */,
-				3490030AF03345E29F7D535D /* Montserrat-Regular.ttf in Resources */,
 				80C6FB952963672A00F8567C /* Foundation.ttf in Resources */,
-				088642CEA73E4B5AB063C367 /* Montserrat-SemiBold.ttf in Resources */,
-				C249F39D8340472DB5A19F62 /* index.js in Resources */,
+				928BAF0E14BB421EB0627B2E /* Mulish-Bold.ttf in Resources */,
+				17CCC5F1085F4C51BDDACB84 /* Mulish-Light.ttf in Resources */,
+				F9B4437CA9D04C1C9F5B539D /* Mulish-Medium.ttf in Resources */,
+				8C9DAB2EAD4C4239BB156638 /* Mulish-Regular.ttf in Resources */,
+				3E750C671AA24EB891691C7F /* Mulish-SemiBold.ttf in Resources */,
+				8A20166AE6FE416BAE8A4058 /* index.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,15 +387,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KtrFitness-KtrFitnessTests/Pods-KtrFitness-KtrFitnessTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Appvertise-AppvertiseTests/Pods-Appvertise-AppvertiseTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KtrFitness-KtrFitnessTests/Pods-KtrFitness-KtrFitnessTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Appvertise-AppvertiseTests/Pods-Appvertise-AppvertiseTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KtrFitness-KtrFitnessTests/Pods-KtrFitness-KtrFitnessTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Appvertise-AppvertiseTests/Pods-Appvertise-AppvertiseTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3B1D0685017FBF5E7268CAE8 /* [CP] Copy Pods Resources */ = {
@@ -405,15 +404,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KtrFitness/Pods-KtrFitness-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Appvertise/Pods-Appvertise-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KtrFitness/Pods-KtrFitness-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Appvertise/Pods-Appvertise-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KtrFitness/Pods-KtrFitness-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Appvertise/Pods-Appvertise-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4B704E95863A06749B5DA544 /* [CP] Embed Pods Frameworks */ = {
@@ -422,15 +421,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KtrFitness-KtrFitnessTests/Pods-KtrFitness-KtrFitnessTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Appvertise-AppvertiseTests/Pods-Appvertise-AppvertiseTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KtrFitness-KtrFitnessTests/Pods-KtrFitness-KtrFitnessTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Appvertise-AppvertiseTests/Pods-Appvertise-AppvertiseTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KtrFitness-KtrFitnessTests/Pods-KtrFitness-KtrFitnessTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Appvertise-AppvertiseTests/Pods-Appvertise-AppvertiseTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9A618D3957D3EF7FE1BD7599 /* [CP-User] [RNFB] Core Configuration */ = {
@@ -461,7 +460,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-KtrFitness-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Appvertise-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -474,15 +473,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KtrFitness/Pods-KtrFitness-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Appvertise/Pods-Appvertise-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KtrFitness/Pods-KtrFitness-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Appvertise/Pods-Appvertise-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KtrFitness/Pods-KtrFitness-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Appvertise/Pods-Appvertise-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D2F4EED3C2A0B54F56517634 /* [CP] Check Pods Manifest.lock */ = {
@@ -500,7 +499,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-KtrFitness-KtrFitnessTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Appvertise-AppvertiseTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -533,7 +532,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* KtrFitnessTests.m in Sources */,
+				00E356F31AD99517003FC87E /* AppvertiseTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,7 +551,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* KtrFitness */;
+			target = 13B07F861A680F5B00A75B9A /* Appvertise */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -560,7 +559,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7AD7F12ACB4F2980A26F5841 /* Pods-KtrFitness-KtrFitnessTests.debug.xcconfig */;
+			baseConfigurationReference = 7AD7F12ACB4F2980A26F5841 /* Pods-Appvertise-AppvertiseTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -568,7 +567,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = KtrFitnessTests/Info.plist;
+				INFOPLIST_FILE = AppvertiseTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -580,20 +579,20 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = in.softment.appvertise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KtrFitness.app/KtrFitness";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Appvertise.app/Appvertise";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 49B39162791E2C03003FACB9 /* Pods-KtrFitness-KtrFitnessTests.release.xcconfig */;
+			baseConfigurationReference = 49B39162791E2C03003FACB9 /* Pods-Appvertise-AppvertiseTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = KtrFitnessTests/Info.plist;
+				INFOPLIST_FILE = AppvertiseTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -605,23 +604,24 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = in.softment.appvertise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KtrFitness.app/KtrFitness";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Appvertise.app/Appvertise";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C656F9E22902D0809FB819F /* Pods-KtrFitness.debug.xcconfig */;
+			baseConfigurationReference = 2C656F9E22902D0809FB819F /* Pods-Appvertise.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = KtrFitness/KtrFitness.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Appvertise/Appvertise.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F4UAJU6HLM;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = KtrFitness/Info.plist;
+				INFOPLIST_FILE = Appvertise/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Appvertise;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -632,12 +632,12 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = in.softment.ktrfitness;
-				PRODUCT_NAME = KtrFitness;
+				PRODUCT_BUNDLE_IDENTIFIER = in.softment.appvertise;
+				PRODUCT_NAME = Appvertise;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "KtrFitness-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Appvertise-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -647,14 +647,15 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 96FCF9A3BB7093752DA17AB7 /* Pods-KtrFitness.release.xcconfig */;
+			baseConfigurationReference = 96FCF9A3BB7093752DA17AB7 /* Pods-Appvertise.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = KtrFitness/KtrFitness.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Appvertise/Appvertise.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F4UAJU6HLM;
-				INFOPLIST_FILE = KtrFitness/Info.plist;
+				INFOPLIST_FILE = Appvertise/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Appvertise;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -665,12 +666,12 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = in.softment.ktrfitness;
-				PRODUCT_NAME = KtrFitness;
+				PRODUCT_BUNDLE_IDENTIFIER = in.softment.appvertise;
+				PRODUCT_NAME = Appvertise;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "KtrFitness-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Appvertise-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -817,7 +818,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "KtrFitnessTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AppvertiseTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -826,7 +827,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "KtrFitness" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Appvertise" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -835,7 +836,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "KtrFitness" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Appvertise" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

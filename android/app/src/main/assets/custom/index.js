@@ -1,10 +1,9 @@
-import { Platform } from "react-native"
 
 export default {
-    bold:"Montserrat-Bold",
-    Light:"Montserrat-Light",
+    bold:"Mulish-Bold",
+    light:"Mulish-Light",
     //light:"Montserrat-Light",
-    regular:"Montserrat-Regular",
-    semiBold:"Montserrat-SemiBold",
-    medium:"Montserrat-Medium"
+    regular:"Mulish-Regular",
+    semiBold:"Mulish-SemiBold",
+    medium:"Mulish-Medium"
 }

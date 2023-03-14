@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "334454353855",
-    "project_id": "ktrfitness-24bc8",
-    "storage_bucket": "ktrfitness-24bc8.appspot.com"
+    "project_number": "189973700039",
+    "project_id": "appvertise-90488",
+    "storage_bucket": "appvertise-90488.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:334454353855:android:96977b948aab216110bb0a",
+        "mobilesdk_app_id": "1:189973700039:android:aca51e601d171fa594cde2",
         "android_client_info": {
-          "package_name": "in.softment.ktrfitness"
+          "package_name": "in.softment.appvertise"
         }
       },
       "oauth_client": [
         {
-          "client_id": "334454353855-kcbve4l6spjgqc2vdugukqdgmpojc9gk.apps.googleusercontent.com",
+          "client_id": "189973700039-oefe9g01b1uhfvs6lld1stii8hskcnq3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBw5b7s6R-CsxgnXJ-F7ER8nhR_jLQPmHg"
+          "current_key": "AIzaSyBLKiHBUpiipKsIi4brvJCoilPrX-C4Cpc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "334454353855-kcbve4l6spjgqc2vdugukqdgmpojc9gk.apps.googleusercontent.com",
+              "client_id": "189973700039-oefe9g01b1uhfvs6lld1stii8hskcnq3.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "334454353855-v3t06lrdhjqaa8nngts9bmo9rios65rk.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "in.softment.ktrfitness"
-              }
             }
           ]
         }

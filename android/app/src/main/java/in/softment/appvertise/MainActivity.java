@@ -1,4 +1,4 @@
-package in.softment.ktrfitness;
+package in.softment.appvertise;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -15,7 +15,7 @@ protected void onCreate(Bundle savedInstanceState) {
    */
   @Override
   protected String getMainComponentName() {
-    return "KtrFitness";
+    return "Appvertise";
   }
 
   /**
