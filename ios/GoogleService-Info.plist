@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>334454353855-64d6s18f993orifgqaml630r5kefrr8m.apps.googleusercontent.com</string>
+	<string>236456769546-hbphvbuod79njv10uba6ocf62gc01gj2.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.334454353855-64d6s18f993orifgqaml630r5kefrr8m</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>334454353855-331465346ctr9memd6d8phj2p13a7dt9.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.236456769546-hbphvbuod79njv10uba6ocf62gc01gj2</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC4EU-o9af4TGrOKquws_NbxHBUlkfjF6s</string>
+	<string>AIzaSyCu5XlrQdCFoR4i-UWx_ITQ14adYgfds50</string>
 	<key>GCM_SENDER_ID</key>
-	<string>334454353855</string>
+	<string>236456769546</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>in.softment.ktrfitness</string>
+	<string>in.softment.sitesee</string>
 	<key>PROJECT_ID</key>
-	<string>ktrfitness-24bc8</string>
+	<string>site-see-32c16</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ktrfitness-24bc8.appspot.com</string>
+	<string>site-see-32c16.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:334454353855:ios:f9ccadab8975534a10bb0a</string>
+	<string>1:236456769546:ios:db98695970d1e3d06d07f3</string>
 </dict>
 </plist>

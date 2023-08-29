@@ -1,4 +1,4 @@
-package in.softment.appvertise.newarchitecture.components;
+package in.softment.sitesee.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

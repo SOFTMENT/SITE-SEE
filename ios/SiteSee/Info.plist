@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Appvertise</string>
+	<string>Site See</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -23,17 +23,17 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb475436421420026</string>
-			</array>
+			<array/>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.334454353855-64d6s18f993orifgqaml630r5kefrr8m</string>
+				<string>com.googleusercontent.apps.189973700039-ldji7p1rfc5ma85dkjv578kbeeflqd5k</string>
 			</array>
 		</dict>
 		<dict>
@@ -43,23 +43,12 @@
 			<string>Bundle Id</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>in.softment.ktrfitness</string>
+				<string>in.softment.sitesee</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>FacebookAppID</key>
-	<string>475436421420026</string>
-	<key>FacebookClientToken</key>
-	<string>3cf239f7bc499af7e89565384e9d7d03</string>
-	<key>FacebookDisplayName</key>
-	<string>Ktr Fitness</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>fbapi</string>
-		<string>fb-messenger-share-api</string>
-	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -73,12 +62,14 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Ktr Fitness requires location access to show nearby trainers</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Ktr Fitness requires location access to show nearby trainers</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Ktr Fitness requires camera access to get pictures</string>
+	<string>Site See requires camera access to upload profile picture</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Site See requires location access to show nearby vendors</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Site See requires location access to show nearby vendors</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Site See requires photo library access to upload profile picture</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>
@@ -103,8 +94,12 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>

@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "in.softment.appvertise",
+    package = "in.softment.sitesee",
 )
 
 android_resource(
     name = "res",
-    package = "in.softment.appvertise",
+    package = "in.softment.sitesee",
     res = "src/main/res",
 )
 
