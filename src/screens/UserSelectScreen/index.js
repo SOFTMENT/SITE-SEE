@@ -1,89 +1,64 @@
-import { Icon, ScrollView, Text } from 'native-base';
-import React, { useState } from 'react';
-import { Image, TouchableOpacity, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import images from "../../assets/images";
+import { Text, View, Image } from 'react-native';
+import React from 'react';
+import styles from './styles';
+import images from '../../assets/images';
 import MyButton from '../../components/MyButton';
-import styles from "./styles";
-const UserSelectScreen = (props) => {
-    const { navigation } = props
-    const [selectedTab, setSelectedTab] = useState(1)
-    const handleNavigation = () => {
-        navigation.navigate("UserLogin", { selectedTab })
+const UserSelectScreen = ({ navigation, route }) => {
+  const {type} = route.params
+  const handleNavigation = (tab) => {
+    if(type == 'login'){
+      navigation.navigate("LoginScreen",{tab})
     }
-    return (
-        <View style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
-            <View
-                style={styles.imageView}>
-                <Image
-                    source={images.userSelect}
-                    style={styles.onboardImage}
-                    resizeMode="cover"
-                />
-            </View>
-            <View style={styles.bottomView}>
-                <Text style={styles.nowShow}>Select Your Category</Text>
-                <View style={styles.userTypeView}>
-                    <View style={{ alignItems: "center" }}>
-                        <TouchableOpacity
-                            onPress={() => setSelectedTab(1)}
-                            style={[styles.userBox, selectedTab == 1 && { borderColor: "#D9D9D9" }]}>
-                            <Image
-                                source={images.select1}
-                                resizeMode="contain"
-                                style={[styles.selectImage,selectedTab == 1 && {tintColor:"#D9D9D9"}]}
-                            />
-                            {
-                                selectedTab == 1 &&
-                                <Image
-                                    source={images.checked}
-                                    style={styles.checked}
-                                    resizeMode="contain"
-                                />
-                            }
-                        </TouchableOpacity>
-                        <Text
-                            style={[styles.typeText, selectedTab == 1 && { color: "#D9D9D9" }]}>
-                            I am User.
-                        </Text>
-                    </View>
-                    <View style={{ alignItems: "center" }}>
-                        <TouchableOpacity
-                            onPress={() => setSelectedTab(2)}
-                            style={[styles.userBox, selectedTab == 2 && { borderColor: "#D9D9D9" }]}>
-                            <Image
-                                source={images.select2}
-                                resizeMode="contain"
-                                style={[styles.selectImage,selectedTab == 2 && {tintColor:"#D9D9D9"}]}
-                            />
-                            {
-                                selectedTab == 2 &&
-                                <Image
-                                    source={images.checked}
-                                    style={styles.checked}
-                                    resizeMode="contain"
-                                />
-                            }
-                        </TouchableOpacity>
-                        <Text
-                            style={[styles.typeText, selectedTab == 2 && { color: "#D9D9D9" }]}>
-                            I am Trainer.
-                        </Text>
-                    </View>
-                </View>
-                <MyButton
-                    title={"Next"}
-                    txtStyle={{color:"black"}}
-                    icon={<Icon 
-                        as={MaterialCommunityIcons} 
-                        name="chevron-right" 
-                        color="black"  
-                        size={"lg"}
-                    />}
-                    onPress={()=>handleNavigation()}
-                />
-            </View>
-        </View>
-    )
-}
-export default UserSelectScreen
+    else{
+      navigation.navigate("SignUpScreen",{tab})
+    }
+  }
+  return (
+    <View style={styles.mainContainer}>
+      <View style={styles.circleView}>
+        <View style={styles.circle} />
+        <View style={styles.circle1} />
+      </View>
+      <View style={styles.logoView}>
+        <Image
+          source={images.logo}
+          style={styles.logo}
+        />
+      </View>
+      <View style={styles.btnView}>
+        <MyButton
+          title={'Advertiser'}
+          onPress={()=>handleNavigation(1)}
+        // onPress={validateLogin}
+        // containerStyle={styles.btn}
+        />
+        <MyButton
+          title={'Vendor'}
+          onPress={()=>handleNavigation(2)}
+          // onPress={validateLogin}
+          containerStyle={styles.btn}
+          txtStyle={styles.text}
+        //icon={images.apple}
+        />
+        <MyButton
+          title={'Service Provider'}
+          onPress={()=>handleNavigation(3)}
+          // onPress={validateLogin}
+          containerStyle={styles.btn}
+          txtStyle={styles.text}
+        //icon={images.facebook}
+        />
+        {/* <SecBtn
+            title={"Register"}
+          //  style={[styles.extraStyle]}
+            // onPress={() => navigation.navigate('Login')}
+           // onPress={validateLogin}
+           containerStyle={styles.btn}
+          /> */}
+      </View>
+    </View>
+  );
+};
+
+export default UserSelectScreen;
+

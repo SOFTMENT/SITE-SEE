@@ -1,91 +1,64 @@
-import { Platform, StyleSheet } from "react-native";
-import fonts from "../../../assets/fonts";
-import Util, { responsiveSize } from "../../common/util";
-import { fontSizes, itemSizes, spacing } from "../../common/variables";
-import colors from "../../theme/colors";
+import { StyleSheet } from 'react-native';
+import Util from '../../common/util';
+import { spacing } from '../../common/variables';
+import colors from '../../theme/colors';
 
-export default StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor:colors.backgroundColor
-    },
-    onboardImage:{
-        width:"100%",
-        height:"100%"
-       // backgroundColor:colors.appSecondary
-       // height:"80%",
-       // backgroundColor:"red"
-    },
-    imageView:{
-        width:"100%",
-        alignSelf:'center',
-        height:Util.getHeight(50),
-        borderRadius:spacing.large,
-        overflow:"hidden"
-    },
-    bottomView:{
-        flex:1,
-        flexDirection:"column",
-        justifyContent:"space-between",
-        alignItems:"center",
-        padding:spacing.extraExtraLarge,
-        //backgroundColor:"red"
-    },
-    nowShow:{
-        fontFamily:fonts.semiBold,
-        fontSize:fontSizes.large,
-        textAlign:'center',
-        color:"white",
-        //backgroundColor:"red",
-        padding:10
-    },
-    userTypeView:{
-        width:"100%",
-        flexDirection:'row',
-        justifyContent:"space-between",
-        alignItems:'center',
-    },
-    userBox:{
-        padding:10,
-        width:Util.getWidth(38),
-        height:Util.getWidth(35),
-        borderColor:"#686767",
-        borderWidth:2,
-        borderRadius:spacing.large,
-        justifyContent:'center',
-        alignItems:'center',
-    },
-    typeText:{
-        color:"#686767",
-        fontFamily:fonts.semiBold,
-        fontSize:responsiveSize(12),
-        marginTop:spacing.small
-    },
-    selectImage:{
-        // width:60,
-        // height:60,
-        tintColor:"#686767"
-    },
-    btn:{
-        backgroundColor:colors.appPrimary,
-        justifyContent:'center',
-        alignItems:"center",
-        padding:spacing.medium,
-        width:"100%",
-        alignSelf:'center',
-        borderRadius:spacing.small
-    },
-    next:{
-        color:"white",
-        fontFamily:fonts.semiBold,
-        fontSize:fontSizes.small
-    },
-    checked:{
-        width:itemSizes.item20,
-        height:itemSizes.item20,
-        position:"absolute",
-        top:8,
-        right:8,
-        tintColor:"#D9D9D9"
-    }
-})
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.white,
+    paddingBottom: spacing.small,
+  },
+  circleView: {
+    flex: 0.3,
+    width: '100%',
+  },
+  circle: {
+    position: 'absolute',
+    top: 40,
+    left: 75,
+    height: 100,
+    width: 100,
+    backgroundColor: '#fff7fc',
+    borderRadius: 50,
+  },
+  circle1: {
+    position: 'absolute',
+    top: 80,
+    left: -35,
+    height: 100,
+    width: 100,
+    backgroundColor: '#fff7fc',
+    borderRadius: 50,
+  },
+  logoView: {
+    flex: 0.4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logo: {
+    width: Util.getWidth(60),
+    height:50,
+    //height: 200,
+  },
+  btnView: {
+    flex: 0.3,
+    width: '80%',
+    alignItems: 'center',
+    paddingVertical: spacing.large,
+  },
+  btn: {
+    borderColor: colors.btnColor,
+    borderWidth: 2,
+    alignItems: 'center',
+    backgroundColor: colors.white,
+  },
+  text: {
+    color: colors.btnColor,
+    //fontFamily:fonts.semiBold
+  },
+});
+
+export default styles;

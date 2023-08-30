@@ -38,10 +38,12 @@ const TopTabComponent = ({
                 key={item.id}
                 onPress={() => setSelected(item.label)}>
                 <View
-                    style={styles.headerTabStyle({
-                      backgroundColor:isSelected?"#272729":colors.btnColor,
-                    })}>
-                    <HeaderTabText label={item.label} style={{color:isSelected?"white":"black"}} />
+                    style={[styles.headerTabStyle,isSelected&&{
+                        borderColor:colors.btnColor,
+                        borderWidth:2,
+                        backgroundColor:colors.white
+                    }]}>
+                    <HeaderTabText label={item.label} style={{color:isSelected?colors.btnColor:"white"}} />
                   </View>
               </TouchableOpacity>
             );

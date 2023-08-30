@@ -8,49 +8,32 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.backgroundColor,
+       // paddingBottom:20
         //padding:spacing.large
     },
-    loginBack: {
-        width: "100%",
-        height: Util.getHeight(30),
-        backgroundColor: colors.backgroundColor,
-        justifyContent: "center",
-        alignItems: "center"
+    loginBack:{
+        width:"100%",
+        height:Util.getHeight(25),
+        //backgroundColor:colors.black,
+        justifyContent:"center",
+        alignItems:"center"
     },
-    logo: {
-        height: Util.getHeight(15),
-        width: Util.getHeight(15)
+    logo:{
+        //height:Util.getHeight(30),
+        width:Util.getWidth(70)
     },
-    // onboardImage:{
-    //     width:"80%",
-    //    // height:"80%",
-    //    // backgroundColor:"red"
-    // },
-    // imageView:{
-    //     width:Util.getWidth(100),
-    //     height:Util.getHeight(40), 
-    //     justifyContent:'center',
-    //     alignItems:'center'
-    // },
-    // bottomView:{
-    //     flex:1,
-    //     borderTopLeftRadius:spacing.extraExtraLarge,
-    //     borderTopRightRadius:spacing.extraExtraLarge,
-    //     backgroundColor:'white',
-    //     padding:spacing.extraLarge
-    // },
-    mainView: {
+    mainView:{ 
         padding: spacing.extraExtraLarge,
-        paddingTop: 0,
-        minHeight: Util.getHeight(70)
+        paddingTop:0,
+        minHeight:Util.getHeight(70) 
     },
-    areYou: {
-        fontFamily: fonts.bold,
-        fontSize: fontSizes.medium,
-        textAlign: 'center',
-        color: "white",
-        //marginBottom:spacing.large
-        marginTop: spacing.extraExtraLarge,
+    areYou:{
+        fontFamily:fonts.bold,
+        fontSize:fontSizes.large,
+        textAlign:'left',
+        color:"black",
+        marginBottom:spacing.large  
+       // marginTop:spacing.extraExtraLarge,
     },
     subText: {
         fontFamily: fonts.semiBold,

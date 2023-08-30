@@ -11,7 +11,7 @@ export default StyleSheet.create({
         paddingLeft:spacing.medium,
         fontSize:responsiveSize(13),
         fontFamily:fonts.semiBold,
-        color:"white"
+        color:"rgba(0, 0, 0, 0.67)"
      },
      subMenu:{
         flexDirection:"row",
@@ -23,12 +23,12 @@ export default StyleSheet.create({
      subMenuImage:{
         width:itemSizes.item20,
         height:itemSizes.item20,
-        tintColor:colors.appPrimaryLight
+        tintColor:colors.appPrimary
      },
      subMenuTitle:{
         fontSize:responsiveSize(13),
         fontFamily:fonts.regular,
-        color:"white",
+        color:"rgba(0, 0, 0, 0.67)",
      },
      subMenuContainer:{
          flex:1,
@@ -40,7 +40,7 @@ export default StyleSheet.create({
          marginTop:spacing.extraExtraSmall,
          fontSize:responsiveSize(11),
          fontFamily:fonts.regular,
-         color:colors.appPrimaryLight,
+         color:"rgba(0, 0, 0, 0.67)",
          marginRight:spacing.small,
          textAlignVertical:"bottom"
      },

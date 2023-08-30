@@ -3,11 +3,11 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
-import { Button, Link, Stack } from 'native-base';
+import { Button, Stack } from 'native-base';
 import React, { useRef, useState } from 'react';
-import { Image, ImageBackground, Text, View } from "react-native";
-import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
+import { Image, Platform, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import images from "../../assets/images";
 import Util from '../../common/util';
 import { spacing } from "../../common/variables";
@@ -26,9 +26,10 @@ const UserRegister = (props) => {
     const [countryCode, setCountryCode] = useState("+41")
     const phoneInput = useRef();
     const [loading, setLaoding] = useState(false)
-    const { tab } = route.params ?? {}
+    //const { tab } = route.params ?? {}
+    const inset = useSafeAreaInsets()
     const handleRegister = () => {
-        console.log(tab, phone)
+        //console.log(tab, phone)
         if (!name.trim()) {
             Util.showMessage("error", "Oops!", "Please Enter Name")
             return
@@ -37,7 +38,6 @@ const UserRegister = (props) => {
             Util.showMessage("error", "Oops!", "Please Enter Email")
             return
         }
-
         // if (tab == 2 && phone.length == 0) {
         //     Util.showMessage("error", "Oops!", "Please Enter Phone Number")
         //     return
@@ -47,7 +47,7 @@ const UserRegister = (props) => {
             return
         }
         if (pass.length < 6) {
-            Util.showMessage("error", "Oops!", "Password must contain atleast 6 digit")
+            Util.showMessage("error", "Oops!", "Password must contain at least 6 digit")
             return
         }
         // if (!cnfPass) {
@@ -71,21 +71,24 @@ const UserRegister = (props) => {
                 .collection('Users')
                 .doc(user.uid)
                 .set({
-                    name: name.trim()+" "+lastName.trim(),
+                    name: name.trim() + " " + lastName.trim(),
                     email: email.trim(),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                   // lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
-                    isUser: tab == 1,
+                    // lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+                    //userType: Util.getUserType(tab),
+                    //...(tab == 2 && { accountStatus:false,balance:0 }),
+                    accountStatus:false,balance:0,
+                    profileCompleted: false,
+                    // phoneVerified: false,
                     uid: user.uid,
-                    profileCompleted:false,
                 })
             if (user) {
                 await user.sendEmailVerification()
                     .then(() => {
 
                     })
-                    Util.showMessage("success", "Registration Successful", "Please login to continue")
-                    navigateAndReset("UserLogin", { tab })
+                    Util.showMessage("success", "Registration successful", "A verification link has been sent to your email.(Check your spam in case the email is not in your inbox.")
+                navigateAndReset("LoginScreen")
             }
         } catch (error) {
             if (error.code === 'auth/email-already-in-use') {
@@ -143,32 +146,32 @@ const UserRegister = (props) => {
             console.log(error)
         }
     }
-    const fbLogin = async () => {
-        try {
-            const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-            if (result.isCancelled) {
-                throw { message: 'User cancelled the login process' };
-            }
-            const data = await AccessToken.getCurrentAccessToken();
-            if (!data) {
-                throw { message: 'Something went wrong obtaining access token' };
-            }
-            // Create a Firebase credential with the AccessToken
-            const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+    // const fbLogin = async () => {
+    //     try {
+    //         const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+    //         if (result.isCancelled) {
+    //             throw { message: 'User cancelled the login process' };
+    //         }
+    //         const data = await AccessToken.getCurrentAccessToken();
+    //         if (!data) {
+    //             throw { message: 'Something went wrong obtaining access token' };
+    //         }
+    //         // Create a Firebase credential with the AccessToken
+    //         const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
 
-            // Sign-in the user with the credential
-            const user = await auth().signInWithCredential(facebookCredential);
-            // console.log( user.providerData)
-            // console.log( user.providerId)
-            handleUser()
-        } catch (error) {
-            if (error.code == "auth/account-exists-with-different-credential") {
-                Util.showMessage("error", "Error", "An account already exists with the same email address")
-            }
-            else
-                Util.showMessage("error", "Error", error?.message)
-        }
-    }
+    //         // Sign-in the user with the credential
+    //         const user = await auth().signInWithCredential(facebookCredential);
+    //         // console.log( user.providerData)
+    //         // console.log( user.providerId)
+    //         handleUser()
+    //     } catch (error) {
+    //         if (error.code == "auth/account-exists-with-different-credential") {
+    //             Util.showMessage("error", "Error", "An account already exists with the same email address")
+    //         }
+    //         else
+    //             Util.showMessage("error", "Error", error?.message)
+    //     }
+    // }
     const appleLogin = async () => {
         try {
             setLaoding(true)
@@ -195,8 +198,8 @@ const UserRegister = (props) => {
             if (error.code == "auth/account-exists-with-different-credential") {
                 Util.showMessage("error", "Error", "An account already exists with the same email address")
             }
-            else
-                Util.showMessage("error", "Error", error?.message)
+            // else
+            //     Util.showMessage("error", "Error", error?.message)
         }
         finally {
             setLaoding(false)
@@ -208,15 +211,34 @@ const UserRegister = (props) => {
             .collection("Users")
             .doc(userData.uid)
             .get()
-            .then((user) => {
+            .then(async(user) => {
                 if (user.exists) {
                     if (user.data().isDeleted) {
+                        if (auth().currentUser.providerData[0].providerId == "google.com") {
+                            //await GoogleSignin.revokeAccess();
+                            await GoogleSignin.signOut();
+                        }
                         auth().signOut().then(() => {
-                            Util.showMessage("This account has been marked as deleted, please register with new email.")
+                            Util.showMessage("error","Oops!","This account has been marked as deleted, please register with new email.")
                         })
                     }
-                    else
+                    else {
+                        await AsyncStorage.setItem("userType","Advertiser")
                         navigateAndReset("HomeScreen", { uid: user.data().uid })
+                        // if((user.data().userType == Util.getUserType(tab)))
+                        //     navigateAndReset("HomeScreen", { uid: user.data().uid })
+                        // else
+                        //     {
+                        //         //console.log("not user")
+                        //         auth().signOut().then(() => {
+                        //             const val = Util.getUserType(tab)
+                        //             Util.showMessage("error",'Oops!',`This account is already associated with ${user.data().userType}.`)
+                        //         })
+                        //         .catch(error=>{
+                        //             console.log(error)
+                        //         })
+                        //     }
+                    }
                 }
                 else {
                     setUserData(fullName)
@@ -225,26 +247,27 @@ const UserRegister = (props) => {
     }
     const setUserData = async (fullName) => {
         const user = auth().currentUser
-        console.log(fullName)
+        //console.log(fullName)
         try {
             await firestore()
                 .collection('Users')
                 .doc(user.uid)
                 .set({
                     name: fullName ? fullName : user.displayName,
-                    email: user.email ? user.email : user.providerData[0].email,
+                    email: user.providerData[0].email,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     //lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
-                     isUser: tab == 1,
+                    //userType: Util.getUserType(tab),
+                    profileCompleted: false,
                     // phoneVerified: false,
-                    profileCompleted:false,
                     uid: user.uid,
-                    // ...(tab == 1 && { uniqueCode: Util.genRandomId(), rating: 5, ratingCount: 3 }),
-                    ...(tab == 2 && { ratingObj: {1:0,2:0,3:0,4:0,5:0}, ratingCount: 0,accountStatus:false,balance:0 }),
+                    //...(tab == 2 && { accountStatus:false,balance:0 }),
+                    accountStatus:false,balance:0,
                     // status: "pending"
                 })
             // if (tab != 1)
             //     sendUnderReviewEmail(fullName ? fullName : user.displayName, user.email ? user.email : user.providerData[0].email)
+            await AsyncStorage.setItem("userType","Advertiser")
             navigateAndReset("HomeScreen", { uid: user.uid })
         } catch (error) {
             Util.showMessage("error", "Error", error.message)
@@ -269,8 +292,8 @@ const UserRegister = (props) => {
             if (error.code == "auth/account-exists-with-different-credential") {
                 Util.showMessage("error", "Error", "An account already exists with the same email address")
             }
-            else
-                Util.showMessage("error", "Error", error?.message)
+            // else
+            //     Util.showMessage("error", "Error", error?.message)
         }
         finally {
             setLaoding(false)
@@ -280,25 +303,26 @@ const UserRegister = (props) => {
     return (
         <KeyboardAwareScrollView
             bounces={false}
-            style={{ flex: 1 }}
+            style={{ flex: 1,backgroundColor: "white"}}
+            keyboardShouldPersistTaps={"handled"}
         // stickyHeaderHiddenOnScroll
         >
             <View
                 style={styles.container}>
-                <ImageBackground
-                    source={images.login}
+                <View
                     style={styles.loginBack}
-                    resizeMode="cover"
                 >
                     <Image
                         source={images.logo}
                         resizeMode="contain"
                         style={styles.logo}
                     />
-                </ImageBackground>
-                <Text style={styles.areYou}>Create new account</Text>
-                <Text style={styles.subText}>Please fill the details below!</Text>
+                </View>
+
                 <View style={styles.mainView}>
+                    <Text style={styles.areYou}>
+                        Register
+                    </Text>
                     <MyTextInput
                         containerStyle={{ marginVertical: spacing.small }}
                         iconName={"account-outline"}
@@ -337,48 +361,50 @@ const UserRegister = (props) => {
                     />
                     <View style={styles.borderViewContainer}>
                         <View style={styles.borderView}></View>
-                        <Text style={styles.or}>Or Register Using</Text>
+                        <Text style={styles.or}>  OR  </Text>
                         <View style={styles.borderView}></View>
                     </View>
-                    <Stack direction={"row"} justifyContent="space-evenly" space={2}>
+                    <Stack direction={"column"} justifyContent="space-evenly" space={2}>
                         <Button
-                            _pressed={{backgroundColor:"gray.800"}}
+                            _pressed={{ backgroundColor: "white" }}
                             onPress={googleLogIn}
                             leftIcon={
                                 <Image source={images.google} style={styles.icon} />
                             }
-                            bg={"gray.700"}
+                            _text={{ color: "rgba(38, 50, 56, 0.65)" }}
+                            bg={"white"}
+                            borderWidth={1}
+                            borderColor={'rgba(0, 0, 0, 0.17)'}
+                            borderRadius={10}
                             flex={1}
-                            //style={styles.socialBtn}
-                        >Google</Button>
-                        <Button
-                            _pressed={{backgroundColor:"gray.800"}}
-                            flex={1}
-                            bg={"gray.700"}
-                            onPress={fbLogin}
-                            leftIcon={
-                                <Image source={images.facebook} style={styles.icon} />
-                            }
-                            //style={styles.socialBtn}
-                        >Facebook</Button>
-                        <Button
-                            _pressed={{backgroundColor:"gray.800"}}
-                            flex={1}
-                            bg={"gray.700"}
-                            onPress={appleLogin}
-                            leftIcon={
-                                <Image source={images.apple} style={[styles.icon, { tintColor: colors.borderColor }]} />
-                            }
+                        //style={styles.socialBtn}
+                        >Login with Google</Button>
+                        {
+                            Platform.OS == "ios" &&
+                            <Button
+                                _pressed={{ backgroundColor: "white" }}
+                                flex={1}
+                                bg={"white"}
+                                onPress={appleLogin}
+                                borderWidth={1}
+                                borderColor={'rgba(0, 0, 0, 0.17)'}
+                                borderRadius={10}
+                                marginBottom={10}
+                                leftIcon={
+                                    <Image source={images.apple} style={[styles.icon, { tintColor: colors.grey }]} />
+                                }
+                                _text={{ color: "rgba(38, 50, 56, 0.65)" }}
                             // backgroundColor: colors.darkGreyBtn, flex: 1 }}
-                        >Apple</Button>
+                            >Login with Apple</Button>
+                        }
                     </Stack>
-                    <View style={{ flexDirection: "row", justifyContent: 'center',alignItems:"center" }}>
+                    {/* <View style={{ flexDirection: "row", justifyContent: 'center',alignItems:"center" }}>
                         <Text style={styles.register}>Already have an account?</Text>
-                        {/* <ClickableText
+                        <ClickableText
                             title={"Sign Up"}
                             extraStyle={[styles.or, { color: colors.appPrimaryDark }]}
                             onPress={() => navigation.navigate("UserRegister", { tab })}
-                        /> */}
+                        />
                          <Link
                              onPress={() => navigation.navigate("UserLogin", { tab })}
                             _text={{
@@ -388,7 +414,7 @@ const UserRegister = (props) => {
                         >
                             Login
                         </Link>
-                    </View>
+                    </View> */}
                 </View>
             </View>
         </KeyboardAwareScrollView>

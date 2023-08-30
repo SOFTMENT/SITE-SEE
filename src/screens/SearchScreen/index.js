@@ -13,8 +13,8 @@ import styles from './styles';
 import Header from '../../components/Header';
 
 const algoliaClient = algoliasearch(
-    'QRXIKBQ5R5',
-    'a4fcc2fb0352dc28d91fbf7453401f23'
+    '5ZDNXVM8M8',
+    '9265d931a90114d65a5d0543a494cf44'
 );
 let firstLoad = true
 const searchClient = {

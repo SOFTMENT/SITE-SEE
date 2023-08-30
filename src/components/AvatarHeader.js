@@ -44,6 +44,7 @@ const AvatarHeader = (props) => {
             }
             <AvatarIcon
                 uri={icon}
+                style={{borderWidth:2,borderColor:"white"}}
             />
             <Text style={styles.title}>{title}</Text>
             {
@@ -70,12 +71,14 @@ const AvatarHeader = (props) => {
 export default AvatarHeader
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:colors.backgroundColor,
+        backgroundColor:colors.btnColor,
         padding:spacing.medium,
         //paddingTop: Platform.OS == 'ios' ? Util.getHeight(5) :spacing.medium,
         flexDirection:"row",
         alignItems:'center',
-        justifyContent:"space-evenly"
+        justifyContent:"space-evenly",
+        borderBottomLeftRadius:spacing.medium,
+        borderBottomRightRadius:spacing.medium
     },
     title:{
         //flex:1,

@@ -2,7 +2,7 @@ import { Fragment } from "react"
 import { StatusBar, Text, View } from "react-native"
 import AppNavigator from "./navigators/AppNavigator"
 import React from "react"
-import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
+import Toast, { BaseToast, ErrorToast, SuccessToast } from 'react-native-toast-message';
 import MyButton from "./components/MyButton";
 import { fontSizes, spacing } from "./common/variables";
 import ClickableText from "./components/ClickableText";
@@ -14,7 +14,7 @@ const toastConfig = {
       by modifying the existing `BaseToast` component
     */
     success: (props) => (
-      <BaseToast
+      <SuccessToast
         {...props}
         text2NumberOfLines={3}
       />
@@ -47,7 +47,7 @@ const toastConfig = {
 const AppRoot = () =>{
     return(
         <Fragment>
-            <StatusBar hidden={true}/>
+            <StatusBar barStyle={"dark-content"} backgroundColor="white"/>
             <AppNavigator/>
             <Toast config={toastConfig}/>
         </Fragment>

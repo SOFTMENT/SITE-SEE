@@ -13,16 +13,16 @@ export default StyleSheet.create({
     //backgroundColor: colors.ratingColor,
     // marginBottom:Platform.OS === 'ios'?itemSizes.item70:itemSizes.item60,
   },
-  headerTabStyle: ({backgroundColor}) => ({
+  headerTabStyle: {
     height: 35,
     alignItems: 'center',
     paddingRight: spacing.large,
     paddingLeft: spacing.large,
     justifyContent: 'center',
-    backgroundColor,
+    backgroundColor:colors.btnColor,
     borderRadius: itemSizes.item20,
     marginRight: spacing.mediumLarge,
-  }),
+  },
   horizontalTabHeaderContainer: {
     marginTop: spacing.mediumLarge,
     marginLeft: spacing.medium,

@@ -7,8 +7,14 @@ import { Avatar, Center } from "native-base";
 import Header from "../../components/Header";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AvatarIcon from "../../components/AvatarIcon";
+import NoResults from "../../components/NoResults";
+import colors from "../../theme/colors";
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+TimeAgo.addDefaultLocale(en)
 const Inbox = (props) => {
     const {navigation} = props
+    const timeAgo = new TimeAgo("en-US")
     const [lastChats, setLastChats] = useState([])
     const uid = auth().currentUser.uid
     const insets = useSafeAreaInsets()
@@ -30,23 +36,42 @@ const Inbox = (props) => {
             .doc(uid)
             .collection("LastMessage")
             .orderBy("date", "desc")
-            .onSnapshot(querySnapshot => {
+            .onSnapshot( querySnapshot => {
                 const temp = []
                 querySnapshot.forEach((doc) => {
-                    temp.push({ ...doc.data(), id: doc.id });
+                    temp.push({ ...doc.data(), id: doc.id,
+                    });
                 });
-                setLastChats(temp)
+                combineRecipentData(temp)
+                //console.log(temp,querySnapshot.size)
             })
+            
     }, [])
+    const combineRecipentData = async (tempData) => {
+        const newTempData = []
+        for( let data of tempData){
+            const res = await firestore().collection("Users").doc(data.senderUid).get()
+            const senderData = res.data()
+            newTempData.push({
+                ...data,
+                senderImage:senderData.profilePic,senderName:senderData.name
+            })
+        }
+        setLastChats(newTempData)
+    }
     const renderChats = ({ item }) => {
        const lastMessage = item
         console.log(item)
         return (
-            <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("ChatScreen",{lastMessage})}>
+            <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("PersonalChat",{lastMessage})}>
                 <View style={styles.rightBox}>
                     <View style={styles.profile}>
                         <AvatarIcon
                             uri={item.senderImage}
+                            style={{
+                                borderWidth:2,
+                                borderColor:colors.btnColor
+                            }}
                         />
                     </View>
                     <View style={styles.chatBox}>
@@ -56,7 +81,7 @@ const Inbox = (props) => {
                         <Text style={styles.text}>{item.message}</Text>
                     </View>
                 </View>
-                <Text style={styles.smallTxt}>02.30 PM</Text>
+                <Text style={styles.smallTxt}>{item.date?.toDate()?timeAgo.format(item.date?.toDate()):""}</Text>
             </TouchableOpacity>
         )
     }
@@ -74,7 +99,7 @@ const Inbox = (props) => {
                         keyExtractor={keyExtractor}
                     />
                     :
-                    <Center flex={1} ><Text style={styles.noData}>No Chats</Text></Center>
+                    <NoResults title={"No Chats"}/>
             }
         </View>
     )

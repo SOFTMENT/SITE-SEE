@@ -1,13 +1,14 @@
 import appleAuth from '@invertase/react-native-apple-authentication';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 import { Button, Link, Stack } from 'native-base';
 import React, { useState } from 'react';
-import { Image, ImageBackground, Text, View } from "react-native";
-import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
+import { Image, Platform, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import images from "../../assets/images";
 import Util from '../../common/util';
 import { spacing } from "../../common/variables";
@@ -16,21 +17,13 @@ import MyTextInput from "../../components/MyTextInput";
 import { navigateAndReset } from '../../navigators/RootNavigation';
 import colors from "../../theme/colors";
 import styles from "./styles";
-GoogleSignin.configure({
-    webClientId: '1021031487843-3oejvl3a6ekc7i6bq9pal6mv0qem51u1.apps.googleusercontent.com',
-    // scopes:[
-    //     `https://www.googleapis.com/auth/drive.readonly`,
-    //     `https://www.googleapis.com/auth/youtube`,
-    //     `https://www.googleapis.com/auth/youtube.upload`,
-    //     `https://www.googleapis.com/auth/plus.login`
-    //     ],
-});
 const UserLogin = (props) => {
     const { navigation, route } = props
-    const tab = route.params?.selectedTab ?? 1
+    //const tab = route.params?.tab ?? 1
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
     const [loading, setLoading] = useState(false)
+    const inset = useSafeAreaInsets()
     const handleForget = () => {
         if (!email.trim()) {
             Util.showMessage("error", "Please provide email")
@@ -70,11 +63,15 @@ const UserLogin = (props) => {
                     .collection("Users")
                     .doc(user.uid)
                     .get()
-                    .then(doc => {
+                    .then(async doc => {
                         const userDoc = doc.data()
                         if (userDoc.isDeleted) {
+                            if (auth().currentUser.providerData[0].providerId == "google.com") {
+                                //await GoogleSignin.revokeAccess();
+                                await GoogleSignin.signOut();
+                            }
                             auth().signOut().then(() => {
-                                Util.showMessage("This account has been marked as deleted, please register with new email.")
+                                Util.showMessage("error","Oops!","This account has been marked as deleted, please register with new email.")
                             })
                         }
                         else if (userDoc.isAdmin) {
@@ -86,7 +83,21 @@ const UserLogin = (props) => {
                                 Util.showMessage("btnToast", "Email Verification Required", "A verification link has been sent to your email.(Check your spam in case the email is not in your inbox", sendEmailVerificationLink)
                             }
                             else {
-                                navigateAndReset("HomeScreen", { uid: user.uid })
+                                // if((userDoc.userType == Util.getUserType(tab)))
+                                //     navigateAndReset("HomeScreen", { uid: userDoc.uid })
+                                // else
+                                //     {
+                                //         console.log("not user")
+                                //         auth().signOut().then(() => {
+                                //             const val = Util.getUserType(tab )
+                                //             Util.showMessage("error",'Oops!',`This account is already associated with ${userDoc.userType}.`)
+                                //         })
+                                //         .catch(error=>{
+                                //             console.log(error)
+                                //         })
+                                //     }
+                                await AsyncStorage.setItem("userType","Advertiser")
+                                navigateAndReset("HomeScreen", { uid: userDoc.uid })
                             }
                         }
                     })
@@ -123,7 +134,7 @@ const UserLogin = (props) => {
             var body = new FormData()
             body.append('name', name)
             body.append('email', email)
-            body.append('subject', "Welcome to Now Show")
+            body.append('subject', "Welcome to Appvertise")
             body.append('body', `<h1>Hey ${name}</h1><p>Your account is under review, we will let you know once it is approved.</p>`)
             await axios({
                 method: "post",
@@ -137,36 +148,36 @@ const UserLogin = (props) => {
             console.log(error)
         }
     }
-    const fbLogin = async () => {
-        try {
-            setLoading(true)
-            const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-            if (result.isCancelled) {
-                throw { message: 'User cancelled the login process' };
-            }
-            const data = await AccessToken.getCurrentAccessToken();
-            if (!data) {
-                throw { message: 'Something went wrong obtaining access token' };
-            }
-            // Create a Firebase credential with the AccessToken
-            const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+    // const fbLogin = async () => {
+    //     try {
+    //         setLoading(true)
+    //         const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+    //         if (result.isCancelled) {
+    //             throw { message: 'User cancelled the login process' };
+    //         }
+    //         const data = await AccessToken.getCurrentAccessToken();
+    //         if (!data) {
+    //             throw { message: 'Something went wrong obtaining access token' };
+    //         }
+    //         // Create a Firebase credential with the AccessToken
+    //         const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
 
-            // Sign-in the user with the credential
-            const user = await auth().signInWithCredential(facebookCredential);
-            // console.log( user.providerData)
-            // console.log( user.providerId)
-            handleUser()
-        } catch (error) {
-            if (error.code == "auth/account-exists-with-different-credential") {
-                Util.showMessage("error", "Error", "An account already exists with the same email address")
-            }
-            else
-                Util.showMessage("error", "Error", error?.message)
-        }
-        finally {
-            setLoading(false)
-        }
-    }
+    //         // Sign-in the user with the credential
+    //         const user = await auth().signInWithCredential(facebookCredential);
+    //         // console.log( user.providerData)
+    //         // console.log( user.providerId)
+    //         handleUser()
+    //     } catch (error) {
+    //         if (error.code == "auth/account-exists-with-different-credential") {
+    //             Util.showMessage("error", "Error", "An account already exists with the same email address")
+    //         }
+    //         else
+    //             Util.showMessage("error", "Error", error?.message)
+    //     }
+    //     finally {
+    //         setLoading(false)
+    //     }
+    // }
     const handleUser = async (fullName) => {
         const userData = auth().currentUser
         console.log(userData)
@@ -175,15 +186,34 @@ const UserLogin = (props) => {
             .collection("Users")
             .doc(userData.uid)
             .get()
-            .then((user) => {
+            .then(async(user) => {
                 if (user.exists) {
                     if (user.data().isDeleted) {
+                        if (auth().currentUser.providerData[0].providerId == "google.com") {
+                            //await GoogleSignin.revokeAccess();
+                            await GoogleSignin.signOut();
+                        }
                         auth().signOut().then(() => {
-                            Util.showMessage("This account has been marked as deleted, please register with new email.")
+                            Util.showMessage("error","Oops!","This account has been marked as deleted, please register with new email.")
                         })
                     }
-                    else
+                    else {
+                        await AsyncStorage.setItem("userType","Advertiser")
                         navigateAndReset("HomeScreen", { uid: user.data().uid })
+                        // if((user.data().userType == Util.getUserType(tab)))
+                        //     navigateAndReset("HomeScreen", { uid: user.data().uid })
+                        // else
+                        //     {
+                        //         //console.log("not user")
+                        //         auth().signOut().then(() => {
+                        //             const val = Util.getUserType(tab)
+                        //             Util.showMessage("error","Oops!",`This account is already associated with ${user.data().userType}.`)
+                        //         })
+                        //         .catch(error=>{
+                        //             console.log(error)
+                        //         })
+                        //     }
+                    }
                 }
                 else {
                     setUserData(fullName)
@@ -195,7 +225,7 @@ const UserLogin = (props) => {
     }
     const setUserData = async (fullName) => {
         const user = auth().currentUser
-        console.log(user)
+        //console.log(user)
         try {
             setLoading(true)
             await firestore()
@@ -206,15 +236,16 @@ const UserLogin = (props) => {
                     email: user.providerData[0].email,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     //lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
-                     isUser: tab == 1,
+                    //userType:Util.getUserType(tab),
                     profileCompleted:false,
                     // phoneVerified: false,
+                    accountStatus:false,balance:0 ,
                     uid: user.uid,
-                    ...(tab == 2 && { ratingObj: {1:0,2:0,3:0,4:0,5:0}, ratingCount: 0,accountStatus:false,balance:0 }),
                     // status: "pending"
                 })
             // if (tab != 1)
             //     sendUnderReviewEmail(fullName ? fullName : user.displayName, user.email ? user.email : user.providerData[0].email)
+            await AsyncStorage.setItem("userType","Advertiser")
             navigateAndReset("HomeScreen", { uid: user.uid })
         } catch (error) {
             Util.showMessage("error", "Error", error.message)
@@ -239,11 +270,12 @@ const UserLogin = (props) => {
 
             handleUser()
         } catch (error) {
+            console.log(error)
             if (error.code == "auth/account-exists-with-different-credential") {
                 Util.showMessage("error", "Error", "An account already exists with the same email address")
             }
-            else
-                Util.showMessage("error", "Error", error?.message)
+            // else
+            //     Util.showMessage("error", "Error", error?.message)
         }
         finally {
             setLoading(false)
@@ -275,8 +307,8 @@ const UserLogin = (props) => {
             if (error.code == "auth/account-exists-with-different-credential") {
                 Util.showMessage("error", "Error", "An account already exists with the same email address")
             }
-            else
-                Util.showMessage("error", "Error", error?.message)
+            // else
+            //     Util.showMessage("error", "Error", error?.message)
         }
         finally {
             setLoading(false)
@@ -285,28 +317,26 @@ const UserLogin = (props) => {
     return (
         <KeyboardAwareScrollView
             bounces={false}
-            style={{ flex: 1 }}
+            style={{ flex: 1,paddingTop: inset.top,backgroundColor:"white" }}
+            keyboardShouldPersistTaps={"handled"}
         // stickyHeaderHiddenOnScroll
         >
             <View
                 style={styles.container}>
                 {/* <Header navigation={navigation} back /> */}
-                <ImageBackground
-                    source={images.login}
+                <View
                     style={styles.loginBack}
-                    resizeMode="cover"
                 >
                     <Image
                         source={images.logo}
                         resizeMode="contain"
                         style={styles.logo}
                     />
-                </ImageBackground>
+                </View>
                 <View style={styles.mainView}>
-                    <Text style={styles.areYou}>Hey, Welcome Back!</Text>
-                    <Text style={styles.subText}>Login to your Account</Text>
+                    <Text style={styles.areYou}>Welcome Back!</Text>
                     <MyTextInput
-                        containerStyle={{ marginVertical: spacing.small }}
+                        containerStyle={{ marginVertical: spacing.medium }}
                         iconName={"email-outline"}
                         placeholder="Email"
                         //value={}
@@ -327,89 +357,70 @@ const UserLogin = (props) => {
                         onPress={handleForget}
                         containerStyle={{borderBottomWidth:1,borderBottomColor:"white"}}
                     /> */}
-                    <Link
-                        onPress={handleForget}
-                        _text={{
-                            color: colors.greyText,
-                        }}
-                        style={{
-                            alignSelf: "flex-end"
-                        }}
-                    >
-                        Forgot Password?
-                    </Link>
                     <MyButton
                         title={"Login"}
                         containerStyle={styles.btn}
                         onPress={handleLogin}
                         loading={loading}
                     />
+                    <Link
+                        mt={5}
+                        onPress={handleForget}
+                        _text={{
+                            color:"#263238",
+                            textDecoration:"none"
+                        }}
+                        style={{
+                            alignSelf: "center",
+                        }}
+                    >
+                        Forgot Password?
+                    </Link>
                     <View style={styles.borderViewContainer}>
                         <View style={styles.borderView}></View>
-                        <Text style={styles.or}>Or Register Using</Text>
+                        <Text style={styles.or}>  OR  </Text>
                         <View style={styles.borderView}></View>
                     </View>
-                    {/* <View style={styles.socialView}>
-                        {
-                            Platform.OS == "ios"
-                            &&
-                            <IconButton
-                                icon={images.apple}
-                                containerStyle={styles.btnContainer}
-                                onPress={appleLogin}
-                            />
-                        }
-                        <IconButton
-                            icon={images.google}
-                            containerStyle={styles.btnContainer}
-                            onPress={googleLogIn}
-                        />
-                        <IconButton
-                            icon={images.facebook}
-                            containerStyle={styles.btnContainer}
-                            onPress={fbLogin}
-                        />
-                       
-                    </View> */}
-                    <Stack direction={"row"} justifyContent="space-evenly" space={2}>
+                    <Stack direction={"column"} justifyContent="space-evenly" space={2}>
                         <Button
-                            _pressed={{backgroundColor:"gray.800"}}
+                            _pressed={{backgroundColor:"white"}}
                             onPress={googleLogIn}
                             leftIcon={
                                 <Image source={images.google} style={styles.icon} />
                             }
-                            bg={"gray.700"}
+                            _text={{color:"rgba(38, 50, 56, 0.65)"}}
+                            bg={"white"}
+                            borderWidth={1}
+                            borderColor={'rgba(0, 0, 0, 0.17)'}
+                            borderRadius={10}
                             flex={1}
                             //style={styles.socialBtn}
-                        >Google</Button>
-                        <Button
-                            _pressed={{backgroundColor:"gray.800"}}
-                            flex={1}
-                            bg={"gray.700"}
-                            onPress={fbLogin}
-                            leftIcon={
-                                <Image source={images.facebook} style={styles.icon} />
-                            }
-                            //style={styles.socialBtn}
-                        >Facebook</Button>
-                        <Button
-                            _pressed={{backgroundColor:"gray.800"}}
-                            flex={1}
-                            bg={"gray.700"}
-                            onPress={appleLogin}
-                            leftIcon={
-                                <Image source={images.apple} style={[styles.icon, { tintColor: colors.borderColor }]} />
-                            }
+                        >Login with Google</Button>
+                        {
+                            Platform.OS == "ios" &&
+                            <Button
+                                _pressed={{ backgroundColor: "white" }}
+                                flex={1}
+                                bg={"white"}
+                                onPress={appleLogin}
+                                borderWidth={1}
+                                borderColor={'rgba(0, 0, 0, 0.17)'}
+                                borderRadius={10}
+                                leftIcon={
+                                    <Image source={images.apple} style={[styles.icon, { tintColor: colors.grey }]} />
+                                }
+                                _text={{ color: "rgba(38, 50, 56, 0.65)" }}
                             // backgroundColor: colors.darkGreyBtn, flex: 1 }}
-                        >Apple</Button>
+                            >Login with Apple</Button>
+                        }
                     </Stack>
-                    <View style={{ flexDirection: "row", justifyContent: 'center',alignItems:"center" }}>
+                    {/* <View style={{ flexDirection: "row", justifyContent: 'center',alignItems:"center" }}>
                         <Text style={styles.register}>Register a new account?</Text>
-                        {/* <ClickableText
+                        <ClickableText
                             title={"Sign Up"}
                             extraStyle={[styles.or, { color: colors.appPrimaryDark }]}
                             onPress={() => navigation.navigate("UserRegister", { tab })}
-                        /> */}
+                        />
                          <Link
                              onPress={() => navigation.navigate("UserRegister", { tab })}
                             _text={{
@@ -419,7 +430,7 @@ const UserLogin = (props) => {
                         >
                             Sign Up
                         </Link>
-                    </View>
+                    </View> */}
                 </View>
             </View>
         </KeyboardAwareScrollView>

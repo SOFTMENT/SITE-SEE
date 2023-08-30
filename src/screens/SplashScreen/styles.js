@@ -1,16 +1,52 @@
 import { StyleSheet } from "react-native";
 import Util from "../../common/util";
+import { spacing } from "../../common/variables";
 import colors from "../../theme/colors";
 
 export default StyleSheet.create({
-    container:{
-        flex:1,
-        justifyContent:"center",
-        alignItems:"center",
-        backgroundColor:"#1C1B1B"
-    },
-    logo:{
-        width:Util.getWidth(30),
-        height:Util.getWidth(30)
-    }
+    mainContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colors.backgroundColor,
+        paddingBottom: spacing.small,
+      },
+      circleView: {
+        flex: 0.3,
+        width: '100%',
+      },
+      circle: {
+        position: 'absolute',
+        top: 40,
+        left: 75,
+        height: 100,
+        width: 100,
+        backgroundColor: '#fff7fc',
+        borderRadius: 50,
+      },
+      circle1: {
+        position: 'absolute',
+        top: 80,
+        left: -35,
+        height: 100,
+        width: 100,
+        backgroundColor: '#fff7fc',
+        borderRadius: 50,
+      },
+      logoView: {
+        flex: 0.4,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      loaderView:{
+        paddingTop:30,
+        flex:0.3
+      },
+      logo: {
+        height:300,
+        //height: 200,
+      },
+      siteSee:{
+        height:35 ,
+      }
 })

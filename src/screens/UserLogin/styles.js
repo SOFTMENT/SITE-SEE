@@ -12,14 +12,14 @@ export default StyleSheet.create({
     },
     loginBack:{
         width:"100%",
-        height:Util.getHeight(30),
-        backgroundColor:colors.backgroundColor,
+        height:Util.getHeight(25),
+        //backgroundColor:colors.black,
         justifyContent:"center",
         alignItems:"center"
     },
     logo:{
-        height:Util.getHeight(15),
-        width:Util.getHeight(15)
+        //height:Util.getHeight(30),
+        width:Util.getWidth(70)
     },
     mainView:{ 
         padding: spacing.extraExtraLarge,
@@ -46,11 +46,11 @@ export default StyleSheet.create({
     // },
     areYou:{
         fontFamily:fonts.bold,
-        fontSize:fontSizes.medium,
-        textAlign:'center',
-        color:"white",
-        //marginBottom:spacing.large
-        marginTop:spacing.extraExtraLarge,
+        fontSize:fontSizes.large,
+        textAlign:'left',
+        color:"black",
+        marginBottom:spacing.medium
+       // marginTop:spacing.extraExtraLarge,
     },
     subText:{
         fontFamily:fonts.semiBold,
@@ -66,7 +66,7 @@ export default StyleSheet.create({
     or:{
         color:colors.btnColor,
         textAlign:"center",
-        marginVertical:spacing.extraExtraLarge,
+        marginVertical:spacing.large,
         fontFamily:fonts.regular,
         fontSize:fontSizes.extraExtraSmall,
         marginHorizontal:spacing.small

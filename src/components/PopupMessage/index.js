@@ -24,9 +24,9 @@ export default PopupMessage = (props) =>{
                         loop={true}
                     />
                  </View>
-                 <TouchableOpacity style={styles.btn} onPress={onPress}>
+                 {/* <TouchableOpacity style={styles.btn} onPress={onPress}>
                      <Text style={styles.btnText}>{subtitle}</Text>
-                 </TouchableOpacity>
+                 </TouchableOpacity> */}
             </View>
           </View>  
         </Modal>

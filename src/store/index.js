@@ -7,7 +7,7 @@ export const store = configureStore({
   },
   middleware:(getDefaultMiddleware)=>getDefaultMiddleware({
     serializableCheck:{
-        ignoredActionPaths:['payload.createdAt']
+        ignoredActionPaths:['payload.createdAt','payload.data.favCreated','payload.subscriptionDate']
     }
   }).concat(logger)
 })

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "189973700039",
+    "project_id": "appvertise-90488",
+    "storage_bucket": "appvertise-90488.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189973700039:android:aca51e601d171fa594cde2",
+        "android_client_info": {
+          "package_name": "in.softment.appvertise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189973700039-oefe9g01b1uhfvs6lld1stii8hskcnq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLKiHBUpiipKsIi4brvJCoilPrX-C4Cpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189973700039-oefe9g01b1uhfvs6lld1stii8hskcnq3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

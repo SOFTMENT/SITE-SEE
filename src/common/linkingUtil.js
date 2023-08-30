@@ -5,6 +5,10 @@ export default {
         Linking.openURL(`tel:${phone}`)
     },
     openBrowser(link){
+        if(link.startsWith('www.'))
+            link = 'https://'+link
+        else if(link.startsWith("https://")  || link.startsWith("http://")){}
+        else {link = 'https://www.'+link}
         Linking.openURL(`${link}`)
     },
     openMail(mail){

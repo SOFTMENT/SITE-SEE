@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Touchable, TouchableOpacity } from "react-native";
 import FastImage from "react-native-fast-image";
 import images from "../../assets/images";
 import React from "react";
@@ -9,13 +9,15 @@ const styles = StyleSheet.create({
         borderRadius:25
     }
 })
-export default AvatarIcon = ({uri,style,size}) => {
+export default AvatarIcon = ({uri,style,size,defaultSource,pressable,onPress}) => {
     return(
-        <FastImage
-            style={[styles.imageStyle,size&&{width:size,height:size,borderRadius:size/2},style]}
-            resizeMode={"cover"}
-            source={{uri:uri}}
-            defaultSource={images.imagePlaceholder}
-        />
+        <TouchableOpacity disabled={!pressable} onPress={onPress}>
+            <FastImage
+                style={[styles.imageStyle,size&&{width:size,height:size,borderRadius:size/2},style]}
+                resizeMode={"cover"}
+                source={{uri:uri}}
+                defaultSource={defaultSource?defaultSource:images.imagePlaceholder}
+            />
+        </TouchableOpacity>
     )
 }

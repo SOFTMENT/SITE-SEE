@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connectInfiniteHits } from 'react-instantsearch-native';
 import { FlatList, StyleSheet, View } from 'react-native';
-import TrainerCard from '../../UserScreens/UserHome/components/TrainerCard';
 import { responsiveSize } from '../../../common/util';
 import { fontSizes, itemSizes, spacing } from '../../../common/variables';
+import SpaceCard from '../../AdvertiserScreens/SpaceCard';
 
 const styles = StyleSheet.create({
   container: {
@@ -125,7 +125,7 @@ const InfiniteHits = ({ hits, hasMore, refineNext, navigation, props }) => {
     if(item.isUser == false && (item.accountStatus == false || item.status != "approved"))
     return null
     return(
-      <TrainerCard data={item} navigation={navigation}/>
+      <SpaceCard data={item} navigation={navigation}/>
     )
   }
   // if(hits.length == 0){

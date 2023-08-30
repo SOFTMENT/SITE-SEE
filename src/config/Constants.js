@@ -11,7 +11,10 @@ const AppConstant = {
     SETTINGS:"SETTINGS",
     CITY_DATA:"CITY_DATA",
     IGNORED_REQUESTS:"IGNORED_REQUESTS",
-    MAIL:""
+    MAIL:"natebetcha@gmail.com",
+    advertiser:"Advertiser",
+    vendor:"Vendor",
+    serviceProvider:"Service Provider"
 }
 
 export default AppConstant; 

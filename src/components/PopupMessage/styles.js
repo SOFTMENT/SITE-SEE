@@ -26,21 +26,21 @@ export default StyleSheet.create({
         borderRadius:spacing.large,
     },
     txtStyle:{
-        color:colors.white,
+        color:colors.black,
         fontSize:responsiveSize(20),
-        fontFamily:fonts.textBold
+        fontFamily:fonts.bold
     },
     btn:{
         width:Util.getWidth(60),
         alignItems:"center",
         paddingHorizontal:spacing.large,
         paddingVertical:spacing.medium,
-        backgroundColor:colors.btnColor,
+        backgroundColor:"#06C265",
         borderRadius:spacing.small
     },
     btnText:{
         fontFamily:fonts.textBold,
-        color:colors.whiteText,
+        color:colors.white,
         fontSize:responsiveSize(14)
     }
 })

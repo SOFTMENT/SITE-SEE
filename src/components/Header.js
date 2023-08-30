@@ -6,8 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import fonts from "../../assets/fonts"
 import { fontSizes, itemSizes, spacing } from "../common/variables"
 import { navigateAndReset } from "../navigators/RootNavigation"
-const Header = (props) => {
-    const {navigation,title,extraStyle,back, rightIcon,onRightIconPress} = props
+const Header = ({navigation,title,extraStyle,back, rightIcon,onRightIconPress,rightIconColor,onBackPress}) => {
     const insets = useSafeAreaInsets()
     const handleBack = () => {
         try {
@@ -23,17 +22,17 @@ const Header = (props) => {
         }
     }
     return(
-        <View style={[styles.container,extraStyle,{paddingTop:insets.top},Platform.OS=="android"&&{paddingTop:spacing.large}]}>
+        <View style={[styles.container,extraStyle,{paddingTop:insets.top}]}>
             {back?
                 <IconButton 
-                    onPress={handleBack}
+                    onPress={ onBackPress ? onBackPress : handleBack}
                     _pressed={{backgroundColor:"transparent"}}
                     icon={
                         <Icon
                         as={MaterialCommunityIcons}
                         size="2xl"
                         name="chevron-left"
-                        color={"white"}
+                        color={"gray.700"}
                         />
                     }
                 />
@@ -52,7 +51,7 @@ const Header = (props) => {
                         as={MaterialCommunityIcons}
                         size="lg"
                         name={rightIcon}
-                        color={"white"}
+                        color={rightIconColor?rightIconColor:"gray.700"}
                     />
                     }
                 />
@@ -75,9 +74,9 @@ const styles = StyleSheet.create({
     title:{
         //flex:1,
         //textAlign:"center",
-        color:"white",
-        fontFamily:fonts.semiBold,
-        fontSize:fontSizes.small,
+        color:"rgba(0, 0, 0, 0.77)",
+        fontFamily:fonts.bold,
+        fontSize:fontSizes.medium,
         flex:1,
         marginLeft:40,
         textAlign:"center",

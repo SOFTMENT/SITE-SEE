@@ -1,8 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit"
-
 const initialState = {
-    userData:null
+    userData:null,
+    currentPosition : null,
+    favorites : [],
+    orderCount:0
 }
+// const api = createApi({
+//     baseQuery: fakeBaseQuery(),
+//     endpoints: (build) => ({
+//       getFavorites: build.query({
+//         async queryFn(arg) {
+//           try {
+//             const uid = auth().currentUser.uid
+//             const result = await firestore().collection("Users").doc(uid).collection("Favorites").get()
+//             let favs = []
+//             result.forEach(doc => {
+//                 favs.push(doc.data())
+//             })
+//             return { data: favs}
+//           } catch (e) {
+//             return { error: e }
+//           }
+//         },
+//       }),
+//     }),
+//   })
 export const userSlice = createSlice({
     name:"user",
     initialState,
@@ -11,11 +33,25 @@ export const userSlice = createSlice({
             let data = action.payload
             data ={
                 ...data,
-                createdAt : data.createdAt.toDate().toDateString()
+                createdAt : data.createdAt.toDate().toDateString(),
+                subscriptionDate : data?.subscriptionDate?.toDate()?.toDateString() ?? ""
             }
             state.userData = data
+        },
+        setCurrentPosition:(state,action)=>{
+            let data = action.payload
+            state.currentPosition = data
+        },
+        setFavorites : (state,action) => {
+            let data = action.payload
+            state.favorites = data
+        },
+        setOrderCount : (state,action) => {
+            let data = action.payload
+            state.orderCount = data
         }
     }
 })
-export const {setUserData} = userSlice.actions
+// export const { getFavorites } = api;
+export const {setUserData,setCurrentPosition,setFavorites,setOrderCount} = userSlice.actions
 export default userSlice.reducer

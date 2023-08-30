@@ -44,6 +44,10 @@ const Util = {
         const { width, height } = Util.getWindowSize()
         return Util.isIphone() && (height >= 812 || width >= 812);
     },
+    isIphone8: () => {
+        const { width, height } = Util.getWindowSize()
+        return Util.isIphone() && (height < 812 || width <812);
+    },
     isIphone: () => {
         return Platform.OS === 'ios'
     },
@@ -98,7 +102,20 @@ const Util = {
         })
         rating = rating / ratingCount
         return Math.round(rating * 10) / 10
-    }
+    },
+    getUserType : (tab) => {
+        switch(tab){
+            case 1 : {
+                return "Advertiser"
+            }
+            case 2 : {
+                return "Vendor"
+            }
+            case 3 : {
+                return "Service Provider"
+            }
+        }
+    } 
 }
 export default Util
 export function responsiveSize(size) {

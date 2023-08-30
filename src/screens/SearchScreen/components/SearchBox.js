@@ -27,24 +27,29 @@ const SearchBox = ({ currentRefinement, refine, backImage, navigation }) => {
                         placeholder="Search"
                         variant="outlined"
                         flex={1}
+                        _focus={{borderColor:colors.appPrimary}}
                         borderRadius={10}
                         py={Platform.OS=="ios"?4:2}
-                        color={"white"}
-                        bg={"gray.800"}
+                        color={"black"}
+                        borderWidth={1}
+                        borderColor={colors.appPrimary}
+                        //bg={"gray.800"}
                         onChangeText={(txt)=>setValue(txt)}
                         value={value}
                         onSubmitEditing={()=>refine(value)}
                         autoFocus
                     />
                     <IconButton
-                        variant={"solid"}
-                        bg={"gray.800"}
+                        //variant={"solid"}
+                        bg={colors.appPrimary}
                         borderRadius={10}
+                        // borderWidth={1}
+                        // borderColor={"gray.400"}
                         onPress={()=>refine(value)}
                         _icon={{
                             size: "xl",
                             name: "magnify",
-                            color: "gray.300",
+                            color: "white",
                             marginLeft: spacing.extraExtraSmall,
                             as: MaterialCommunityIcons
                         }}

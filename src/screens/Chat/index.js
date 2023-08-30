@@ -1,34 +1,33 @@
-import { FlatList, ImageBackground, Text, TextInput, View } from "react-native"
-import React, { useEffect, useState } from "react"
-import styles from "./styles"
-import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
-import { Center, HStack, Icon, IconButton } from "native-base";
-import Header from "../../components/Header";
-import AvatarHeader from "../../components/AvatarHeader";
-import images from "../../assets/images";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+import firestore from '@react-native-firebase/firestore';
+import TimeAgo from 'javascript-time-ago';
+import { HStack, Icon, IconButton, KeyboardAvoidingView, ScrollView } from "native-base";
+import React, { useEffect, useState } from "react";
+import { FlatList, Platform, Text, TextInput, View } from "react-native";
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { connect } from "react-redux";
 import Util from "../../common/util";
+import AvatarHeader from "../../components/AvatarHeader";
+import styles from "./styles";
 const Chat = (props) => {
     const { userData, navigation, route } = props
     const { params } = route
-    const { lastMessage } = params
+    const timeAgo = new TimeAgo("en-US")
+    const [lastMessage,setLastMessage] = useState(params.lastMessage)
     const [chats, setChats] = useState([])
     const uid = auth().currentUser.uid
-    const [chatText, setChatText] = useState("")
     const [chatActive,setChatActive] = useState(false)
     const { profilePic, name } = userData
     const checkForBooking = () => {
-        if(userData.isUser){
+        if(userData.userType == 'Advertiser'){
             firestore()
-            .collection("bookings")
-            .where("status","==","Active")
-            .where("trainerId","==",lastMessage.senderUid)
-            .where("userId","==",auth().currentUser.uid)    
+            .collection("Bookings")
+            .where("vendorId","==",lastMessage.senderUid)
+            .where("advertiserId","==",auth().currentUser.uid)    
             .get()
-            .then((sanpShot)=>{
-                if(sanpShot.size>0){
+            .then((snapShot)=>{
+                if(snapShot.size>0){
                     setChatActive(true)
                 }
             })
@@ -36,12 +35,11 @@ const Chat = (props) => {
         else{
             firestore()
             .collection("bookings")
-            .where("status","==","Active")
-            .where("trainerId","==",uid)
-            .where("userId","==",lastMessage.senderUid)
+            .where("vendorId","==",uid)
+            .where("advertiserId","==",lastMessage.senderUid)
             .get()
-            .then((sanpShot)=>{
-                if(sanpShot.size>0){
+            .then((snapShot)=>{
+                if(snapShot.size>0){
                     setChatActive(true)
                 }
             })
@@ -51,6 +49,7 @@ const Chat = (props) => {
         checkForBooking()
         if (lastMessage) {
             const { senderUid } = lastMessage
+            getRecipientData(senderUid)
             const unsubscribe = firestore()
                 .collection("Chats")
                 .doc(uid)
@@ -66,18 +65,34 @@ const Chat = (props) => {
             return unsubscribe
         }
     }, [])
+    const getRecipientData = async(senderUid) => {
+        const res = await firestore().collection("Users").doc(senderUid).get()
+        const data = res.data()
+        setLastMessage({
+            ...lastMessage,
+            senderImage:data.profilePic,
+            senderName:data.name
+        })
+    }
     const renderChats = ({ item }) => {
+        console.log(item)
         if (item.senderUid == uid)
             return (
                 <View style={styles.rightMsg}>
-                    <Text style={styles.txt}>{item.message}</Text>
+                    <View style={styles.rightMsgInner}>
+                        <Text style={styles.txt}>{item.message}</Text>
+                    </View>
+                    <Text style={styles.timeAgo}>{item.date?.toDate()?timeAgo.format(item.date?.toDate()):""}</Text>
                 </View>
             )
-        return (
-            <View style={styles.leftMsg}>
-                <Text style={styles.txt}>{item.message}</Text>
-            </View>
-        )
+            return (
+                <View style={styles.leftMsg}>
+                    <View style={styles.leftMsgInner}>
+                        <Text style={styles.txt}>{item.message}</Text>
+                    </View>
+                    <Text style={styles.timeAgo}>{item.date?.toDate()?timeAgo.format(item.date?.toDate()):""}</Text>
+                </View>
+            )
     }
     const keyExtractor = (item) => {
         return item.id
@@ -96,8 +111,8 @@ const Chat = (props) => {
             Util.showMessage("error", "Something went wrong")
         }
     }
-    const handleSubmit = () => {
-        setChatText(chatText.trim())
+    const handleSubmit = (chatText) => {
+        //setChatText(chatText.trim())
         if (chatText.trim().length > 0) {
             try {
                 let docId = firestore().collection("Chats").doc().id
@@ -105,9 +120,9 @@ const Chat = (props) => {
                     message: chatText.trim(),
                     senderUid: uid,
                     messageId: docId,
-                    senderImage:profilePic,
+                    //senderImage:profilePic,
                     date: firebase.firestore.FieldValue.serverTimestamp(),
-                    senderName: name
+                    //senderName: name
                 }
                 setMessage(docId, uid, lastMessage.senderUid, messageObj)
                 setMessage(docId, lastMessage.senderUid, uid, messageObj)
@@ -115,53 +130,42 @@ const Chat = (props) => {
                     message: chatText.trim(),
                     senderUid: lastMessage.senderUid,
                     isRead: true,
-                    senderImage:lastMessage.senderImage,
-                    senderName: lastMessage.senderName,
+                    //senderImage:lastMessage.senderImage,
+                    //senderName: lastMessage.senderName,
                     date: firebase.firestore.FieldValue.serverTimestamp(),
                 })
                 setMessage(uid, lastMessage.senderUid, "LastMessage", {
                     message: chatText.trim(),
                     senderUid: uid,
                     isRead: false,
-                    senderImage:profilePic,
-                    senderName: name,
+                    //senderImage:profilePic,
+                    //senderName: name,
                     date: firebase.firestore.FieldValue.serverTimestamp(),
                 })
-                setChatText("")
+                //setChatText("")
             } catch (error) {
                 console.log(error)
             }
         }
     }
-    console.log(lastMessage)
-    return (
-        <ImageBackground style={styles.container} source={images.chatsBack}>
-            <AvatarHeader back title={lastMessage.senderName} navigation={navigation} icon={lastMessage.senderImage} />
-            {
-                chats.length > 0 ?
-                    <FlatList
-                        renderItem={renderChats}
-                        data={chats}
-                        keyExtractor={keyExtractor}
-                        contentContainerStyle={styles.flatList}
-                        bounces={false}
-                        showsVerticalScrollIndicator={false}
-                    />
-                    :
-                    <Center flex={1} ><Text style={styles.noData}>No Chats</Text></Center>
-            }
-            <HStack style={styles.inputBox}>
+    //console.log(lastMessage)
+    const RenderHeader = () => {
+        const [chatText, setChatText] = useState("")
+        return(
+            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : ""}>
+                <HStack style={styles.inputBox}>
                 <TextInput
-                    style={{ flex: 1 }}
+                    style={{ flex: 1,color:"black"}}
                     value={chatText}
-                    onSubmitEditing={handleSubmit}
+                    onSubmitEditing={()=>{handleSubmit(chatText);setChatText("")}}
                     onChangeText={(txt) => setChatText(txt)}
                     autoCorrect={false}
                     autoCapitalize="none"
                     placeholder={"Type Here"}
                     returnKeyType="send"
                     placeholderTextColor={"gray"}
-                    editable={chatActive}
+                    multiline={true}
+                    //editable={chatActive}
                 />
                 <IconButton
                     icon={<Icon
@@ -170,10 +174,29 @@ const Chat = (props) => {
                         size={"2xl"}
                         color="black"
                     />}
-                    onPress={handleSubmit}
+                    onPress={()=>{handleSubmit(chatText);setChatText("")}}
                 />
             </HStack>
-        </ImageBackground>
+            </KeyboardAvoidingView>
+        )
+    }
+    return (
+        <View style={styles.container}>
+            <AvatarHeader back title={lastMessage.senderName} navigation={navigation} icon={lastMessage.senderImage} />
+                <FlatList
+                        inverted
+                        renderItem={renderChats}
+                        data={chats}
+                        //style={{flex:1}}
+                        keyExtractor={keyExtractor}
+                        style={styles.flatList}
+                        bounces={false}
+                        showsVerticalScrollIndicator={false}
+                        //ListHeaderComponent={<RenderHeader/>}
+                        keyboardShouldPersistTaps={"handled"}
+                    />
+                <RenderHeader/>
+        </View>
     )
 }
 const mapStateToProps = (state) => {

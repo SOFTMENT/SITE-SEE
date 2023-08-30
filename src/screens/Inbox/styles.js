@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import fonts from "../../../assets/fonts";
+import { fontSizes } from "../../common/variables";
 import colors from "../../theme/colors";
 
 const styles = StyleSheet.create({
@@ -31,30 +32,20 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.4,
         borderBottomColor: colors.borderColor
     },
-
     title: {
-        fontSize: 17,
-        color: "white",
-        fontWeight: "bold"
-        //marginLeft:10
-    },
-
-    Txt: {
-        color: "#ede1ed",
-        fontSize: 24,
-        fontWeight: "bold",
-        letterSpacing: 1
-
+        fontFamily:fonts.semiBold,
+        fontSize: fontSizes.extraSmall,
+        color: "black",
     },
     text: {
-        color: "#cccccc",
-        fontSize: 13,
-        // fontWeight: "bold",
-        letterSpacing: 1
-
+        color: "gray",
+        fontSize: fontSizes.extraExtraSmall,
+        fontFamily: fonts.medium,
+        letterSpacing: 1,
+        width:"60%"
     },
     smallTxt: {
-        color: "#cccccc",
+        color: "gray",
         fontSize: 10,
         // fontWeight: "bold",
         letterSpacing: 1,
