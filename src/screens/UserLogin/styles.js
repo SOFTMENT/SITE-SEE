@@ -11,11 +11,26 @@ export default StyleSheet.create({
         //padding:spacing.large
     },
     loginBack:{
-        width:"100%",
+        flexDirection:"row",
         height:Util.getHeight(25),
         //backgroundColor:colors.black,
-        justifyContent:"center",
-        alignItems:"center"
+        alignItems:"center",
+        marginHorizontal:25,
+    },
+    siteSee:{
+        height:"100%"
+    },
+    login:{
+        fontFamily:fonts.bold,
+        color:colors.white,
+        fontSize:fontSizes.extraExtraLarge,
+        marginLeft:30
+    },
+    borderViewTop:{
+        height:"75%",
+        width:2,
+        marginLeft:30,
+        backgroundColor:colors.white
     },
     logo:{
         //height:Util.getHeight(30),

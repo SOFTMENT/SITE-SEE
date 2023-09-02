@@ -19,7 +19,7 @@ import colors from "../../theme/colors";
 import styles from "./styles";
 const UserLogin = (props) => {
     const { navigation, route } = props
-    //const tab = route.params?.tab ?? 1
+    const tab = route.params?.tab ?? 1
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
     const [loading, setLoading] = useState(false)
@@ -317,7 +317,7 @@ const UserLogin = (props) => {
     return (
         <KeyboardAwareScrollView
             bounces={false}
-            style={{ flex: 1,paddingTop: inset.top,backgroundColor:"white" }}
+            style={{ flex: 1,paddingTop: inset.top,backgroundColor:colors.backgroundColor }}
             keyboardShouldPersistTaps={"handled"}
         // stickyHeaderHiddenOnScroll
         >
@@ -328,10 +328,16 @@ const UserLogin = (props) => {
                     style={styles.loginBack}
                 >
                     <Image
-                        source={images.logo}
+                        source={images.siteSeeVertical}
                         resizeMode="contain"
-                        style={styles.logo}
+                        style={styles.siteSee}
                     />
+                    <View
+                        style={styles.borderViewTop}
+                    />
+                    <Text style={styles.login}>
+                        {`Login to your \naccount`}
+                    </Text>
                 </View>
                 <View style={styles.mainView}>
                     <Text style={styles.areYou}>Welcome Back!</Text>

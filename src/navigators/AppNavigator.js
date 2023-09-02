@@ -22,7 +22,7 @@ import AdvertiserOnBoardPhoto from '../screens/AdvertiserScreens/AdvertiserOnBoa
 import HomeScreen from '../screens/HomeScreen';
 import LogOrRegister from '../screens/LogOrRegister';
 import OnboardingScreen from '../screens/OnboradingScreens/OnboardingScreen';
-import OnboardingScreen1 from '../screens/OnboradingScreens/OnboardingScreen1';
+
 import BuyMembership from '../screens/ServiceProviderScreens/BuyMembership';
 import ServiceHome from '../screens/ServiceProviderScreens/ServiceHome';
 import ServiceOnBoard from '../screens/ServiceProviderScreens/ServiceOnBoard';
@@ -103,7 +103,6 @@ const AppNavigator = () => {
             }}>
                 <Stack.Screen name="SplashScreen" component={SplashScreen} />
                 <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
-                <Stack.Screen name="OnboardingScreen1" component={OnboardingScreen1} />
                 <Stack.Screen name='LogOrRegister' component={LogOrRegister} />
                 <Stack.Screen name='UserSelectScreen' component={UserSelectScreen} />
                 <Stack.Screen name='LoginScreen' component={UserLogin} />

@@ -48,47 +48,47 @@ const App = () => {
     fontConfig: {
       Mulish: {
         100: {
-          normal: "Mulish-Light",
+          normal: "Montserrat-Light",
           //italic: "Roboto-LightItalic",
         },
         200: {
-          normal: "Mulish-Light",
+          normal: "Montserrat-Light",
           //italic: "Roboto-LightItalic",
         },
         300: {
-          normal: "Mulish-Regular",
+          normal: "Montserrat-Regular",
           //italic: "Roboto-LightItalic",
         },
         400: {
-          normal: "Mulish-Regular",
+          normal: "Montserrat-Regular",
           //italic: "Roboto-Italic",
         },
         500: {
-          normal: "Mulish-Medium"
+          normal: "Montserrat-Medium"
         },
         600: {
-          normal: "Mulish-Medium"
+          normal: "Montserrat-Medium"
         },
         700: {
-          normal: 'Mulish-SemiBold',
+          normal: 'Montserrat-SemiBold',
         },
         800: {
-          normal: 'Mulish-SemiBold',
+          normal: 'Montserrat-SemiBold',
         },
         900: {
-          normal: "Mulish-Bold"
+          normal: "Montserrat-Bold"
         },
         1000: {
-          normal: "Mulish-Bold"
+          normal: "Montserrat-Bold"
         }
       },
     },
 
     // Make sure values below matches any of the keys in `fontConfig`
     fonts: {
-      heading: "Mulish",
-      body: "Mulish",
-      mono: "Mulish",
+      heading: "Montserrat",
+      body: "Montserrat",
+      mono: "Montserrat",
     },
   });
   return (

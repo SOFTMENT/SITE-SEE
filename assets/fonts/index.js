@@ -1,9 +1,9 @@
 
 export default {
-    bold:"Mulish-Bold",
-    light:"Mulish-Light",
+    bold:"Montserrat-Bold",
+    light:"Montserrat-Light",
     //light:"Montserrat-Light",
-    regular:"Mulish-Regular",
-    semiBold:"Mulish-SemiBold",
-    medium:"Mulish-Medium"
+    regular:"Montserrat-Regular",
+    semiBold:"Montserrat-SemiBold",
+    medium:"Montserrat-Medium"
 }

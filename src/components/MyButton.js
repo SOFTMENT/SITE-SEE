@@ -15,24 +15,26 @@ const MyButton = (props) => {
             disabled={loading || disabled}
             onPress={onPress}
             style={[styles.container,containerStyle]}>
+                {/* {icon} */}
+                {/* {!loading && icon} */}
                 {
-                    icon &&
+                    icon && 
                     <Icon
                         as={MaterialCommunityIcons}
                         name={icon}
-                        color={"white"}
-                        size={'md'}
-                        mr={1}
+                        color={colors.appDefaultColor}
+                        size={'lg'}
+                        ml={1}
+                        
                     />
                 }
-                {/* {!loading && icon} */}
             <Text style={[styles.btnText,txtStyle]}>{title}</Text>
             {
                     rightIcon &&
                     <Icon
                         as={MaterialCommunityIcons}
                         name={rightIcon}
-                        color={"white"}
+                        color={colors.appDefaultColor}
                         size={'lg'}
                         ml={1}
                     />
@@ -61,8 +63,8 @@ const styles = StyleSheet.create({
         marginVertical:spacing.small,
     },
     btnText:{
-        color:'white',
+        color:colors.appDefaultColor,
         fontFamily:fonts.bold,
-        fontSize:fontSizes.small,
+        fontSize:fontSizes.extraSmall,
     },
 });

@@ -43,5 +43,6 @@ export default {
     locationImage:require("./locationImage.png"),
     serviceProvider:require("./service-provider.png"),
     withdrawal:require("./withdrawal.png"),
-    siteSeeText:require("./SiteSee.png")
+    siteSeeText:require("./SiteSee.png"),
+    siteSeeVertical:require("./siteSeeVertical.png")
 }
