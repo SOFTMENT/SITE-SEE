@@ -1,5 +1,5 @@
 import auth from '@react-native-firebase/auth'
-import { Icon } from 'native-base'
+import { HStack, Icon, ScrollView } from 'native-base'
 import React, { useEffect, useState } from "react"
 import { FlatList, Image, Text, TextInput, TouchableOpacity, View } from "react-native"
 import images from "../../assets/images"
@@ -14,42 +14,37 @@ import firestore from '@react-native-firebase/firestore'
 import Util from '../../common/util'
 import axios from 'axios'
 import { NOTIFY_CALL } from '../../config/Networksettings'
+import AddCategory from './AddCategory'
+import colors from '../../theme/colors'
+let unsubscribe
 const AdminScreen = (props) => {
     const {navigation} = props
     const [title,setTitle] = useState("")
     const [message,setMessage] = useState("")
+    const [visible,setVisible] = useState(false)
     const [data,setData] = useState([])
     const [loader,setLoader] = useState(false)
-    useEffect(() => {
+    
+    useEffect(()=>{
         getData()
-    }, [])
-    const getData = async () => {
+        return unsubscribe
+    },[])
+    const getData = async() => {
         try {
-            await firestore()
-                .collection("Users")
-                .where("status", "==", "pending")
-                .where("isUser", "==", false)
-                .orderBy("createdAt", "desc")
-                .get()
-                .then(querySnapshot => {
-                    console.log(querySnapshot.size)
-                    const temp = []
-                    querySnapshot.forEach(docSnap => {
-                        //console.log(docSnap.data())
-                        temp.push(docSnap.data())
-                    })
-                    setData(temp)
-                    //console.log(temp)
-                })
+            unsubsctibe = firestore()
+            .collection("Category")
+            .onSnapshot(snap=>{
+                const localData = []
+                snap.docs.map(doc=>localData.push(doc.data()))
+                setData(localData)
+            })
+            
         } catch (error) {
-            console.log(error)
-            Util.showMessage("error", "Error", error.message)
-        }
-        finally{
-            //setLoader(false)
+            
         }
     }
     const sendNotification = async() =>{
+        return
         if(!title.trim()){
             Util.showMessage("error","Please Enter Title","")
             return
@@ -82,77 +77,43 @@ const AdminScreen = (props) => {
         try {
             auth()
                 .signOut()
-                .then(() => navigateAndReset("UserSelectScreen"));
+                .then(() => navigateAndReset("OnboardingScreen"));
         } catch (error) {
             console.log(error)
         }
     }
-    const updateStatus = async (uid, status,name,email) => {
+    const handleDelete = async id => {
         try {
             await firestore()
-                .collection("Users")
-                .doc(uid)
-                .update({
-                    status
-                })
-            Util.showMessage("success",status=="approved"?"Profile Verified!":"Profile Rejected!")
-            getData()
-            sendUnderReviewEmail(name,email,status == "approved"?true:false)
+            .collection("Category")
+            .doc(id)
+            .delete()
+            Util.showMessage("error","Category Deleted","")
         } catch (error) {
-            console.log(error)
+            
         }
     }
-    const renderItem = ({ item }) => {
-        return (
-            <View style={styles.item}>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.email}>{item.email}</Text>
-                <View style={styles.btnView}>
-                    <MyButton
-                        title={"Approve"}
-                        containerStyle={styles.approve}
-                        txtStyle={{color:"white"}}
-                        onPress={() => updateStatus(item.uid, "approved",item.name,item.email)}
+    const renderData = ({item}) => {
+        return(
+            <HStack bgColor={"white"} p={3} borderRadius={6} alignItems={"center"} mb={3}>
+                <Text>
+                    {item.categoryName}
+                </Text>
+                <TouchableOpacity style={styles.logContainer} onPress={()=>handleDelete(item.id)}>
+                    <Icon
+                        name="delete-empty"
+                        size={"xl"}
+                        as={MaterialCommunityIcons}
+                        color={colors.appDefaultColor}
                     />
-                    <MyButton
-                        title={"Reject"}
-                        containerStyle={styles.reject}
-                        txtStyle={{color:"white"}}
-                        onPress={() => updateStatus(item.uid, "rejected",item.name,item.email)}
-                    />
-                </View>
-            </View>
+                </TouchableOpacity>
+            </HStack>
         )
     }
-    const sendUnderReviewEmail = async(name,email,isApprove) => {
-        try {
-            var body = new FormData()
-            body.append('name',name)
-            body.append('email',email)
-            if(isApprove){
-                body.append('subject',"Ktr Fitness account approved")
-                body.append('body',`<h1>Hey ${name}</h1><p>We are delighted to let you know that we have succesfully verified your account, you can now continue using our app.</p>`)
-            }
-            else{
-                body.append('subject',"Ktr Fitness account rejected")
-                body.append('body',`<h1>Hey ${name}</h1><p>Sorry, we are unable to verify your account at this moment.</p>`)
-            }
-            await axios({
-                method:"post",
-                url:"https://softment.in/universal/mailer/sendmail.php",
-                data:body
-               
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const keyExtractor = (item) => {
-        return item.uid
-    }
+    const keyExtractor = (item) => item.id
     return (
-        <View style={styles.container}>
-            <Header title="Ktr Fitness"/>
+        <ScrollView style={styles.container}>
+            <Header title="Site See"/>
             <View style={styles.titleView}>
                 <Text style={styles.logoutText}>{`Hello, \nAdmin`}</Text>
                 <TouchableOpacity style={styles.logContainer} onPress={logout}>
@@ -184,27 +145,28 @@ const AdminScreen = (props) => {
             <MyButton
                 title="Send Notification"
                 containerStyle={{marginVertical:10}}
+                txtStyle={{color:"white"}}
                 onPress={sendNotification}
             />
-            <Text style={[styles.heading,{marginTop:5}]}>Verification List</Text>
-            <View style={{flex:1}}>
-            {
-                data ? (
-                    data.length == 0 ?
-                        <NoResults title="No new request" />
-                        :
-                        <FlatList
-                            renderItem={renderItem}
-                            keyExtractor={keyExtractor}
-                            data={data ? data : []}
-                            bounces={false}
-                            style={{ flex: 1, marginBottom: spacing.medium }}
-                        />
-                ) :
-                    <CenteredLoader />
-            }
-            </View>
-        </View>
+            <HStack>
+            <Text style={styles.heading}>Manage Categories</Text>
+             <TouchableOpacity style={styles.logContainer} onPress={()=>setVisible(true)}>
+                    <Icon
+                        name="plus"
+                        size={"lg"}
+                        as={MaterialCommunityIcons}
+                        color="white"
+                    />
+                </TouchableOpacity>
+            </HStack>
+            <FlatList
+                data={data}
+                renderItem={renderData}
+                keyExtractor={keyExtractor}
+                style={{marginTop:10,flex:1}}
+            />
+            <AddCategory visible={visible} setMenuOpen={setVisible}/>
+        </ScrollView>
     )
 }
 export default AdminScreen

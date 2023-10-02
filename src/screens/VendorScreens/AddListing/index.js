@@ -35,6 +35,7 @@ import LoaderComponent from '../../../components/LoaderComponent';
 import {geohashForLocation} from 'geofire-common';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import { useSelector } from 'react-redux';
 
 export default function AddListing(props) {
   const {navigation, route} = props;
@@ -44,17 +45,12 @@ export default function AddListing(props) {
     address: null,
     location: {},
   });
-  const toggleLocationPopup = () => {
-    setLocationAllState({
-      ...locationAllState,
-      visible: true,
-    });
-  };
+  const categories = useSelector(state=>state.user.categories)
   const [about, setAbout] = useState('');
   const [title, setTitle] = useState('');
   const [images, setImages] = useState([]);
   const [index, setIndex] = useState(0);
-  const [category, setCategory] = useState(propertyCategories[0].label);
+  const [category, setCategory] = useState(categories[0]);
   const [loaderVisibility, setLoaderVisibility] = useState(false);
   const handleImage = index => {
     setIndex(index);
@@ -68,7 +64,7 @@ export default function AddListing(props) {
     setAbout('')
     setImages([])
     setIndex(0)
-    setCategory(propertyCategories[0].label)
+    setCategory(categories[0])
     setLocationAllState({
         address: null,
         location: {},
@@ -304,12 +300,12 @@ export default function AddListing(props) {
           selectedValue={category}
           color={'black'}
           onValueChange={itemValue => setCategory(itemValue)}>
-          {propertyCategories.map(item => {
+          {categories.map((item,index) => {
             return (
               <Select.Item
-                key={item.id}
-                value={item.label}
-                label={item.label}
+                key={index}
+                value={item}
+                label={item}
               />
             );
           })}
@@ -319,7 +315,7 @@ export default function AddListing(props) {
         <MyTextInput
           numberOfLines={2}
           containerStyle={{marginTop:20}}
-          txtInputStyle={{height: 100}}
+          txtInputStyle={{height: 100,textAlignVertical: 'top'}}
           multiline={true}
           //iconName={"lock-outline"}
           //isPass

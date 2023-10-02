@@ -33,6 +33,7 @@ import UserSelectScreen from '../screens/UserSelectScreen';
 import { navigationRef } from './RootNavigation';
 import UserBottomTab from './UserBottomTab';
 import VendorBottomTab from './VendorBottomTab';
+import AdminScreen from '../screens/AdminScreen';
 
 const Stack = createNativeStackNavigator();
 const ServiceStack = createNativeStackNavigator()
@@ -109,8 +110,9 @@ const AppNavigator = () => {
                 <Stack.Screen name='UserRegister' component={UserRegister}/>
                 <Stack.Screen name='OnBoardPhoto' component={OnBoardPhoto}/>
                 <Stack.Screen name='ServiceHomeStack' component={MyServiceStack}/>
-                {/* <Stack.Screen name='UserSelectScreen' component={UserSelectScreen} />
                 <Stack.Screen name='AdminScreen' component={AdminScreen} />
+                {/* <Stack.Screen name='UserSelectScreen' component={UserSelectScreen} />
+                
                 <Stack.Screen name='HomeScreen' component={HomeScreen} />
                 <Stack.Screen name='UserLogin' component={UserLogin} />
                 <Stack.Screen name='UserRegister' component={UserRegister} />

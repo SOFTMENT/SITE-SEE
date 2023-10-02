@@ -346,7 +346,7 @@ const UserLogin = (props) => {
                     {/* <Text style={styles.areYou}>Welcome Back!</Text> */}
                     <MyTextInput
                         containerStyle={{ marginVertical: spacing.medium }}
-                        iconName={"email-outline"}
+                        //iconName={"email-outline"}
                         placeholder="Email"
                         //value={}
                         value={email}
@@ -355,7 +355,7 @@ const UserLogin = (props) => {
                     />
                     <MyTextInput
                         containerStyle={{ marginVertical: spacing.small }}
-                        iconName={"lock-outline"}
+                        //iconName={"lock-outline"}
                         isPass
                         placeholder={"Password"}
                         value={pass}

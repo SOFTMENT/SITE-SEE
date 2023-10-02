@@ -1,40 +1,36 @@
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
+import { geohashForLocation } from 'geofire-common';
+import {
+  Icon,
+  ScrollView,
+  Select,
+  VStack,
+  useDisclose
+} from 'native-base';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Platform,
-  StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
-import styles from './styles';
-import Header from '../../../components/Header';
 import FastImage from 'react-native-fast-image';
-import {
-  HStack,
-  Icon,
-  Select,
-  useDisclose,
-  VStack,
-  ScrollView,
-} from 'native-base';
-import PhotoPicker from '../../../components/PhotoPicker';
-import MyTextInput from '../../../components/MyTextInput';
-import {spacing} from '../../../common/variables';
-import colors from '../../../theme/colors';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {propertyCategories} from '../../../config/appConfig';
-import MyButton from '../../../components/MyButton';
-import LocationSelector from '../../../components/LocationSelector';
-import Util from '../../../common/util';
 import Helper from '../../../common/Helper';
-import auth, {firebase} from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
-import storage from '@react-native-firebase/storage'
+import Util from '../../../common/util';
+import { spacing } from '../../../common/variables';
+import Header from '../../../components/Header';
 import LoaderComponent from '../../../components/LoaderComponent';
-import {geohashForLocation} from 'geofire-common';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import MyButton from '../../../components/MyButton';
+import MyTextInput from '../../../components/MyTextInput';
+import PhotoPicker from '../../../components/PhotoPicker';
+import colors from '../../../theme/colors';
+import styles from './styles';
+import { useSelector } from 'react-redux';
 export default function EditListing(props) {
   const {navigation, route} = props;
   const {item} = route.params
@@ -52,6 +48,7 @@ export default function EditListing(props) {
   const [title, setTitle] = useState(item.title);
   const [images, setImages] = useState(item.listingImages);
   const [index, setIndex] = useState(0);
+  const categories = useSelector(state=>state.user.categories)
   const [category, setCategory] = useState(item.category);
   const [loaderVisibility, setLoaderVisibility] = useState(false);
   const handleImage = index => {
@@ -66,7 +63,7 @@ export default function EditListing(props) {
     setAbout('')
     setImages([])
     setIndex(0)
-    setCategory(propertyCategories[0].label)
+    setCategory(categories[0])
     setLocationAllState({
         address: null,
         location: {},
@@ -302,12 +299,12 @@ export default function EditListing(props) {
           selectedValue={category}
           color={'black'}
           onValueChange={itemValue => setCategory(itemValue)}>
-          {propertyCategories.map(item => {
+          {categories.map((item,index) => {
             return (
               <Select.Item
-                key={item.id}
-                value={item.label}
-                label={item.label}
+                key={index}
+                value={item}
+                label={item}
               />
             );
           })}
@@ -317,7 +314,7 @@ export default function EditListing(props) {
         <MyTextInput
           numberOfLines={2}
           containerStyle={{marginTop:20}}
-          txtInputStyle={{height: 100}}
+          txtInputStyle={{height: 100,textAlignVertical: 'top'}}
           multiline={true}
           //iconName={"lock-outline"}
           //isPass
@@ -329,7 +326,7 @@ export default function EditListing(props) {
        
        
         <MyButton
-          title={'Add Listing'}
+          title={'Update Listing'}
           containerStyle={{
             marginTop: 20,
           }}

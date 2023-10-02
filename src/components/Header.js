@@ -43,7 +43,7 @@ const Header = ({
     }
   };
   return (
-    <View style={[styles.container, extraStyle, {paddingTop: insets.top}]}>
+    <View style={[styles.container, extraStyle, {paddingTop: Platform.OS == "ios"?insets.top:insets.top+15}]}>
       {back ? (
         <IconButton
           onPress={onBackPress ? onBackPress : handleBack}
@@ -61,7 +61,7 @@ const Header = ({
         <View />
       )}
       {isSearch ? (
-        <HStack flex={1} bgColor={'white'} p={2} borderRadius={20} w={'100%'}>
+        <HStack flex={1} bgColor={'white'} px={2} mt={Platform.OS=="ios"?0:4} py={Platform.OS=="ios"?2:0}borderRadius={20} w={'100%'} alignItems={"center"}>
           <Icon
             as={MaterialCommunityIcons}
             size="lg"
@@ -71,7 +71,7 @@ const Header = ({
           />
           <TextInput
             placeholder="Search wishlist"
-            style={[styles.txtInput]}
+            style={[styles.txtInput,{flex:1}]}
             autoCapitalize="none"
             autoComplete={'off'}
             onChangeText={handleSearch}

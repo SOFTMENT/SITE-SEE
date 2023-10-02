@@ -185,7 +185,7 @@ export default function ListingDetail(props) {
                             <Icon
                                     as={MaterialCommunityIcons}
                                     name={isSelected?"heart":"heart-outline"}
-                                    color={isSelected?colors.appDefaultColor:"black"}
+                                    color={colors.appDefaultColor}
                                     size={"lg"}
                             />
                         </Center>
@@ -194,7 +194,7 @@ export default function ListingDetail(props) {
                 </HStack>
                 <Text style={styles.des}>Description</Text>
                 <View style={styles.desView}>
-                    <Text style={styles.about}>{"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore "}</Text>
+                    <Text style={styles.about}>{item.about}</Text>
                 </View>
                 <MyButton
                     title={"Message"}

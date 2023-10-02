@@ -353,7 +353,7 @@ const UserRegister = (props) => {
                     </Text> */}
                     <MyTextInput
                         containerStyle={{ marginVertical: spacing.small }}
-                        iconName={"account-outline"}
+                        //iconName={"account-outline"}
                         placeholder={"First Name"}
                         value={name}
                         onChangeText={(txt) => setName(txt)}
@@ -362,7 +362,7 @@ const UserRegister = (props) => {
                     />
                     <MyTextInput
                         containerStyle={{ marginVertical: spacing.small }}
-                        iconName={"account-outline"}
+                        //iconName={"account-outline"}
                         placeholder={"Last Name"}
                         subPlace={"Enter your last name"}
                         value={lastName}
@@ -370,7 +370,7 @@ const UserRegister = (props) => {
                     />
                     <MyTextInput
                         containerStyle={{ marginVertical: spacing.small }}
-                        iconName={"email-outline"}
+                        //iconName={"email-outline"}
                         placeholder="Email"
                         value={email}
                         onChangeText={(txt) => setEmail(txt.trim())}
@@ -381,7 +381,7 @@ const UserRegister = (props) => {
 
                     <MyTextInput
                         containerStyle={{ marginVertical: spacing.small }}
-                        iconName={"lock-outline"}
+                        //iconName={"lock-outline"}
                         isPass
                         placeholder={"Password"}
                         value={pass}

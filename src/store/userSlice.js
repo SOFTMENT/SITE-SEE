@@ -4,7 +4,8 @@ const initialState = {
     currentPosition : null,
     favorites : [],
     orderCount:0,
-    currentLocation:""
+    currentLocation:"",
+    categories:[]
 }
 // const api = createApi({
 //     baseQuery: fakeBaseQuery(),
@@ -43,6 +44,10 @@ export const userSlice = createSlice({
             let data = action.payload
             state.currentPosition = data
         },
+        setCategories:(state,action)=>{
+            let data = action.payload
+            state.categories = data
+        },
         setCurrentLocation:(state,action) => {
             let data = action.payload
             state.currentLocation = data
@@ -58,5 +63,5 @@ export const userSlice = createSlice({
     }
 })
 // export const { getFavorites } = api;
-export const {setUserData,setCurrentPosition,setFavorites,setOrderCount,setCurrentLocation} = userSlice.actions
+export const {setUserData,setCurrentPosition,setFavorites,setOrderCount,setCurrentLocation,setCategories} = userSlice.actions
 export default userSlice.reducer

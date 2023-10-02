@@ -10,10 +10,11 @@ import styles from './styles';
 import {Icon, Link} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import {setCurrentLocation, setCurrentPosition} from '../../../store/userSlice';
+import {setCategories, setCurrentLocation, setCurrentPosition} from '../../../store/userSlice';
 import LocationRequiredModal from '../../../components/LocationRequiredModal';
 import { handleLocation } from '../../../common/LocationHelper';
 import Geolocation from 'react-native-geolocation-service';
+import firestore from '@react-native-firebase/firestore'
 let sub = null
 export default function VendorHome(props) {
   const {navigation} = props;
@@ -23,13 +24,23 @@ export default function VendorHome(props) {
   const dispatch = useDispatch();
   const [locationModal, setLocationModal] = useState(false);
   useEffect(() => {
-   
+    getCategories()
     return () => {
       //focusListener.remove();
       if(sub)
       sub.remove();
     };
   }, []);
+  const getCategories = () => {
+    firestore()
+    .collection("Category")
+    .get()
+    .then((res)=>{
+      const localData = []
+      res.docs.map(doc=>localData.push(doc.data().categoryName))
+      dispatch(setCategories(localData.sort((a,b)=>a-b)))
+    })
+  }
   const callLocationPermission = () => {
     handleLocation(handleLocationAcceptance, handleLocationRejection);
     sub = AppState.addEventListener('change', () => {
