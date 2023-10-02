@@ -1,7 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import AdvertiserOnBoardPhoto from '../screens/AdvertiserScreens/AdvertiserOnBoardPhoto';
 // import AdminScreen from '../screens/AdminScreen';
 // import HomeScreen from '../screens/HomeScreen';
 // import ProOnBoard from '../screens/ProScreens/ProOnBoard';
@@ -23,18 +22,16 @@ import HomeScreen from '../screens/HomeScreen';
 import LogOrRegister from '../screens/LogOrRegister';
 import OnboardingScreen from '../screens/OnboradingScreens/OnboardingScreen';
 
+import OnBoardPhoto from '../screens/OnBoardPhoto';
 import BuyMembership from '../screens/ServiceProviderScreens/BuyMembership';
 import ServiceHome from '../screens/ServiceProviderScreens/ServiceHome';
-import ServiceOnBoard from '../screens/ServiceProviderScreens/ServiceOnBoard';
-import ServiceOnBoardPhoto from '../screens/ServiceProviderScreens/ServiceOnBoardPhoto';
 import ServiceProfile from '../screens/ServiceProviderScreens/ServiceProfile';
 import SplashScreen from '../screens/SplashScreen';
 import UserLogin from '../screens/UserLogin';
 import UserRegister from '../screens/UserRegister';
 import UserSelectScreen from '../screens/UserSelectScreen';
-import VendorOnBoardPhoto from '../screens/VendorScreens/VendorOnBoardPhoto';
-import AdvertiserBottomTab from './AdvertiserBottomTab';
 import { navigationRef } from './RootNavigation';
+import UserBottomTab from './UserBottomTab';
 import VendorBottomTab from './VendorBottomTab';
 
 const Stack = createNativeStackNavigator();
@@ -54,44 +51,44 @@ const MyServiceStack = () => {
         </ServiceStack.Navigator>
     )
 }
-const ServiceOnBoardStack = createNativeStackNavigator()
-const MyServiceOnBoardStack = () => {
-    return(
-        <ServiceOnBoardStack.Navigator
-            initialRouteName='ServiceOnBoard'
-            screenOptions={{
-                headerShown:false,
-            }}
-        >
-            <ServiceOnBoardStack.Screen name='ServiceOnBoardPhoto' component={ServiceOnBoardPhoto}/>
-            <ServiceOnBoardStack.Screen name='ServiceOnBoard' component={ServiceOnBoard}/>
-        </ServiceOnBoardStack.Navigator>
-    )
-}
-const AdvertiserOnBoardStack = createNativeStackNavigator()
-const MyAdvertiserOnBoardStack = () => {
-    return(
-        <AdvertiserOnBoardStack.Navigator
-            screenOptions={{
-                headerShown:false
-            }}
-        >
-            <AdvertiserOnBoardStack.Screen name='AdvertiserOnBoardPhoto' component={AdvertiserOnBoardPhoto}/>
-        </AdvertiserOnBoardStack.Navigator>
-    )
-}
-const VendorOnBoardStack = createNativeStackNavigator()
-const MyVendorOnBoardStack = () => {
-    return(
-        <VendorOnBoardStack.Navigator
-            screenOptions={{
-                headerShown:false
-            }}
-        >
-            <VendorOnBoardStack.Screen name='VendorOnBoardPhoto' component={VendorOnBoardPhoto}/>
-        </VendorOnBoardStack.Navigator>
-    )
-}
+// const ServiceOnBoardStack = createNativeStackNavigator()
+// const MyServiceOnBoardStack = () => {
+//     return(
+//         <ServiceOnBoardStack.Navigator
+//             initialRouteName='ServiceOnBoard'
+//             screenOptions={{
+//                 headerShown:false,
+//             }}
+//         >
+//             <ServiceOnBoardStack.Screen name='ServiceOnBoardPhoto' component={ServiceOnBoardPhoto}/>
+//             <ServiceOnBoardStack.Screen name='ServiceOnBoard' component={ServiceOnBoard}/>
+//         </ServiceOnBoardStack.Navigator>
+//     )
+// }
+// const UserOnBoardStack = createNativeStackNavigator()
+// const MyUserOnBoardStack = () => {
+//     return(
+//         <UserOnBoardStack.Navigator
+//             screenOptions={{
+//                 headerShown:false
+//             }}
+//         >
+//             <UserOnBoardStack.Screen name='UserOnBoardPhoto' component={UserOnBoardPhoto}/>
+//         </UserOnBoardStack.Navigator>
+//     )
+// }
+// const VendorOnBoardStack = createNativeStackNavigator()
+// const MyVendorOnBoardStack = () => {
+//     return(
+//         <VendorOnBoardStack.Navigator
+//             screenOptions={{
+//                 headerShown:false
+//             }}
+//         >
+//             <VendorOnBoardStack.Screen name='VendorOnBoardPhoto' component={VendorOnBoardPhoto}/>
+//         </VendorOnBoardStack.Navigator>
+//     )
+// }
 const AppNavigator = () => {
     return (
         <NavigationContainer
@@ -107,12 +104,10 @@ const AppNavigator = () => {
                 <Stack.Screen name='UserSelectScreen' component={UserSelectScreen} />
                 <Stack.Screen name='LoginScreen' component={UserLogin} />
                 <Stack.Screen name='HomeScreen' component={HomeScreen} />
-                <Stack.Screen name='AdvertiserBottomTab' component={AdvertiserBottomTab}/>
+                <Stack.Screen name='UserBottomTab' component={UserBottomTab}/>
                 <Stack.Screen name='VendorBottomTab' component={VendorBottomTab}/>
-                <Stack.Screen name='SignUpScreen' component={UserRegister}/>
-                <Stack.Screen name='MyVendorOnBoardStack' component={MyVendorOnBoardStack}/>
-                <Stack.Screen name='MyAdvertiserOnBoardStack' component={MyAdvertiserOnBoardStack}/>
-                <Stack.Screen name='MyServiceProviderOnBoardStack' component={MyServiceOnBoardStack}/>
+                <Stack.Screen name='UserRegister' component={UserRegister}/>
+                <Stack.Screen name='OnBoardPhoto' component={OnBoardPhoto}/>
                 <Stack.Screen name='ServiceHomeStack' component={MyServiceStack}/>
                 {/* <Stack.Screen name='UserSelectScreen' component={UserSelectScreen} />
                 <Stack.Screen name='AdminScreen' component={AdminScreen} />

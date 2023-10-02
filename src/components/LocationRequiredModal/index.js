@@ -9,11 +9,13 @@ import colors from "../../theme/colors"
 const LocationRequiredModal = (props) => {
     const {visible, closeModal, handleLocation,handleNotNow} = props
     return(
-        <Modal visible={visible}>
-            <Header/>
+        <Modal visible={visible} style={{backgroundColor:colors.backgroundColor,flex:1}}>
+            <Header extraStyle={{backgroundColor:colors.backgroundColor}}/>
             <View style={styles.container}>
                 <Image
                     source={images.locationImage}
+                    resizeMode="contain"
+                    style={{height:"50%"}}
                 />
                 <Text style={styles.title}>
                     Explore vendor spaces nearby you.
@@ -22,11 +24,12 @@ const LocationRequiredModal = (props) => {
                     Your location helps us bring you to better spaces to find.
                 </Text>
             </View>
-            <HStack bottom={5} px={4} justifyContent="space-evenly">
+            <HStack paddingBottom={5} px={4} justifyContent="space-evenly" bgColor={colors.backgroundColor}>
                 <MyButton
                     title={"Enable Location"}
                     containerStyle={styles.btn}
                     onPress={handleLocation}
+                    txtStyle={{color:"white"}}
                 />
                 <MyButton
                     title={"Not Now"}

@@ -7,20 +7,20 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         alignItems:"center",
-        
+        backgroundColor:colors.backgroundColor
     },
     title:{
         fontSize:fontSizes.large,
         fontFamily:fonts.bold,
-        color:"black",
+        color:"white",
         textAlign:"center",
         marginHorizontal:50,
         marginTop:50
     },
     subtitle:{
         fontSize:fontSizes.small,
-        fontFamily:fonts.medium,
-        color:"rgba(0, 0, 0, 0.61)",
+        fontFamily:fonts.regular,
+        color:"white",
         textAlign:"center",
         marginHorizontal:50,
         marginTop:spacing.large

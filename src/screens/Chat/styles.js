@@ -6,11 +6,27 @@ import colors from "../../theme/colors";
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:colors.white
+        backgroundColor:colors.backgroundColor
     },
     noData:{
         color:"white",
         fontFamily:fonts.semiBold
+    },
+    rightImage:{
+        alignSelf:"flex-end",
+        width:200,
+        aspectRatio:16/9,
+        borderWidth:2,
+        borderColor:colors.appDefaultColor,
+        borderRadius:spacing.small
+    },
+    leftImage:{
+        alignSelf:"flex-start",
+        width:200,
+        aspectRatio:16/9,
+        borderWidth:2,
+        borderColor:colors.appDefaultColor,
+        borderRadius:spacing.small
     },
     inputBox:{
         // position:'absolute',
@@ -26,13 +42,14 @@ const styles = StyleSheet.create({
         marginBottom:20
     },
     txt:{
-        color:"white",
-        fontFamily:fonts.semiBold
+        color:"black",
+        fontFamily:fonts.medium
     },
     timeAgo:{
-        color:"gray",
+        color:"white",
         fontFamily:fonts.regular,
-        fontSize:fontSizes.tiny
+        fontSize:fontSizes.tiny,
+        marginTop:2
     },
     rightMsg:{
         marginVertical:spacing.small,
@@ -41,7 +58,7 @@ const styles = StyleSheet.create({
     },
     rightMsgInner:{
         padding:spacing.medium,
-        backgroundColor:colors.btnColor,
+        backgroundColor:colors.white,
         width:undefined,
         borderTopLeftRadius:spacing.medium,
         borderBottomLeftRadius:spacing.medium,
@@ -49,7 +66,7 @@ const styles = StyleSheet.create({
     },
     leftMsgInner:{
         padding:spacing.medium,
-        backgroundColor:"#313131",
+        backgroundColor:colors.white,
         width:undefined,
         borderTopRightRadius:spacing.medium,
         borderBottomLeftRadius:spacing.medium,

@@ -13,19 +13,23 @@ const styles = StyleSheet.create({
         fontFamily: fonts.semiBold
     },
     rightBox: {
-        flexDirection: "row"
+        flexDirection: "row",
+        flex:1,
     },
     chatBox: {
+        flexDirection:"column",
         alignItems: "flex-start",
-        marginLeft: 14
+        justifyContent:"center",
+        paddingLeft: 14,
+        flex:1,
     },
     item: {
         // backgroundColor: 'pink',
         // padding: 20,
         marginVertical: 3,
         marginHorizontal: 7,
-        height: 70,
         alignItems: "center",
+        paddingVertical:10,
         justifyContent: "space-between",
         flexDirection: "row",
         paddingHorizontal: 13,
@@ -35,17 +39,18 @@ const styles = StyleSheet.create({
     title: {
         fontFamily:fonts.semiBold,
         fontSize: fontSizes.extraSmall,
-        color: "black",
+        color: "white",
     },
     text: {
-        color: "gray",
+        color: "#8C94D2",
         fontSize: fontSizes.extraExtraSmall,
         fontFamily: fonts.medium,
         letterSpacing: 1,
-        width:"60%"
+        width:"100%",
+        marginTop:3
     },
     smallTxt: {
-        color: "gray",
+        color: "#8C94D2",
         fontSize: 10,
         // fontWeight: "bold",
         letterSpacing: 1,

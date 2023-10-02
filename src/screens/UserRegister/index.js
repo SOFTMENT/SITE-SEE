@@ -3,7 +3,7 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
-import { Button, Stack } from 'native-base';
+import { Button, Stack, useDisclose } from 'native-base';
 import React, { useRef, useState } from 'react';
 import { Image, Platform, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -16,6 +16,8 @@ import MyTextInput from "../../components/MyTextInput";
 import { navigateAndReset } from '../../navigators/RootNavigation';
 import colors from '../../theme/colors';
 import styles from "./styles";
+import Header from '../../components/Header';
+import MemberShipActionSheet from '../../components/MembershipActionSheet';
 const UserRegister = (props) => {
     const { navigation, route } = props
     const [name, setName] = useState("")
@@ -26,9 +28,14 @@ const UserRegister = (props) => {
     const [countryCode, setCountryCode] = useState("+41")
     const phoneInput = useRef();
     const [loading, setLaoding] = useState(false)
-    //const { tab } = route.params ?? {}
+    const { tab } = route.params ?? {}
     const inset = useSafeAreaInsets()
-    const handleRegister = () => {
+    const {
+        isOpen,
+        onOpen,
+        onClose
+      } = useDisclose();
+    const handleRegister = async() => {
         //console.log(tab, phone)
         if (!name.trim()) {
             Util.showMessage("error", "Oops!", "Please Enter Name")
@@ -58,9 +65,22 @@ const UserRegister = (props) => {
         //     Util.showMessage("error", "Oops!", "Password and Confirm password doesn't match")
         //     return
         // }
-        createUser()
+        if(tab == 2){
+            onOpen()
+        }
+        else{
+            createUser()
+        }
+        // await handleMembership()
+        // .then((data)=>{
+        //     console.log(data)
+        //     return
+        // })
+        // .catch(()=>{
+
+        // })
     }
-    const createUser = async () => {
+    const createUser = async (membershipDetails) => {
         try {
             setLaoding(true)
             await auth().createUserWithEmailAndPassword(
@@ -71,25 +91,26 @@ const UserRegister = (props) => {
                 .collection('Users')
                 .doc(user.uid)
                 .set({
+                    ...membershipDetails,
                     name: name.trim() + " " + lastName.trim(),
                     email: email.trim(),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     // lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
-                    //userType: Util.getUserType(tab),
+                    userType: Util.getUserType(tab),
                     //...(tab == 2 && { accountStatus:false,balance:0 }),
                     accountStatus:false,balance:0,
                     profileCompleted: false,
                     // phoneVerified: false,
                     uid: user.uid,
                 })
-            if (user) {
-                await user.sendEmailVerification()
+                if (user) {
+                    await user.sendEmailVerification()
                     .then(() => {
 
                     })
                     Util.showMessage("success", "Registration successful", "A verification link has been sent to your email.(Check your spam in case the email is not in your inbox.")
-                navigateAndReset("LoginScreen")
-            }
+                    navigateAndReset("LoginScreen",{tab})
+                }
         } catch (error) {
             if (error.code === 'auth/email-already-in-use') {
                 Util.showMessage("error", "Error", 'That email address is already in use!');
@@ -101,11 +122,13 @@ const UserRegister = (props) => {
                 Util.showMessage("error", "Error", 'Something Went Wrong');
 
             }
-            console.log(error)
         }
         finally {
             setLaoding(false)
         }
+    }
+    const memberShipCallback = async (membershipDetails) => {
+        createUser(membershipDetails)
     }
     const sendNewProEmailAdmin = async (name, email) => {
         try {
@@ -223,21 +246,20 @@ const UserRegister = (props) => {
                         })
                     }
                     else {
-                        await AsyncStorage.setItem("userType","Advertiser")
-                        navigateAndReset("HomeScreen", { uid: user.data().uid })
-                        // if((user.data().userType == Util.getUserType(tab)))
-                        //     navigateAndReset("HomeScreen", { uid: user.data().uid })
-                        // else
-                        //     {
-                        //         //console.log("not user")
-                        //         auth().signOut().then(() => {
-                        //             const val = Util.getUserType(tab)
-                        //             Util.showMessage("error",'Oops!',`This account is already associated with ${user.data().userType}.`)
-                        //         })
-                        //         .catch(error=>{
-                        //             console.log(error)
-                        //         })
-                        //     }
+                        
+                        if((user.data().userType == Util.getUserType(tab)))
+                            navigateAndReset("HomeScreen", { uid: user.data().uid })
+                        else
+                            {
+                                //console.log("not user")
+                                auth().signOut().then(() => {
+                                    const val = Util.getUserType(tab)
+                                    Util.showMessage("error",'Oops!',`This account is already associated with ${user.data().userType}.`)
+                                })
+                                .catch(error=>{
+                                    console.log(error)
+                                })
+                            }
                     }
                 }
                 else {
@@ -257,7 +279,7 @@ const UserRegister = (props) => {
                     email: user.providerData[0].email,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     //lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
-                    //userType: Util.getUserType(tab),
+                    userType: Util.getUserType(tab),
                     profileCompleted: false,
                     // phoneVerified: false,
                     uid: user.uid,
@@ -267,7 +289,6 @@ const UserRegister = (props) => {
                 })
             // if (tab != 1)
             //     sendUnderReviewEmail(fullName ? fullName : user.displayName, user.email ? user.email : user.providerData[0].email)
-            await AsyncStorage.setItem("userType","Advertiser")
             navigateAndReset("HomeScreen", { uid: user.uid })
         } catch (error) {
             Util.showMessage("error", "Error", error.message)
@@ -303,37 +324,47 @@ const UserRegister = (props) => {
     return (
         <KeyboardAwareScrollView
             bounces={false}
-            style={{ flex: 1,backgroundColor: "white"}}
+            style={{ flex: 1,backgroundColor:colors.backgroundColor}}
             keyboardShouldPersistTaps={"handled"}
         // stickyHeaderHiddenOnScroll
         >
+            <Header back extraStyle={{paddingVertical:0}} navigation={navigation}/>
             <View
                 style={styles.container}>
                 <View
                     style={styles.loginBack}
                 >
                     <Image
-                        source={images.logo}
+                        source={images.siteSeeVertical}
                         resizeMode="contain"
-                        style={styles.logo}
+                        style={styles.siteSee}
                     />
+                    <View
+                        style={styles.borderViewTop}
+                    />
+                    <Text style={styles.login}>
+                        {`Create new \naccount`}
+                    </Text>
                 </View>
 
                 <View style={styles.mainView}>
-                    <Text style={styles.areYou}>
+                    {/* <Text style={styles.areYou}>
                         Register
-                    </Text>
+                    </Text> */}
                     <MyTextInput
                         containerStyle={{ marginVertical: spacing.small }}
                         iconName={"account-outline"}
                         placeholder={"First Name"}
                         value={name}
                         onChangeText={(txt) => setName(txt)}
+                        subPlace={"Enter your first name"}
+
                     />
                     <MyTextInput
                         containerStyle={{ marginVertical: spacing.small }}
                         iconName={"account-outline"}
                         placeholder={"Last Name"}
+                        subPlace={"Enter your last name"}
                         value={lastName}
                         onChangeText={(txt) => setLastName(txt)}
                     />
@@ -343,7 +374,10 @@ const UserRegister = (props) => {
                         placeholder="Email"
                         value={email}
                         onChangeText={(txt) => setEmail(txt.trim())}
+                        subPlace={"Enter your email"}
+
                     />
+                    
 
                     <MyTextInput
                         containerStyle={{ marginVertical: spacing.small }}
@@ -352,12 +386,14 @@ const UserRegister = (props) => {
                         placeholder={"Password"}
                         value={pass}
                         onChangeText={(txt) => setPass(txt)}
+                        subPlace={"Enter password"}
                     />
                     <MyButton
-                        title={"Register"}
+                        title={"Sign up"}
                         containerStyle={styles.btn}
                         onPress={handleRegister}
                         loading={loading}
+                        txtStyle={{color:'white'}}
                     />
                     <View style={styles.borderViewContainer}>
                         <View style={styles.borderView}></View>
@@ -371,7 +407,7 @@ const UserRegister = (props) => {
                             leftIcon={
                                 <Image source={images.google} style={styles.icon} />
                             }
-                            _text={{ color: "rgba(38, 50, 56, 0.65)" }}
+                            _text={{ color: colors.appDefaultColor,fontWeight:"medium"}}
                             bg={"white"}
                             borderWidth={1}
                             borderColor={'rgba(0, 0, 0, 0.17)'}
@@ -391,9 +427,9 @@ const UserRegister = (props) => {
                                 borderRadius={10}
                                 marginBottom={10}
                                 leftIcon={
-                                    <Image source={images.apple} style={[styles.icon, { tintColor: colors.grey }]} />
+                                    <Image source={images.apple} style={[styles.icon, { tintColor: colors.black }]} />
                                 }
-                                _text={{ color: "rgba(38, 50, 56, 0.65)" }}
+                                _text={{ color: colors.appDefaultColor,fontWeight:"medium"}}
                             // backgroundColor: colors.darkGreyBtn, flex: 1 }}
                             >Login with Apple</Button>
                         }
@@ -417,6 +453,11 @@ const UserRegister = (props) => {
                     </View> */}
                 </View>
             </View>
+            <MemberShipActionSheet 
+                isOpen={isOpen} 
+                onClose={onClose} 
+                memberShipCallback={memberShipCallback}
+            />
         </KeyboardAwareScrollView>
     )
 }

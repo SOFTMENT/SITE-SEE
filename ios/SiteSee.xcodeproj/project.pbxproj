@@ -11,9 +11,8 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		17CCC5F1085F4C51BDDACB84 /* Mulish-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B0C31250D5C4949A42FD764 /* Mulish-Light.ttf */; };
 		1BDDBF402C9E6678CCCE6D47 /* Pods_SiteSee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACCC6DDC62A0D90BE0CEB8D /* Pods_SiteSee.framework */; };
-		3E750C671AA24EB891691C7F /* Mulish-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4E52E90B1DC4474BB37393B /* Mulish-SemiBold.ttf */; };
+		3B836851168A4F1A9D187885 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 676B40BFB42543D588735B5D /* Montserrat-Regular.ttf */; };
 		8004B8532961F93C008AA020 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8004B8522961F93C008AA020 /* GoogleService-Info.plist */; };
 		804C0EE12982E0FD0071AB43 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804C0EE02982E0FD0071AB43 /* File.swift */; };
 		80C6FB8E2963672A00F8567C /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80C6FB7E2963672A00F8567C /* Fontisto.ttf */; };
@@ -34,10 +33,11 @@
 		80C6FB9D2963672A00F8567C /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80C6FB8D2963672A00F8567C /* MaterialIcons.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8A20166AE6FE416BAE8A4058 /* index.js in Resources */ = {isa = PBXBuildFile; fileRef = 876FE4F09819449F9CF07EB6 /* index.js */; };
-		8C9DAB2EAD4C4239BB156638 /* Mulish-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6651C38C464441D9C42EEBB /* Mulish-Regular.ttf */; };
-		928BAF0E14BB421EB0627B2E /* Mulish-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F75F984AA794C1A82A132A0 /* Mulish-Bold.ttf */; };
+		95C651A7706A4BC08E6A5A90 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1D83E7F30984E378315712B /* Montserrat-Medium.ttf */; };
+		A35F7E829E764CFE9661C64D /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 541D9A4C53B242D68208E792 /* Montserrat-Bold.ttf */; };
+		A64D2BFC5F354AFE927D7FA4 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FDFCFAB1C3045AE9E355D2A /* Montserrat-SemiBold.ttf */; };
 		B385B634DB3112190CA20BB1 /* Pods_SiteSee_SiteSeeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FE2E4C004F98B5D696DCBA /* Pods_SiteSee_SiteSeeTests.framework */; };
-		F9B4437CA9D04C1C9F5B539D /* Mulish-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C3C5085B7C094678AE5B5676 /* Mulish-Medium.ttf */; };
+		DD957EE246E147F1A340BF3E /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3377A4249DED4768BDFA58C6 /* Montserrat-Light.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,10 +61,12 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SiteSee/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SiteSee/main.m; sourceTree = "<group>"; };
 		1ACCC6DDC62A0D90BE0CEB8D /* Pods_SiteSee.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SiteSee.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1B0C31250D5C4949A42FD764 /* Mulish-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mulish-Light.ttf"; path = "../assets/fonts/Mulish-Light.ttf"; sourceTree = "<group>"; };
 		2C656F9E22902D0809FB819F /* Pods-SiteSee.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SiteSee.debug.xcconfig"; path = "Target Support Files/Pods-SiteSee/Pods-SiteSee.debug.xcconfig"; sourceTree = "<group>"; };
-		3F75F984AA794C1A82A132A0 /* Mulish-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mulish-Bold.ttf"; path = "../assets/fonts/Mulish-Bold.ttf"; sourceTree = "<group>"; };
+		3377A4249DED4768BDFA58C6 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Light.ttf"; path = "../assets/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		49B39162791E2C03003FACB9 /* Pods-SiteSee-SiteSeeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SiteSee-SiteSeeTests.release.xcconfig"; path = "Target Support Files/Pods-SiteSee-SiteSeeTests/Pods-SiteSee-SiteSeeTests.release.xcconfig"; sourceTree = "<group>"; };
+		541D9A4C53B242D68208E792 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		5FDFCFAB1C3045AE9E355D2A /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../assets/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		676B40BFB42543D588735B5D /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		7AD7F12ACB4F2980A26F5841 /* Pods-SiteSee-SiteSeeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SiteSee-SiteSeeTests.debug.xcconfig"; path = "Target Support Files/Pods-SiteSee-SiteSeeTests/Pods-SiteSee-SiteSeeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8004B8522961F93C008AA020 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		804C0ED92982DFC60071AB43 /* SiteSee-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SiteSee-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -89,11 +91,9 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SiteSee/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		876FE4F09819449F9CF07EB6 /* index.js */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = index.js; path = ../assets/fonts/index.js; sourceTree = "<group>"; };
 		96FCF9A3BB7093752DA17AB7 /* Pods-SiteSee.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SiteSee.release.xcconfig"; path = "Target Support Files/Pods-SiteSee/Pods-SiteSee.release.xcconfig"; sourceTree = "<group>"; };
+		B1D83E7F30984E378315712B /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		C1FE2E4C004F98B5D696DCBA /* Pods_SiteSee_SiteSeeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SiteSee_SiteSeeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C3C5085B7C094678AE5B5676 /* Mulish-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mulish-Medium.ttf"; path = "../assets/fonts/Mulish-Medium.ttf"; sourceTree = "<group>"; };
-		E4E52E90B1DC4474BB37393B /* Mulish-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mulish-SemiBold.ttf"; path = "../assets/fonts/Mulish-SemiBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F6651C38C464441D9C42EEBB /* Mulish-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mulish-Regular.ttf"; path = "../assets/fonts/Mulish-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,12 +162,12 @@
 		44D612F624C04C7AB330662F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3F75F984AA794C1A82A132A0 /* Mulish-Bold.ttf */,
-				1B0C31250D5C4949A42FD764 /* Mulish-Light.ttf */,
-				C3C5085B7C094678AE5B5676 /* Mulish-Medium.ttf */,
-				F6651C38C464441D9C42EEBB /* Mulish-Regular.ttf */,
-				E4E52E90B1DC4474BB37393B /* Mulish-SemiBold.ttf */,
 				876FE4F09819449F9CF07EB6 /* index.js */,
+				541D9A4C53B242D68208E792 /* Montserrat-Bold.ttf */,
+				3377A4249DED4768BDFA58C6 /* Montserrat-Light.ttf */,
+				B1D83E7F30984E378315712B /* Montserrat-Medium.ttf */,
+				676B40BFB42543D588735B5D /* Montserrat-Regular.ttf */,
+				5FDFCFAB1C3045AE9E355D2A /* Montserrat-SemiBold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -354,12 +354,12 @@
 				8004B8532961F93C008AA020 /* GoogleService-Info.plist in Resources */,
 				80C6FB912963672A00F8567C /* Entypo.ttf in Resources */,
 				80C6FB952963672A00F8567C /* Foundation.ttf in Resources */,
-				928BAF0E14BB421EB0627B2E /* Mulish-Bold.ttf in Resources */,
-				17CCC5F1085F4C51BDDACB84 /* Mulish-Light.ttf in Resources */,
-				F9B4437CA9D04C1C9F5B539D /* Mulish-Medium.ttf in Resources */,
-				8C9DAB2EAD4C4239BB156638 /* Mulish-Regular.ttf in Resources */,
-				3E750C671AA24EB891691C7F /* Mulish-SemiBold.ttf in Resources */,
 				8A20166AE6FE416BAE8A4058 /* index.js in Resources */,
+				A35F7E829E764CFE9661C64D /* Montserrat-Bold.ttf in Resources */,
+				DD957EE246E147F1A340BF3E /* Montserrat-Light.ttf in Resources */,
+				95C651A7706A4BC08E6A5A90 /* Montserrat-Medium.ttf in Resources */,
+				3B836851168A4F1A9D187885 /* Montserrat-Regular.ttf in Resources */,
+				A64D2BFC5F354AFE927D7FA4 /* Montserrat-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,7 +569,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = SiteSeeTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -580,6 +580,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = in.softment.sitesee;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SiteSee.app/SiteSee";
@@ -594,7 +595,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = SiteSeeTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -605,6 +606,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = in.softment.sitesee;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SiteSee.app/SiteSee";
@@ -618,8 +620,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SiteSee/SiteSee.entitlements;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F4UAJU6HLM;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SiteSee/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SiteSee;
@@ -633,8 +636,10 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = in.softment.sitesee;
 				PRODUCT_NAME = SiteSee;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -653,8 +658,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SiteSee/SiteSee.entitlements;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F4UAJU6HLM;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SiteSee/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SiteSee;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -667,8 +673,10 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = in.softment.sitesee;
 				PRODUCT_NAME = SiteSee;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -728,7 +736,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -793,7 +801,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",

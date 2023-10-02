@@ -12,11 +12,25 @@ export default StyleSheet.create({
         //padding:spacing.large
     },
     loginBack:{
-        width:"100%",
+        flexDirection:"row",
         height:Util.getHeight(25),
-        //backgroundColor:colors.black,
-        justifyContent:"center",
-        alignItems:"center"
+        alignItems:"center",
+        marginHorizontal:25,
+    },
+    siteSee:{
+        height:"100%"
+    },
+    login:{
+        fontFamily:fonts.medium,
+        color:colors.white,
+        fontSize:fontSizes.extraExtraLarge,
+        marginLeft:30
+    },
+    borderViewTop:{
+        height:"75%",
+        width:2,
+        marginLeft:30,
+        backgroundColor:colors.white
     },
     logo:{
         //height:Util.getHeight(30),
@@ -44,28 +58,28 @@ export default StyleSheet.create({
         color: "white",
     },
     btn: {
-        marginTop: spacing.medium
+        marginTop: spacing.medium,
+        borderRadius:spacing.large
     },
     borderViewContainer: {
         width: "100%",
         alignItems: "center",
-        flexDirection: "row",
+        flexDirection: "row",   
         //backgroundColor:'red'
     },
     borderView: {
         height: 0.5,
         flex: 1,
         // width:"100%",
-        backgroundColor: "grey",
-
+        backgroundColor:"white",
     },
-    or: {
-        color: colors.btnColor,
-        textAlign: "center",
-        marginVertical: spacing.extraExtraLarge,
-        fontFamily: fonts.regular,
-        fontSize: fontSizes.extraExtraSmall,
-        marginHorizontal: spacing.small
+    or:{
+        color:colors.white,
+        textAlign:"center",
+        marginVertical:spacing.large,
+        fontFamily:fonts.bold,
+        fontSize:fontSizes.extraExtraSmall,
+        marginHorizontal:spacing.extraExtraSmall
     },
     register: {
         color: colors.btnColor,

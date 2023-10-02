@@ -17,6 +17,9 @@ import MyTextInput from "../../components/MyTextInput";
 import { navigateAndReset } from '../../navigators/RootNavigation';
 import colors from "../../theme/colors";
 import styles from "./styles";
+import fonts from '../../../assets/fonts';
+import ClickableText from '../../components/ClickableText';
+import Header from '../../components/Header';
 const UserLogin = (props) => {
     const { navigation, route } = props
     const tab = route.params?.tab ?? 1
@@ -83,21 +86,18 @@ const UserLogin = (props) => {
                                 Util.showMessage("btnToast", "Email Verification Required", "A verification link has been sent to your email.(Check your spam in case the email is not in your inbox", sendEmailVerificationLink)
                             }
                             else {
-                                // if((userDoc.userType == Util.getUserType(tab)))
-                                //     navigateAndReset("HomeScreen", { uid: userDoc.uid })
-                                // else
-                                //     {
-                                //         console.log("not user")
-                                //         auth().signOut().then(() => {
-                                //             const val = Util.getUserType(tab )
-                                //             Util.showMessage("error",'Oops!',`This account is already associated with ${userDoc.userType}.`)
-                                //         })
-                                //         .catch(error=>{
-                                //             console.log(error)
-                                //         })
-                                //     }
-                                await AsyncStorage.setItem("userType","Advertiser")
-                                navigateAndReset("HomeScreen", { uid: userDoc.uid })
+                                if((userDoc.userType == Util.getUserType(tab)))
+                                    navigateAndReset("HomeScreen", { uid: userDoc.uid })
+                                else
+                                    {
+                                        auth().signOut().then(() => {
+                                            const val = Util.getUserType(tab )
+                                            Util.showMessage("error",'Oops!',`This account is already associated with ${userDoc.userType}.`)
+                                        })
+                                        .catch(error=>{
+                                            console.log(error)
+                                        })
+                                    }
                             }
                         }
                     })
@@ -198,26 +198,28 @@ const UserLogin = (props) => {
                         })
                     }
                     else {
-                        await AsyncStorage.setItem("userType","Advertiser")
-                        navigateAndReset("HomeScreen", { uid: user.data().uid })
-                        // if((user.data().userType == Util.getUserType(tab)))
-                        //     navigateAndReset("HomeScreen", { uid: user.data().uid })
-                        // else
-                        //     {
-                        //         //console.log("not user")
-                        //         auth().signOut().then(() => {
-                        //             const val = Util.getUserType(tab)
-                        //             Util.showMessage("error","Oops!",`This account is already associated with ${user.data().userType}.`)
-                        //         })
-                        //         .catch(error=>{
-                        //             console.log(error)
-                        //         })
-                        //     }
+                       
+                        if((user.data().userType == Util.getUserType(tab)))
+                            navigateAndReset("HomeScreen", { uid: user.data().uid })
+                        else
+                            {
+                                //console.log("not user")
+                                auth().signOut().then(() => {
+                                    const val = Util.getUserType(tab)
+                                    Util.showMessage("error","Oops!",`This account is already associated with ${user.data().userType}.`)
+                                })
+                                .catch(error=>{
+                                    console.log(error)
+                                })
+                            }
                     }
                 }
                 else {
                     setUserData(fullName)
                 }
+            })
+            .catch(err=>{
+                console.log(err)
             })
             .finally(() => {
                 setLoading(false)
@@ -236,7 +238,7 @@ const UserLogin = (props) => {
                     email: user.providerData[0].email,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     //lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
-                    //userType:Util.getUserType(tab),
+                    userType:Util.getUserType(tab),
                     profileCompleted:false,
                     // phoneVerified: false,
                     accountStatus:false,balance:0 ,
@@ -245,9 +247,9 @@ const UserLogin = (props) => {
                 })
             // if (tab != 1)
             //     sendUnderReviewEmail(fullName ? fullName : user.displayName, user.email ? user.email : user.providerData[0].email)
-            await AsyncStorage.setItem("userType","Advertiser")
             navigateAndReset("HomeScreen", { uid: user.uid })
         } catch (error) {
+            console.log(error)
             Util.showMessage("error", "Error", error.message)
         }
         finally {
@@ -317,10 +319,11 @@ const UserLogin = (props) => {
     return (
         <KeyboardAwareScrollView
             bounces={false}
-            style={{ flex: 1,paddingTop: inset.top,backgroundColor:colors.backgroundColor }}
+            style={{ flex: 1,backgroundColor:colors.backgroundColor }}
             keyboardShouldPersistTaps={"handled"}
         // stickyHeaderHiddenOnScroll
         >
+            <Header back extraStyle={{paddingVertical:0}} navigation={navigation}/>
             <View
                 style={styles.container}>
                 {/* <Header navigation={navigation} back /> */}
@@ -340,7 +343,7 @@ const UserLogin = (props) => {
                     </Text>
                 </View>
                 <View style={styles.mainView}>
-                    <Text style={styles.areYou}>Welcome Back!</Text>
+                    {/* <Text style={styles.areYou}>Welcome Back!</Text> */}
                     <MyTextInput
                         containerStyle={{ marginVertical: spacing.medium }}
                         iconName={"email-outline"}
@@ -348,6 +351,7 @@ const UserLogin = (props) => {
                         //value={}
                         value={email}
                         onChangeText={(txt) => setEmail(txt)}
+                        subPlace={"Enter your email"}
                     />
                     <MyTextInput
                         containerStyle={{ marginVertical: spacing.small }}
@@ -356,6 +360,8 @@ const UserLogin = (props) => {
                         placeholder={"Password"}
                         value={pass}
                         onChangeText={(txt) => setPass(txt)}
+                        subPlace={"Enter your password"}
+
                     />
                     {/* <ClickableText
                         title={"Forgot Password?"}
@@ -368,12 +374,16 @@ const UserLogin = (props) => {
                         containerStyle={styles.btn}
                         onPress={handleLogin}
                         loading={loading}
+                        txtStyle={{
+                            color:"white",
+                            fontFamily:fonts.medium
+                        }}
                     />
                     <Link
                         mt={5}
                         onPress={handleForget}
                         _text={{
-                            color:"#263238",
+                            color:"white",
                             textDecoration:"none"
                         }}
                         style={{
@@ -394,7 +404,7 @@ const UserLogin = (props) => {
                             leftIcon={
                                 <Image source={images.google} style={styles.icon} />
                             }
-                            _text={{color:"rgba(38, 50, 56, 0.65)"}}
+                            _text={{color:colors.appDefaultColor,fontWeight:'medium'}}
                             bg={"white"}
                             borderWidth={1}
                             borderColor={'rgba(0, 0, 0, 0.17)'}
@@ -413,21 +423,21 @@ const UserLogin = (props) => {
                                 borderColor={'rgba(0, 0, 0, 0.17)'}
                                 borderRadius={10}
                                 leftIcon={
-                                    <Image source={images.apple} style={[styles.icon, { tintColor: colors.grey }]} />
+                                    <Image source={images.apple} style={[styles.icon, { tintColor: colors.black }]} />
                                 }
-                                _text={{ color: "rgba(38, 50, 56, 0.65)" }}
+                                _text={{ color: colors.appDefaultColor,fontWeight:"medium"}}
                             // backgroundColor: colors.darkGreyBtn, flex: 1 }}
                             >Login with Apple</Button>
                         }
                     </Stack>
-                    {/* <View style={{ flexDirection: "row", justifyContent: 'center',alignItems:"center" }}>
-                        <Text style={styles.register}>Register a new account?</Text>
+                    <View style={{ flexDirection: "row", justifyContent: 'center',alignItems:"center" }}>
+                        <Text style={styles.register}>Don't have an account?</Text>
                         <ClickableText
                             title={"Sign Up"}
-                            extraStyle={[styles.or, { color: colors.appPrimaryDark }]}
+                            extraStyle={[styles.or, { color: colors.appDefaultColor }]}
                             onPress={() => navigation.navigate("UserRegister", { tab })}
                         />
-                         <Link
+                         {/* <Link
                              onPress={() => navigation.navigate("UserRegister", { tab })}
                             _text={{
                                 color: "white",
@@ -435,8 +445,8 @@ const UserLogin = (props) => {
                             }}
                         >
                             Sign Up
-                        </Link>
-                    </View> */}
+                        </Link> */}
+                    </View>
                 </View>
             </View>
         </KeyboardAwareScrollView>

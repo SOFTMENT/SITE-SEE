@@ -11,6 +11,7 @@ export default function PhotoPicker(props) {
         setImage,
         isVideo,
         isCover,
+        isTF
     } = props;
     const handleCamera = () => {
         onClose()
@@ -37,6 +38,12 @@ export default function PhotoPicker(props) {
         onClose()
         if(isVideo){
             Helper.pickVideo()
+            .then(val=>{
+                setImage(val)
+            })
+        }
+        else if(isTF){
+            Helper.pickImageTF(isCover)
             .then(val=>{
                 setImage(val)
             })

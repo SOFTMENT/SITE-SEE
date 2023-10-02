@@ -11,22 +11,14 @@ import InfiniteHits from './components/InfiniteHits';
 import SearchBox from './components/SearchBox';
 import styles from './styles';
 import Header from '../../components/Header';
+import { connect } from 'react-redux';
 
 const algoliaClient = algoliasearch(
-    '5ZDNXVM8M8',
-    '9265d931a90114d65a5d0543a494cf44'
+    'MOMHBUJFM8',
+    '110bf4874cab087690527dec42643d51'
 );
 let firstLoad = true
-const searchClient = {
-    search(requests) {
-        console.log(firstLoad)
-      if (firstLoad === true) {
-        firstLoad = false;
-        return;
-      }
-      return algoliaClient.search(requests);
-    },
-  };
+
 const VirtualRefinementList = connectRefinementList(() => null);
 
 class SearchScreen extends React.Component {
@@ -59,18 +51,34 @@ class SearchScreen extends React.Component {
     render() {
         const { isModalOpen, searchState } = this.state;
         const {route, navigation} = this.props
+        const {currentPosition} = route.params
+        const searchClient = {
+            search(requests) {
+                console.log(firstLoad)
+              if (firstLoad === true) {
+                firstLoad = false;
+                return;
+              }
+              return algoliaClient.search(requests,
+            //     {
+            //     aroundLatLng: `${currentPosition.latitude}, ${currentPosition.longitude}`,
+            //     aroundRadius: 1000000 // 1,000 km
+            //   }
+              );
+            }
+        }
         return (
             <View style={styles.container}>
                 <Header navigation={navigation} title="Search" back/>
                 <View style={styles.mainView}>
                     <InstantSearch
                         searchClient={searchClient}
-                        indexName="item"
+                        indexName="title"
                         root={this.root}
                         searchState={searchState}
                         onSearchStateChange={this.onSearchStateChange}
                     >
-                        <VirtualRefinementList attribute="name" />
+                        <VirtualRefinementList attribute="title" />
                         <SearchBox navigation={navigation}/>
                         <InfiniteHits navigation={navigation}/>
                     </InstantSearch>
@@ -79,6 +87,5 @@ class SearchScreen extends React.Component {
 
         );
     }
-}
-
+};
 export default SearchScreen;

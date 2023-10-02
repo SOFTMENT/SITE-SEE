@@ -10,7 +10,8 @@
 	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:ktrfitness.page.link/H3Ed</string>
+		<string>applinks:mlz3i.app.link</string>
+		<string>applinks:mlz3i-alternate.app.link</string>
 	</array>
 </dict>
 </plist>

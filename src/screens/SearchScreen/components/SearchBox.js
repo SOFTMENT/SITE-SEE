@@ -28,7 +28,8 @@ const SearchBox = ({ currentRefinement, refine, backImage, navigation }) => {
                         variant="outlined"
                         flex={1}
                         _focus={{borderColor:colors.appPrimary}}
-                        borderRadius={10}
+                        borderRadius={30}
+                        bgColor={"white"}
                         py={Platform.OS=="ios"?4:2}
                         color={"black"}
                         borderWidth={1}

@@ -39,7 +39,7 @@ const MyButton = (props) => {
                         ml={1}
                     />
                 }
-            {loading && <ActivityIndicator size={'small'} color={colors.backgroundColor} style={{marginLeft:5}}/>}
+            {loading && <ActivityIndicator size={'small'} color={colors.white} style={{marginLeft:5}}/>}
         </TouchableOpacity>
     );
 };
@@ -52,7 +52,7 @@ export default MyButton;
 const styles = StyleSheet.create({
     container: {
         flexDirection:'row',
-        backgroundColor:colors.btnColor,
+        backgroundColor:colors.appDefaultColor,
         justifyContent: 'center',
         alignItems: 'center',
         padding: spacing.medium,

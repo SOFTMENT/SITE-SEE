@@ -1,14 +1,14 @@
 export const propertyCategories = [
     {
-        label:"Building",
+        label:"Table",
         id:0
     },
     {
-        label:"Front Fence",
+        label:"Chair",
         id:1
     },
     {
-        label:"Truck",
+        label:"Television",
         id:2
     },
 ]

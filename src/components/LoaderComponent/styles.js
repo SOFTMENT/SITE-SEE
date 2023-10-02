@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
     },
       loaderbackgroundView: {
         width:"50%",
-        backgroundColor:colors.appDefaultColor,
         borderRadius:spacing.large,
         alignItems:"center",
         justifyContent:"center",

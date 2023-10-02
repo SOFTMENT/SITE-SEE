@@ -74,7 +74,7 @@ const VendorProfile = (props) => {
     
     return (
         <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
-            <Header navigation={navigation} title="Account"
+            <Header navigation={navigation} title="My Profile"
                 // rightIcon={"logout"}
                 // onRightIconPress={logout}
             />

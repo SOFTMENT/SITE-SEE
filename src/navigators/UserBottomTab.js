@@ -2,198 +2,199 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Icon } from 'native-base';
 import React from 'react';
+import { Platform, StyleSheet, View } from 'react-native';
 import Ionicons from "react-native-vector-icons/Ionicons";
-import HomeSvg from '../components/SvgIcons/HomeSvg';
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import fonts from '../../assets/fonts';
+import { fontSizes } from '../common/variables';
 import Chat from '../screens/Chat';
 import Inbox from '../screens/Inbox';
-import AppointmentScreen from '../screens/UserScreens/AppointmentScreen';
-import MapViewScreen from '../screens/UserScreens/MapViewScreen';
-import TrainerScreen from '../screens/UserScreens/TrainerScreen';
-import UserHome from '../screens/UserScreens/UserHome';
-import UserNotifications from '../screens/UserScreens/UserNotifications';
-import UserProfile from '../screens/UserScreens/UserProfile';
-import VideoPlayer from '../screens/VideoPlayer';
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-import EditUserPorfile from '../screens/UserScreens/EditUserPorfile';
-import ReviewScreen from '../screens/UserScreens/ReviewScreen';
-import UserBookings from '../screens/UserScreens/UserBookings';
-import WriteReview from '../screens/UserScreens/WriteReview';
-import TrainerVideoLibrary from '../screens/UserScreens/TrainerVideoLibrary';
 import SearchScreen from '../screens/SearchScreen';
+import AdvertiserDetail from '../screens/UserScreens/ListingDetail';
+import UserHome from '../screens/UserScreens/AdvertiserHome';
+import AdvertiserOrderDetails from '../screens/UserScreens/AdvertiserOrderDetails';
+import AdvertiserOrders from '../screens/UserScreens/AdvertiserOrders';
+import AdvertiserProfile from '../screens/UserScreens/AdvertiserProfile';
+import CategoryScreen from '../screens/UserScreens/CartegoryScreen';
+import FavoritesScreen from '../screens/UserScreens/FavoritesScreen';
+import PaymentScreen from '../screens/UserScreens/PaymentScreen';
+import ServiceProviderProfiles from '../screens/UserScreens/ServiceProviderProfiles';
+import colors from '../theme/colors';
+import HomeIcon from '../assets/svgs/home.svg'
+import LocationSelectorScreen from '../screens/UserScreens/LocationSelectorScreen';
+import MyListingScreenUser from '../screens/UserScreens/MyListingScreenUser';
+import ListingDetail from '../screens/UserScreens/ListingDetail';
+import ListingBySupplier from '../screens/UserScreens/ListingBySupplier';
 const Tab = createBottomTabNavigator();
-const MapStackProfileStack = createNativeStackNavigator()
-const UserHomeStack = createNativeStackNavigator()
-const ChatStack = createNativeStackNavigator()
-const MapStack = createNativeStackNavigator()
-const BookingStack = createNativeStackNavigator()
+const AdHomeStack = createNativeStackNavigator()
+const AdOrderStack = createNativeStackNavigator()
+const InboxStack = createNativeStackNavigator()
 const ProfileStack = createNativeStackNavigator()
-const MyProfileHomeStack = () => {
-    return (
-        <ProfileStack.Navigator
+const FavoriteStack = createNativeStackNavigator()
+const MyFavoriteStack = () => {
+    return(
+        <FavoriteStack.Navigator
             screenOptions={{
-                headerShown: false
+                headerShown:false
             }}
         >
-            <ProfileStack.Screen name='Profile' component={UserProfile} />
-            <ProfileStack.Screen name='EditUserProfile' component={EditUserPorfile} />
+            <FavoriteStack.Screen name='Favorite' component={FavoritesScreen}/>
+            <FavoriteStack.Screen name='ListingDetail' component={ListingDetail}/>
+        </FavoriteStack.Navigator>
+    )
+}
+const MyProfileStack = () => {
+    return(
+        <ProfileStack.Navigator
+            screenOptions={{
+                headerShown:false
+            }}
+        >
+            <ProfileStack.Screen name='ProfileScreen' component={AdvertiserProfile}/>
+            
         </ProfileStack.Navigator>
     )
 }
-const MyMapStack = () => {
-    return (
-        <MapStack.Navigator
+const MyInboxStack = () => {
+    return(
+        <InboxStack.Navigator
             screenOptions={{
-                headerShown: false
+                headerShown:false
             }}
         >
-            <MapStack.Screen name='MapViewScreen' component={MapViewScreen} />
-            <MapStack.Screen name='ReviewScreen' component={ReviewScreen} />
-            {/* <MapStack.Screen name='WriteReview' component={WriteReview} /> */}
-        </MapStack.Navigator>
+            <InboxStack.Screen name='Inbox' component={Inbox}/>
+            <InboxStack.Screen name='PersonalChat' component={Chat}/>
+        </InboxStack.Navigator>
     )
 }
-const MyBookingStack = () => {
-    return (
-        <BookingStack.Navigator
+const MyAdHomeStack = () => {
+    return(
+        <AdHomeStack.Navigator
             screenOptions={{
-                headerShown: false
+                headerShown:false
             }}
         >
-            <BookingStack.Screen name='UserBookings' component={UserBookings} />
-            <BookingStack.Screen name='WriteReview' component={WriteReview} />
-            {/* <MapStack.Screen name='WriteReview' component={WriteReview} /> */}
-        </BookingStack.Navigator>
+            <AdHomeStack.Screen name='AdHome' component={UserHome}/>
+            <AdHomeStack.Screen name='MyListingScreenUser' component={MyListingScreenUser}/>
+            <AdHomeStack.Screen name='LocationSelectorScreen' component={LocationSelectorScreen}/>
+            <AdHomeStack.Screen name='ListingDetail' component={ListingDetail}/>
+            <AdHomeStack.Screen name='ListingBySupplier' component={ListingBySupplier}/>
+            <AdOrderStack.Screen name='PersonalChat' component={Chat}/>
+            <AdHomeStack.Screen name='CategoryScreen' component={CategoryScreen}/>
+            <AdHomeStack.Screen name='PaymentScreen' component={PaymentScreen}/>
+            <AdHomeStack.Screen name='SearchScreen' component={SearchScreen}/>
+            <AdHomeStack.Screen name='ServiceProviderProfiles' component={ServiceProviderProfiles}/>
+        </AdHomeStack.Navigator>
     )
 }
-const MyUserHomeStack = () => {
-    return (
-        <UserHomeStack.Navigator
+const MyAdOrderStack = () => {
+    return(
+        <AdOrderStack.Navigator
             screenOptions={{
-                headerShown: false
+                headerShown:false
             }}
         >
-            <UserHomeStack.Screen name='UserHome' component={UserHome} />
-            <UserHomeStack.Screen name='TrainerProfile' component={TrainerScreen} />
-            <UserHomeStack.Screen name='VideoPlayer' component={VideoPlayer} />
-            <UserHomeStack.Screen name='AppointmentScreen' component={AppointmentScreen} />
-            <UserHomeStack.Screen name='ChatScreen' component={Chat} />
-            <UserHomeStack.Screen name='ReviewScreen' component={ReviewScreen} />
-            <UserHomeStack.Screen name='WriteReview' component={WriteReview} />
-            <UserHomeStack.Screen name='TrainerVideoLibrary' component={TrainerVideoLibrary} />
-            <UserHomeStack.Screen name='SearchScreen' component={SearchScreen} />
-        </UserHomeStack.Navigator>
-    )
-}
-const MyChatStack = () => {
-    return (
-        <ChatStack.Navigator
-            screenOptions={{
-                headerShown: false
-            }}
-        >
-            <ChatStack.Screen name='inbox' component={Inbox} />
-            <ChatStack.Screen name='ChatScreen' component={Chat} />
-        </ChatStack.Navigator>
+            <AdOrderStack.Screen name='AdOrder' component={AdvertiserOrders}/>
+            
+            <AdOrderStack.Screen name='AdvertiserOrderDetails' component={AdvertiserOrderDetails}/>
+        </AdOrderStack.Navigator>
     )
 }
 function UserBottomTab() {
     return (
         <Tab.Navigator
             screenOptions={{
+                //tabBarHideOnKeyboard:true,
                 headerShown: false,
                 tabBarShowLabel: false,
                 tabBarStyle: {
-                    backgroundColor: "black",
-                    borderTopWidth: 0
+                    backgroundColor: colors.appDefaultColor,
+                    borderTopWidth: 0,
+                    paddingBottom:Platform.OS == 'android' ? 7:15,
+                    height:Platform.OS =="android"?60:70,
+                    shadowOffset: {
+                        width: 20,
+                        height: 20,
+                    },
+                    shadowOpacity: 0.58,
+                    shadowRadius: 16.0,
+                    elevation: 24,
                 },
-                tabBarActiveTintColor: "white",
-                tabBarInactiveTintColor: "#505050"
+                tabBarIconStyle : {
+                    
+                },
+                tabBarLabelStyle : {
+                    fontFamily:fonts.bold,
+                    fontSize:fontSizes.extraExtraSmall
+                },
+                tabBarActiveTintColor: colors.backgroundColor,
+                tabBarInactiveTintColor: "#D4DAD8",
             }}
         >
-            <Tab.Screen name="UserHomeStack" component={MyUserHomeStack}
+            <Tab.Screen name="Home" component={MyAdHomeStack}
                 options={{
                     tabBarIcon: ({ color, size }) => {
                         return (
-                            <HomeSvg
-                                color={color}
-                                size={size}
-                            />
+                            <View style={[styles.activeBackground,{backgroundColor:colors.backgroundColor == color?"white":"transparent"}]}>
+                                <HomeIcon width={size} height={size} fill={color}/>
+                            </View>
                         )
                     }
                 }}
             />
-            <Tab.Screen name="MyMapStack" component={MyMapStack}
+
+            <Tab.Screen name="FavoritesScreen" component={MyFavoriteStack}
                 options={{
                     tabBarIcon: ({ color, size }) => {
                         return (
+                            <View style={[styles.activeBackground,{backgroundColor:colors.backgroundColor == color?"white":"transparent"}]}>
                             <Icon
-                                as={Ionicons}
-                                name='map'
+                                as={MaterialCommunityIcons}
+                                name='heart'
                                 color={color}
                                 size={size}
                             />
+                            </View>
                         )
                     }
                 }}
             />
-            <Tab.Screen name="UserBookingStack" component={MyBookingStack}
+            <Tab.Screen name="Chats" component={MyInboxStack}
                 options={{
-                    //tabBarBadge: 0,
                     tabBarIcon: ({ color, size }) => {
                         return (
+                            <View style={[styles.activeBackground,{backgroundColor:colors.backgroundColor == color?"white":"transparent"}]}>
                             <Icon
-                                as={Ionicons}
-                                name='cart'
+                                as={MaterialCommunityIcons}
+                                name='forum'
                                 color={color}
-                                size={8}
+                                size={size}
                             />
+                            </View>
                         )
                     }
                 }}
             />
-            <Tab.Screen name="UserInbox" component={MyChatStack}
+            <Tab.Screen name="Setting" component={MyProfileStack}
                 options={{
                     tabBarIcon: ({ color, size }) => {
                         return (
+                            <View style={[styles.activeBackground,{backgroundColor:colors.backgroundColor == color?"white":"transparent"}]}>
                             <Icon
-                                as={Ionicons}
-                                name='chatbox'
+                                as={MaterialCommunityIcons}
+                                name='account'
                                 color={color}
                                 size={size}
                             />
+                            </View>
                         )
                     }
                 }}
             />
-            <Tab.Screen name="UserProfile" component={MyProfileHomeStack}
-                options={{
-                    tabBarIcon: ({ color, size }) => {
-                        return (
-                            <Icon
-                                as={Ionicons}
-                                name='person'
-                                color={color}
-                                size={size}
-                            />
-                        )
-                    }
-                }}
-            />
-            {/* <Tab.Screen name="ReviewScreen" component={ReviewScreen}
-                options={{
-                    tabBarIcon: ({ color, size }) => {
-                        return (
-                            <Icon
-                                as={Ionicons}
-                                name='star'
-                                color={color}
-                                size={size}
-                            />
-                        )
-                    }
-                }}
-            /> */}
         </Tab.Navigator>
     );
 }
 export default UserBottomTab
+const styles = StyleSheet.create({
+    activeBackground:{padding:5,paddingHorizontal:10,borderRadius:20}
+})

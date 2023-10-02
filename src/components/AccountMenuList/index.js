@@ -58,7 +58,7 @@ export default AccountMenuList = (props) => {
                             await auth()
                                 .signOut()
                             Util.showMessage("success","Account Deleted")
-                            navigateAndReset("UserSelectScreen")
+                            navigateAndReset("OnboardingScreen")
                            } catch (error) {
                                 Util.showMessage("error","Error",error.message)
                            }
@@ -82,14 +82,13 @@ export default AccountMenuList = (props) => {
                     {
                         text: "Yes",
                         onPress: async () => {
-                            await AsyncStorage.removeItem("userType")
                             if (auth().currentUser.providerData[0].providerId == "google.com") {
                                 //await GoogleSignin.revokeAccess();
                                 await GoogleSignin.signOut();
                             }
                             auth()
                                 .signOut()
-                                .then(() => navigateAndReset("LogOrRegister"));
+                                .then(() => navigateAndReset("OnboardingScreen"));
                         }
                     }
                 ]
@@ -194,61 +193,7 @@ export default AccountMenuList = (props) => {
         navigateAndReset("SplashScreen")
     }
     const driverMenu = [
-        {
-            id: "account",
-            label: "Account",
-            subMenu: [
-                // {
-                //     label: "Profile",
-                //     icon: "account-outline",
-                //     onClick: () => {
-                //         navigation.navigate("EditProProfile")
-                //     }
-                // },
-                {
-                    label: "Bank Details",
-                    icon: "bank",
-                    subLabel: accountStatus ? "Verified" : "Not Verified",
-                    subImage: accountStatus ? "check-circle-outline" : "cancel",
-                    status: accountStatus,
-                    onClick: () => {
-                        bankFlow()
-                    }
-                },
-                {
-                    label: "Balance",
-                    icon: "wallet-outline",
-                    subLabel: `$ ${balance?.toString() ?? 0}`,
-                    onClick: () => {
-                        navigation.navigate("VendorAccountDetail")
-                    },
-                    //disabled: true
-                },
-                {
-                    label: "Switch to Advertiser",
-                    icon: "swap-horizontal",
-                    onClick: () => {
-                            handleSwitch("Advertiser")
-                    }
-                },
-                {
-                    label: "Switch to Service Provider",
-                    icon: "swap-horizontal",
-                    onClick: () => {
-                            handleSwitch("Service Provider")
-                    }
-                }
-                // {
-                //     label: "Withdraw",
-                //     icon: "cash",
-                //     //subLabel:`AED ${balance?.toString()}`,
-                //     onClick: () => {
-                //         handleWithdraw()
-                //     },
-                //     //disabled:true
-                // },
-            ]
-        },
+        
         // {
         //     id: "about",
         //     label: "About Us",
@@ -275,7 +220,7 @@ export default AccountMenuList = (props) => {
         // },
         {
             id: "other",
-            label: "Others",
+            label: "",
             subMenu: [
                 {
                     label: "Rate Us",
@@ -311,39 +256,7 @@ export default AccountMenuList = (props) => {
 
     ]
     const menu = [
-        {
-            id: "account",
-            label: "Account",
-            subMenu: [
-                {
-                    label: userType == "Advertiser"?"Switch to Vendor":"Switch to Advertiser",
-                    icon: "swap-horizontal",
-                    onClick: () => {
-                        if(userType == "Advertiser")
-                            handleSwitch("Vendor")
-                        else
-                            handleSwitch("Advertiser")
-                    }
-                },
-                {
-                    label: userType == "Advertiser"?"Switch to Service Provider":"Switch to Vendor",
-                    icon: "swap-horizontal",
-                    onClick: () => {
-                        if(userType == "Advertiser")
-                            handleSwitch("Service Provider")
-                        else
-                            handleSwitch("Vendor")
-                    }
-                }
-                // {
-                //     label: "Profile",
-                //     icon: "account-outline",
-                //     onClick: () => {
-                //         navigation.navigate("EditUserProfile")
-                //     }
-                // }
-            ]
-        },
+        
         // {
         //     id: "about",
         //     label: "About Us",
@@ -370,7 +283,7 @@ export default AccountMenuList = (props) => {
         // },
         {
             id: "other",
-            label: "Others",
+            label: "",
             subMenu: [
                 {
                     label: "Rate Us",
@@ -421,13 +334,15 @@ export default AccountMenuList = (props) => {
                                             key={subItem.label}
                                             disabled={loaderVisibility || subItem.disabled}
                                         >
+                                            <View style={{padding:4,justifyContent:"center",alignItems:'center',backgroundColor:'white',borderRadius:30}}>
                                             <Icon
                                                 // style={styles.subMenuImage}
                                                 name={subItem.icon}
                                                 as={MaterialCommunityIcons}
                                                 size={"md"}
-                                                color={colors.appPrimary}
+                                                
                                             />
+                                            </View>
                                             <View style={styles.subMenuContainer}>
                                                 <Text style={styles.subMenuTitle}>{subItem.label}</Text>
                                                 {

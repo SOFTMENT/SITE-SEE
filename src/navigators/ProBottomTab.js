@@ -9,10 +9,8 @@ import Inbox from '../screens/Inbox';
 import EditProProfile from '../screens/ProScreens/EditProProfile';
 import ProBookings from '../screens/ProScreens/ProBookings';
 import ProHome from '../screens/ProScreens/ProHome';
-import ProNotifications from '../screens/ProScreens/ProNotifications';
 import ProProfile from '../screens/ProScreens/ProProfile';
 import ProVideoUpload from '../screens/ProScreens/ProVideoUpload';
-import VideoPlayer from '../screens/VideoPlayer';
 const Tab = createBottomTabNavigator();
 const ProfileStack = createNativeStackNavigator()
 const HomeStack = createNativeStackNavigator()
@@ -37,7 +35,6 @@ const MyProHomeStack = () => {
             }}
         >
             <HomeStack.Screen name='ProHome' component={ProHome} />
-            <HomeStack.Screen name='ProVideoPlayer' component={VideoPlayer} />
             <HomeStack.Screen name='ProVideoUpload' component={ProVideoUpload} />
         </HomeStack.Navigator>
     )

@@ -9,8 +9,8 @@ import { Provider } from 'react-redux';
 import AppRoot from './src';
 import { store } from './src/store';
 GoogleSignin.configure({
-  iosClientId: "189973700039-ldji7p1rfc5ma85dkjv578kbeeflqd5k.apps.googleusercontent.com",
-  webClientId:"189973700039-tkmshnrff53aol5ij7qqj66pmq0l7m8b.apps.googleusercontent.com"
+  iosClientId: "236456769546-hbphvbuod79njv10uba6ocf62gc01gj2.apps.googleusercontent.com",
+  webClientId:"236456769546-6kto9osph04hr0mjr3i2jf07h7rpjkjp.apps.googleusercontent.com"
   // scopes:[
   //     `https://www.googleapis.com/auth/drive.readonly`,
   //     `https://www.googleapis.com/auth/youtube`,

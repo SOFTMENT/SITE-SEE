@@ -21,7 +21,7 @@ export default StyleSheet.create({
         height:"100%"
     },
     login:{
-        fontFamily:fonts.bold,
+        fontFamily:fonts.medium,
         color:colors.white,
         fontSize:fontSizes.extraExtraLarge,
         marginLeft:30
@@ -76,21 +76,22 @@ export default StyleSheet.create({
         color:"white",
     },
     btn:{
-        marginTop:spacing.medium
+        marginTop:spacing.medium,
+        borderRadius:spacing.large,
     },
     or:{
-        color:colors.btnColor,
+        color:colors.white,
         textAlign:"center",
         marginVertical:spacing.large,
-        fontFamily:fonts.regular,
+        fontFamily:fonts.bold,
         fontSize:fontSizes.extraExtraSmall,
-        marginHorizontal:spacing.small
+        marginHorizontal:spacing.extraExtraSmall
     },
     register:{
-        color:colors.btnColor,
+        color:colors.white,
         textAlign:"center",
         marginVertical:spacing.extraExtraLarge,
-        fontFamily:fonts.medium,
+        fontFamily:fonts.regular,
         fontSize:fontSizes.extraExtraSmall,
         marginHorizontal:spacing.small
     },
@@ -114,7 +115,7 @@ export default StyleSheet.create({
      height:0.5,
      flex:1,
     // width:"100%",
-     backgroundColor:"grey",
+     backgroundColor:"white",
      
     },
     socialView:{

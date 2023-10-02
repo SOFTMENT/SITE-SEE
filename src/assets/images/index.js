@@ -13,7 +13,6 @@ export default {
     // password:require("./password.png"),
     google: require("./google.png"),
     facebook: require("./facebook.png"),
-    home: require("./home.png"),
     // filter: require("./filter.png"),
     //backCircle: require("./back-circle.png"),
     // hidePass:require("./hide.png"),
@@ -44,5 +43,6 @@ export default {
     serviceProvider:require("./service-provider.png"),
     withdrawal:require("./withdrawal.png"),
     siteSeeText:require("./SiteSee.png"),
-    siteSeeVertical:require("./siteSeeVertical.png")
+    siteSeeVertical:require("./siteSeeVertical.png"),
+    tapToSee:require("./tapToSee.png")
 }

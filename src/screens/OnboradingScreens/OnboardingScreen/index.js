@@ -29,13 +29,13 @@ export default function OnboardingScreen(props) {
             title={"User"} 
             containerStyle={styles.btn}
             icon={"account-outline"}
-            onPress={()=>handleNavigation(0)}
+            onPress={()=>handleNavigation(1)}
           />
           <MyButton 
             icon={"cart-variant"}
             title={"Supplier"} 
             containerStyle={styles.btn}
-            onPress={()=>handleNavigation(1)}
+            onPress={()=>handleNavigation(2)}
             />
         </HStack>
       </View>

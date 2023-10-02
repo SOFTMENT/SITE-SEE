@@ -42,7 +42,7 @@ export default StyleSheet.create({
         textAlign:"center",
         fontSize:fontSizes.medium,
         fontFamily:fonts.bold,
-        color:"black",
+        color:"white",
         marginTop:spacing.medium,
         marginBottom:spacing.extraExtraSmall
     },
@@ -50,7 +50,7 @@ export default StyleSheet.create({
         textAlign:"center",
         fontSize:fontSizes.extraExtraSmall,
         fontFamily:fonts.regular,
-        color:"gray",
+        color:"white",
         marginVertical:spacing.extraExtraSmall
     },
     orderView:{

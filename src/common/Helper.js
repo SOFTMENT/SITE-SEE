@@ -43,6 +43,24 @@ export default {
         }
 
     },
+    async imageUrlToBase64(imageUrl) {
+        try {
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+            const base64data = await new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result.split(',')[1]);
+              reader.onerror = (error) => reject(error);
+              reader.readAsDataURL(blob);
+            });
+            const dataType = 'image'; // Replace with the appropriate data type
+            const fileExtension = 'png'; // Replace with the actual file extension
+            return `data:${dataType}/${fileExtension};base64,${base64data}`;
+          } catch (error) {
+            console.error('Error converting image to base64:', error);
+            throw error;
+          }
+      },
     async pickVideo(image) {
         try {
             const result = await DocumentPicker.pick({
@@ -62,6 +80,20 @@ export default {
             throw "something went wrong"
         }
 
+    },
+    async pickImageTF() {
+        try {
+            const result = await ImageCropPicker.openPicker({
+                width:224,
+                height:224,
+                cropping:true,
+                mediaType:"photo",
+                //mediaType:
+            })
+            return {...result,uri:result.path}
+        } catch (error) {
+            console.log(error)
+        }
     },
     async pickImage(isCover) {
         try {
@@ -143,6 +175,9 @@ export default {
     uploadImage : async(imageLoc,source)=>{
         //console.log(source,imageLoc)
         return new Promise(async(resolve,reject)=>{
+            if(!source.uri){
+                return resolve(source)
+            }
             const reference = storage().ref(imageLoc); 
             const data = await RNFS.readFile(decodeURI(source.uri), 'base64')
             await reference.putString(data,"base64",{

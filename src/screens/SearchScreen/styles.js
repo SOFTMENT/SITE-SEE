@@ -1,7 +1,8 @@
 import { StyleSheet } from "react-native";
 import Util, { responsiveSize } from "../../common/util";
-import { itemSizes, spacing } from "../../common/variables";
+import { fontSizes, itemSizes, spacing } from "../../common/variables";
 import colors from "../../theme/colors";
+import fonts from "../../../assets/fonts";
 
 export default StyleSheet.create({
     container:{
@@ -12,6 +13,7 @@ export default StyleSheet.create({
         flex:1,
        // padding:spacing.medium
     },
+    
     textBack:{
         width:Util.getWidth(100)-spacing.medium*4-itemSizes.item40,
         backgroundColor:"white",

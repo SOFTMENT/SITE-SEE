@@ -6,6 +6,8 @@ import MapView, { Marker } from 'react-native-maps'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import MyButton from '../MyButton'
 import styles from './styles'
+import { useDispatch } from 'react-redux'
+import { setCurrentLocation } from '../../store/userSlice'
 export default LocationSelector = (props) => {
   const mapRef = useRef(null)
   const { setLocationAllState, locationAllState } = props
@@ -16,9 +18,10 @@ export default LocationSelector = (props) => {
   })
   const [address, setAddress] = useState("")
   const [loc, setLoc] = useState(null)
+  const dispatch = useDispatch()
   const confirmPressed = () => {
-    console.log(localLocation,loc,address)
-    setLocationAllState({ ...locationAllState, address: address, location: loc, visible: false })
+    // dispatch(setCurrentLocation)
+    // dispatch(setCurrentLocation())
   }
   const getAddressFromCoordinates = async (latitude, longitude) => {
     try {

@@ -61,7 +61,6 @@ const Inbox = (props) => {
     }
     const renderChats = ({ item }) => {
        const lastMessage = item
-        console.log(item)
         return (
             <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("PersonalChat",{lastMessage})}>
                 <View style={styles.rightBox}>
@@ -69,16 +68,14 @@ const Inbox = (props) => {
                         <AvatarIcon
                             uri={item.senderImage}
                             style={{
-                                borderWidth:2,
-                                borderColor:colors.btnColor
+                                borderWidth:1,
+                                borderColor:colors.white
                             }}
                         />
                     </View>
                     <View style={styles.chatBox}>
-
                         <Text style={styles.title}>{item.senderName}</Text>
-
-                        <Text style={styles.text}>{item.message}</Text>
+                        <Text style={styles.text} numberOfLines={1}>{item.message}</Text>
                     </View>
                 </View>
                 <Text style={styles.smallTxt}>{item.date?.toDate()?timeAgo.format(item.date?.toDate()):""}</Text>
@@ -90,7 +87,7 @@ const Inbox = (props) => {
     }
     return (
         <View style={[styles.container]}>
-            <Header title="Inbox"/>
+            <Header title="Messages"/>
             {
                 lastChats.length > 0 ?
                     <FlatList

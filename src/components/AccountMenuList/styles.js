@@ -28,7 +28,7 @@ export default StyleSheet.create({
      subMenuTitle:{
         fontSize:responsiveSize(13),
         fontFamily:fonts.regular,
-        color:"rgba(0, 0, 0, 0.67)",
+        color:"white",
      },
      subMenuContainer:{
          flex:1,

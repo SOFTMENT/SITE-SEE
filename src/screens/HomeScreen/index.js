@@ -34,38 +34,29 @@ const HomeScreen = (props) => {
                 .get()
                 .then( async user => {
                     if (user.exists) {
+                        const val = user.data().userType
                         if (user.data().profileCompleted)
                             {
-                                const val = await AsyncStorage.getItem("userType")
-                                if(val == null || val == "Advertiser")
+                                if(val == null || val == "User")
                                 {
-                                    dispatch(setUserData({...user.data(),userType:"Advertiser"}))
-                                    navigateAndReset("AdvertiserBottomTab")
+                                    dispatch(setUserData({...user.data(),userType:"User"}))
+                                    navigateAndReset("UserBottomTab")
                                 }
-                                else if( val == "Vendor"){
-                                    dispatch(setUserData({...user.data(),userType:"Vendor"}))
+                                else if( val == "Supplier"){
+                                    dispatch(setUserData({...user.data(),userType:"Supplier"}))
                                     navigateAndReset("VendorBottomTab")
                                 }
-                                else if( val == "Service Provider"){
-                                    if(user.data().serviceProfileCompleted)
-                                    {
-                                        dispatch(setUserData({...user.data(),userType:"Service Provider"}))
-                                        navigateAndReset("ServiceHomeStack")
-                                    }
-                                    else{
-                                        navigateAndReset("MyServiceProviderOnBoardStack")
-                                    }
-                                }
-                            // if (user.data().userType == AppConstant.advertiser) {
-                            //     navigateAndReset("AdvertiserBottomTab")
-                            // }
-                            // else if(user.data().userType == AppConstant.vendor)
-                            //     navigateAndReset("VendorBottomTab")
-                            // else
-                            //     navigateAndReset("ServiceHomeStack")
                             }
                         else {
-                            navigateAndReset("MyAdvertiserOnBoardStack")
+                            if(val == null || val == "User")
+                                {
+                                    dispatch(setUserData({...user.data(),userType:"User"}))
+                                    navigateAndReset("OnBoardPhoto")
+                                }
+                                else if( val == "Supplier"){
+                                    dispatch(setUserData({...user.data(),userType:"Supplier"}))
+                                    navigateAndReset("OnBoardPhoto")
+                                }
                             // if (user.data().userType == AppConstant.advertiser) {
                             //     navigateAndReset("MyAdvertiserOnBoardStack")
                             // }
