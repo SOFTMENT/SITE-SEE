@@ -2,16 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>branch_universal_link_domains</key>
-    <array>
-        <string>mlz3i.app.link</string>
-        <string>mlz3i-alternate.app.link</string>
-    </array>
+	<key>branch_universal_link_domains</key>
+	<array>
+		<string>mlz3i.app.link</string>
+		<string>mlz3i-alternate.app.link</string>
+	</array>
 	<key>branch_key</key>
-		<dict>
-			<key>live</key>
-			<string>key_live_cwpvlRCfe9ZS9wHYiVIUBjelFBe9m6Wh</string>
-		</dict>
+	<dict>
+		<key>live</key>
+		<string>key_live_cwpvlRCfe9ZS9wHYiVIUBjelFBe9m6Wh</string>
+	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -79,7 +79,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Site See requires location access to show nearby vendors</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Site See requires photo library access to upload profile picture</string>
+	<string>Site See requires photo library access to upload picture</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>
@@ -115,5 +115,7 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Site See requires media library access to upload picture</string>
 </dict>
 </plist>

@@ -10,6 +10,7 @@ import styles from "./styles"
 import Util from '../../common/util'
 import { Icon } from 'native-base'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux'
 import auth from '@react-native-firebase/auth'
 import LoaderComponent from '../LoaderComponent'
@@ -25,7 +26,6 @@ export default AccountMenuList = (props) => {
     const [successPopup, setSuccessPopup] = useState(false)
     const { accountStatus, accountId, balance,userType } = useSelector(state => state.user.userData)
     const uid = auth().currentUser.uid
-    const dispatch = useDispatch()
     const deleteAccount = async() => {
         Alert.alert(
             "Delete Account",
@@ -82,6 +82,7 @@ export default AccountMenuList = (props) => {
                     {
                         text: "Yes",
                         onPress: async () => {
+                            await AsyncStorage.removeItem("userType")
                             if (auth().currentUser.providerData[0].providerId == "google.com") {
                                 //await GoogleSignin.revokeAccess();
                                 await GoogleSignin.signOut();
@@ -100,7 +101,7 @@ export default AccountMenuList = (props) => {
     const rateUs = () => {
         if (Platform.OS != 'ios') {
             //To open the Google Play Store
-            Linking.openURL(`market://details?id=in.softment.appvertise`).catch(err =>
+            Linking.openURL(`market://details?id=in.softment.sitesee`).catch(err =>
                 alert('Please check for the Google Play Store')
             );
         } else {
@@ -114,84 +115,7 @@ export default AccountMenuList = (props) => {
         setSuccessPopup(false)
     }
     
-    
-    const bankFlow = async () => {
-        if (accountStatus)
-            return
-        else {
-            if (!accountId) {
-                var newId
-                setLoaderVisibility(true)
-                try {
-                    const response = await createAccountId()
-                    console.log("accountid",response.account_id)
-                    newId = response.account_id
-                    await updateAccountId(response.account_id)
-                } catch (error) {
-                    console.log("account id error",error)
-                    Util.showMessage("error", "Something went wrong", "")
-                }
-                setLoaderVisibility(false)
-            }
-            setLoaderVisibility(true)
-            try {
-                const linkResponse = await createAccountLink(accountId ? accountId : newId)
-                console.log("linkresponse,",linkResponse)
-                linkingUtil.openBrowser(linkResponse.url)
-            } catch (error) {
-                console.log("here",error)
-                Util.showMessage("error", "Something went wrong", "")
-            }
-            setLoaderVisibility(false)
-        }
-    }
-    const createAccountId = async () => {
-        try {
-            const response = await axios({
-                method: AppConstant.GET,
-                url: CREATE_ACCOUNT,
-            })
-            console.log(response.data)
-            return response.data
-        } catch (error) {
-            throw error
-        }
-    }
-    const createAccountLink = async (value) => {
-        try {
-            var body = new FormData()
-            body.append('account_id', value)
-            const response = await axios({
-                method: AppConstant.POST,
-                url: ACCOUNT_LINK,
-                data: body,
-                headers: {
-                    "content-type": "multipart/form-data",
-                  },
-            })
-            console.log(response)
-            return response.data
-        } catch (error) {
-            console.log(error)
-            throw error
-        }
-    }
-    const updateAccountId = async (id) => {
-        try {
-            await firestore().collection("Users").doc(uid)
-                .update({
-                    accountId: id
-                })
-
-        } catch (error) {
-            throw error
-        }
-
-    }
-    const handleSwitch = async(type)=>{
-        await AsyncStorage.setItem("userType",type)
-        navigateAndReset("SplashScreen")
-    }
+   
     const driverMenu = [
         
         // {
@@ -220,30 +144,32 @@ export default AccountMenuList = (props) => {
         // },
         {
             id: "other",
-            label: "",
+            label: "Legal Agreements",
             subMenu: [
                 {
-                    label: "Rate Us",
-                    icon: "star-check-outline",
-                    onClick: rateUs
+                    label: "Rate App",
+                    icon: "star-half-full",
+                    onClick: rateUs,
+                    asMaterial:true
                 },
-                {
-                    label: "Contact Us",
-                    icon: "email-outline",
-                    onClick: () => {
-                        linkingUtil.openMail(AppConstant.MAIL)
-                    }
-                },
+                // {
+                //     label: "Contact Us",
+                //     icon: "email-outline",
+                //     onClick: () => {
+                //         linkingUtil.openMail(AppConstant.MAIL)
+                //     }
+                // },
                 {
                     label: "Logout",
-                    icon: "logout",
+                    icon: "log-out",
                     onClick: () => {
                         logout()
                     }
                 },
                 {
                     label: "Delete Account",
-                    icon: "delete-outline",
+                    icon: "delete",
+                    asMaterial:true,
                     //subLabel:`AED ${balance?.toString()}`,
                     onClick: () => {
                         deleteAccount()
@@ -282,31 +208,65 @@ export default AccountMenuList = (props) => {
         //     ]
         // },
         {
-            id: "other",
+            id: "Settings",
             label: "",
             subMenu: [
+                
                 {
-                    label: "Rate Us",
-                    icon: "star-check-outline",
-                    onClick: rateUs
+                    label: "Notifications",
+                    icon: "bell",
+                    //onClick: rateUs,
+                    asMaterial:true,
+                    onClick:()=>{
+                        navigation.navigate("NotificationScreen")
+                    }
                 },
                 {
-                    label: "Contact Us",
-                    icon: "email-outline",
+                    label: "Share App",
+                    icon: "share-circle",
+                    onClick: rateUs,
+                    asMaterial:true
+                },
+               
+                {
+                    label: "Rate App",
+                    icon: "star-half-full",
+                    onClick: rateUs,
+                    asMaterial:true
+                },
+            ]
+        },
+        {
+            id: "other",
+            label: "Legal Agreements",
+            subMenu: [
+                {
+                    label: "Privacy Policy",
+                    icon: "file-document-edit",
+                    asMaterial:true,
                     onClick: () => {
-                        linkingUtil.openMail(AppConstant.MAIL)
+                        linkingUtil.openBrowser(SOFTMENT)
+                    }
+                },
+                {
+                    label: "Terms & Conditions",
+                    icon: "text-box",
+                    asMaterial:true,
+                    onClick: () => {
+                        linkingUtil.openBrowser(SOFTMENT)
                     }
                 },
                 {
                     label: "Logout",
-                    icon: "logout",
+                    icon: "log-out",
                     onClick: () => {
                         logout()
                     }
                 },
                 {
                     label: "Delete Account",
-                    icon: "delete-outline",
+                    icon: "delete",
+                    asMaterial:true,
                     //subLabel:`AED ${balance?.toString()}`,
                     onClick: () => {
                         deleteAccount()
@@ -314,17 +274,17 @@ export default AccountMenuList = (props) => {
                     //disabled:true
                 },
             ]
-        },
+        }
 
     ]
-    const activeMenu = isUser ? menu : driverMenu
+    const activeMenu = menu
     return (
         <View>
             {
                 activeMenu.map((item) => {
                     return (
                         <View key={item.id}>
-                            <Text style={styles.settingsText}>{item.label}</Text>
+                            {item.label&& <Text style={styles.settingsText}>{item.label}</Text>}
                             {
                                 item.subMenu.map(subItem => {
                                     return (
@@ -338,9 +298,9 @@ export default AccountMenuList = (props) => {
                                             <Icon
                                                 // style={styles.subMenuImage}
                                                 name={subItem.icon}
-                                                as={MaterialCommunityIcons}
+                                                as={subItem.asMaterial?MaterialCommunityIcons: Ionicons}
                                                 size={"md"}
-                                                
+                                                color="#414245"
                                             />
                                             </View>
                                             <View style={styles.subMenuContainer}>
@@ -353,10 +313,10 @@ export default AccountMenuList = (props) => {
                                                             subItem.subImage &&
                                                             <Icon
                                                                 // style={styles.subMenuImage}
-                                                                name={subItem.subImage}
-                                                                as={MaterialCommunityIcons}
+                                                                name={"log-out"}
+                                                                as={Ionicons}
                                                                 size={"sm"}
-                                                                color="gray.500"
+                                                                color="#414245"
                                                             />
                                                         }
                                                     </View>

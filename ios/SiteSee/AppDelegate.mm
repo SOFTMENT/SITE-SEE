@@ -38,6 +38,12 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
     [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
     NSURL *jsCodeLocation;
   [FIRApp configure];
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+      if (![defaults boolForKey:@"notFirstRun"]) {
+          [defaults setBool:YES forKey:@"notFirstRun"];
+          [defaults synchronize];
+          [[FIRAuth auth] signOut:NULL];
+     }
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
 
  //[GMSServices provideAPIKey:@"AIzaSyDiDhePfa6TjIO53RDsCYguUekMQPuJBYU"];

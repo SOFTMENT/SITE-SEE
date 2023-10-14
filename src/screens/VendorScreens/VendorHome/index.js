@@ -131,7 +131,7 @@ export default function VendorHome(props) {
           size="lg"
           name="map-marker-radius"
           color={'black'}
-          marginTop={2}
+          alignSelf={"center"}
         />
         <GooglePlacesAutocomplete
           keyboardShouldPersistTaps={'always'}
@@ -146,12 +146,15 @@ export default function VendorHome(props) {
             textInput: {
               padding: 0,
               backgroundColor: 'transparent',
+              alignItems:'center'
             },
             container: {
               padding: 0,
+              alignItems:'center'
             },
             textInputContainer: {
               padding: 0,
+              alignItems:'center'
             },
           }}
           placeholder={'Search address'}

@@ -30,11 +30,7 @@ const UserRegister = (props) => {
     const [loading, setLaoding] = useState(false)
     const { tab } = route.params ?? {}
     const inset = useSafeAreaInsets()
-    const {
-        isOpen,
-        onOpen,
-        onClose
-      } = useDisclose();
+    
     const handleRegister = async() => {
         //console.log(tab, phone)
         if (!name.trim()) {
@@ -65,12 +61,13 @@ const UserRegister = (props) => {
         //     Util.showMessage("error", "Oops!", "Password and Confirm password doesn't match")
         //     return
         // }
-        if(tab == 2){
-            onOpen()
-        }
-        else{
-            createUser()
-        }
+        // if(tab == 2){
+        //     onOpen()
+        // }
+        // else{
+        //     createUser()
+        // }
+        createUser()
         // await handleMembership()
         // .then((data)=>{
         //     console.log(data)
@@ -80,7 +77,7 @@ const UserRegister = (props) => {
 
         // })
     }
-    const createUser = async (membershipDetails) => {
+    const createUser = async () => {
         try {
             setLaoding(true)
             await auth().createUserWithEmailAndPassword(
@@ -91,12 +88,12 @@ const UserRegister = (props) => {
                 .collection('Users')
                 .doc(user.uid)
                 .set({
-                    ...membershipDetails,
+                    ...(tab == 2 && {membershipActive:false}),
                     name: name.trim() + " " + lastName.trim(),
                     email: email.trim(),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     // lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
-                    userType: Util.getUserType(tab),
+                    //userType: Util.getUserType(tab),
                     //...(tab == 2 && { accountStatus:false,balance:0 }),
                     accountStatus:false,balance:0,
                     profileCompleted: false,
@@ -126,9 +123,6 @@ const UserRegister = (props) => {
         finally {
             setLaoding(false)
         }
-    }
-    const memberShipCallback = async (membershipDetails) => {
-        createUser(membershipDetails)
     }
     const sendNewProEmailAdmin = async (name, email) => {
         try {
@@ -246,8 +240,7 @@ const UserRegister = (props) => {
                         })
                     }
                     else {
-                        
-                        if((user.data().userType == Util.getUserType(tab)))
+                            if((user.data().userType == Util.getUserType(tab)))
                             navigateAndReset("HomeScreen", { uid: user.data().uid })
                         else
                             {
@@ -277,6 +270,7 @@ const UserRegister = (props) => {
                 .set({
                     name: fullName ? fullName : user.displayName,
                     email: user.providerData[0].email,
+                    ...(tab == 2 && {membershipActive:false}),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     //lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
                     userType: Util.getUserType(tab),
@@ -395,7 +389,7 @@ const UserRegister = (props) => {
                         loading={loading}
                         txtStyle={{color:'white'}}
                     />
-                    <View style={styles.borderViewContainer}>
+                    {/* <View style={styles.borderViewContainer}>
                         <View style={styles.borderView}></View>
                         <Text style={styles.or}>  OR  </Text>
                         <View style={styles.borderView}></View>
@@ -433,7 +427,7 @@ const UserRegister = (props) => {
                             // backgroundColor: colors.darkGreyBtn, flex: 1 }}
                             >Login with Apple</Button>
                         }
-                    </Stack>
+                    </Stack> */}
                     {/* <View style={{ flexDirection: "row", justifyContent: 'center',alignItems:"center" }}>
                         <Text style={styles.register}>Already have an account?</Text>
                         <ClickableText
@@ -453,11 +447,7 @@ const UserRegister = (props) => {
                     </View> */}
                 </View>
             </View>
-            <MemberShipActionSheet 
-                isOpen={isOpen} 
-                onClose={onClose} 
-                memberShipCallback={memberShipCallback}
-            />
+           
         </KeyboardAwareScrollView>
     )
 }

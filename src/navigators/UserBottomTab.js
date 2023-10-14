@@ -25,6 +25,7 @@ import LocationSelectorScreen from '../screens/UserScreens/LocationSelectorScree
 import MyListingScreenUser from '../screens/UserScreens/MyListingScreenUser';
 import ListingDetail from '../screens/UserScreens/ListingDetail';
 import ListingBySupplier from '../screens/UserScreens/ListingBySupplier';
+import NotificationScreen from '../screens/NotificationScreen';
 const Tab = createBottomTabNavigator();
 const AdHomeStack = createNativeStackNavigator()
 const AdOrderStack = createNativeStackNavigator()
@@ -51,7 +52,7 @@ const MyProfileStack = () => {
             }}
         >
             <ProfileStack.Screen name='ProfileScreen' component={AdvertiserProfile}/>
-            
+            <ProfileStack.Screen name='NotificationScreen' component={NotificationScreen}/>
         </ProfileStack.Navigator>
     )
 }

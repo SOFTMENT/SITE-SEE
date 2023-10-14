@@ -14,6 +14,7 @@ const UserProductCard = ({item,navigation,favorites}) => {
     const isSelected = favorites.find(fav => fav.id == item.id);
     const dispatch = useDispatch()
     const [supplierData,setSupplierData] = useState(null)
+    const [favIsSelected,setFavIsSelected] = useState(isSelected)
     useEffect(()=>{
     firestore()
     .collection("Users")
@@ -43,6 +44,7 @@ const UserProductCard = ({item,navigation,favorites}) => {
       };
       const handleFav = async (id, isSelected) => {
         const uid = auth().currentUser.uid
+        setFavIsSelected(!favIsSelected)
         if (isSelected) {
           firestore()
             .collection('Users')
@@ -87,8 +89,8 @@ const UserProductCard = ({item,navigation,favorites}) => {
           }}>
           <Icon
             as={MaterialCommunityIcons}
-            name={isSelected ? 'heart' : 'heart-outline'}
-            color={isSelected ? colors.appPrimary : 'black'}
+            name={favIsSelected ? 'heart' : 'heart-outline'}
+            color={favIsSelected ? colors.appPrimary : 'black'}
             size={'lg'}
           /></TouchableOpacity>
           <FastImage
@@ -99,7 +101,7 @@ const UserProductCard = ({item,navigation,favorites}) => {
           />
         <VStack direction={"column"} mt={2}>
           <Text style={styles.title}>{item.title}</Text>
-          {supplierData&&<Text style={styles.name}>by {supplierData.name}</Text>}
+          {supplierData&&<Text style={styles.name}>By {supplierData.name}</Text>}
         </VStack>
       </TouchableOpacity>
     );

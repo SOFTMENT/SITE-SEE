@@ -86,18 +86,20 @@ const UserLogin = (props) => {
                                 Util.showMessage("btnToast", "Email Verification Required", "A verification link has been sent to your email.(Check your spam in case the email is not in your inbox", sendEmailVerificationLink)
                             }
                             else {
-                                if((userDoc.userType == Util.getUserType(tab)))
-                                    navigateAndReset("HomeScreen", { uid: userDoc.uid })
-                                else
-                                    {
-                                        auth().signOut().then(() => {
-                                            const val = Util.getUserType(tab )
-                                            Util.showMessage("error",'Oops!',`This account is already associated with ${userDoc.userType}.`)
-                                        })
-                                        .catch(error=>{
-                                            console.log(error)
-                                        })
-                                    }
+                                // if((userDoc.userType == Util.getUserType(tab)))
+                                //     navigateAndReset("HomeScreen", { uid: userDoc.uid })
+                                // else
+                                //     {
+                                //         auth().signOut().then(() => {
+                                //             const val = Util.getUserType(tab )
+                                //             Util.showMessage("error",'Oops!',`This account is already associated with ${userDoc.userType}.`)
+                                //         })
+                                //         .catch(error=>{
+                                //             console.log(error)
+                                //         })
+                                //     }
+                                await AsyncStorage.setItem("userType",Util.getUserType(tab))
+                                navigateAndReset("HomeScreen", { uid: userDoc.uid })
                             }
                         }
                     })
@@ -180,7 +182,6 @@ const UserLogin = (props) => {
     // }
     const handleUser = async (fullName) => {
         const userData = auth().currentUser
-        console.log(userData)
         setLoading(true)
         await firestore()
             .collection("Users")
@@ -198,20 +199,21 @@ const UserLogin = (props) => {
                         })
                     }
                     else {
-                       
-                        if((user.data().userType == Util.getUserType(tab)))
-                            navigateAndReset("HomeScreen", { uid: user.data().uid })
-                        else
-                            {
-                                //console.log("not user")
-                                auth().signOut().then(() => {
-                                    const val = Util.getUserType(tab)
-                                    Util.showMessage("error","Oops!",`This account is already associated with ${user.data().userType}.`)
-                                })
-                                .catch(error=>{
-                                    console.log(error)
-                                })
-                            }
+                        await AsyncStorage.setItem("userType",Util.getUserType(tab))
+                        navigateAndReset("HomeScreen", { uid: user.data().uid })
+                        // if((user.data().userType == Util.getUserType(tab)))
+                        //     navigateAndReset("HomeScreen", { uid: user.data().uid })
+                        // else
+                        //     {
+                        //         //console.log("not user")
+                        //         auth().signOut().then(() => {
+                        //             const val = Util.getUserType(tab)
+                        //             Util.showMessage("error","Oops!",`This account is already associated with ${user.data().userType}.`)
+                        //         })
+                        //         .catch(error=>{
+                        //             console.log(error)
+                        //         })
+                        //     }
                     }
                 }
                 else {
@@ -226,6 +228,7 @@ const UserLogin = (props) => {
             })
     }
     const setUserData = async (fullName) => {
+        console.log(fullName)
         const user = auth().currentUser
         //console.log(user)
         try {
@@ -238,15 +241,15 @@ const UserLogin = (props) => {
                     email: user.providerData[0].email,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     //lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
-                    userType:Util.getUserType(tab),
+                    //userType:Util.getUserType(tab),
                     profileCompleted:false,
                     // phoneVerified: false,
-                    accountStatus:false,balance:0 ,
                     uid: user.uid,
                     // status: "pending"
                 })
             // if (tab != 1)
             //     sendUnderReviewEmail(fullName ? fullName : user.displayName, user.email ? user.email : user.providerData[0].email)
+            await AsyncStorage.setItem("userType",Util.getUserType(tab))
             navigateAndReset("HomeScreen", { uid: user.uid })
         } catch (error) {
             console.log(error)
@@ -290,7 +293,7 @@ const UserLogin = (props) => {
             // Start the sign-in request
             const appleAuthRequestResponse = await appleAuth.performRequest({
                 requestedOperation: appleAuth.Operation.LOGIN,
-                requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+                requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
             });
 
             // Ensure Apple returned a user identityToken
@@ -300,6 +303,7 @@ const UserLogin = (props) => {
 
             // Create a Firebase credential from the response
             const { identityToken, nonce, fullName } = appleAuthRequestResponse;
+            console.log(fullName)
             const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
             // Sign the user in with the credential
             await auth().signInWithCredential(appleCredential);

@@ -9,6 +9,7 @@ import {navigateAndReset} from '../navigators/RootNavigation';
 import colors from '../theme/colors';
 import AvatarIcon from './AvatarIcon';
 import ReportUserDialog from './ReportUserDialog';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const AvatarHeader = props => {
   const {
     navigation,
@@ -43,21 +44,22 @@ const AvatarHeader = props => {
       ]}>
       {back ? (
         <IconButton
-          onPress={handleBack}
-          _pressed={{backgroundColor: 'transparent'}}
-          icon={
-            <Icon
-              as={MaterialCommunityIcons}
-              size="2xl"
-              name="chevron-left"
-              color={'white'}
-            />
-          }
-        />
+        onPress={handleBack}
+        _pressed={{backgroundColor: 'transparent'}}
+        style={{backgroundColor:"white",borderRadius:30}}
+        icon={
+          <Icon
+            as={Ionicons}
+            size="lg"
+            name="arrow-back"
+            color={'black'}
+          />
+        }
+      />
       ) : (
         <View />
       )}
-      <AvatarIcon uri={icon} style={{borderWidth: 1, borderColor: 'white'}} />
+      <AvatarIcon uri={icon} style={{borderWidth: 1, borderColor: 'white',marginLeft:10}} size={45}/>
       <Text style={styles.title}>{title}</Text>
       {rightIcon ? (
         rightIsComponent ? (
@@ -66,12 +68,12 @@ const AvatarHeader = props => {
             placement="bottom right"
             trigger={triggerProps => {
               return (
-                <Pressable {...triggerProps}>
+                <Pressable {...triggerProps} style={{backgroundColor:"white",borderRadius:30,width:40,height:40,justifyContent:"center",alignItems:'center'}}>
                   <Icon
                     as={MaterialCommunityIcons}
-                    size="xl"
+                    size="lg"
                     name={"dots-vertical"}
-                    color={'white'}
+                    color={'black'}
                 />
                 </Pressable>
               );
@@ -81,14 +83,15 @@ const AvatarHeader = props => {
         ) : (
           <IconButton
             //bgColor={"red.100"}
+            style={{backgroundColor:"white",borderRadius:30}}
             onPress={onRightIconPress}
             _pressed={{backgroundColor: 'transparent'}}
             icon={
               <Icon
-                as={MaterialCommunityIcons}
-                size="xl"
+                as={Ionicons}
+                size="lg"
                 name={rightIcon}
-                color={'white'}
+                color={'black'}
               />
             }
           />

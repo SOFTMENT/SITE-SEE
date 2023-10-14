@@ -22,6 +22,11 @@ const styles = StyleSheet.create({
         color:colors.white,
         fontFamily:fonts.medium,
         fontFamily:fonts.regular
+    },
+    noItem:{
+        color:colors.white,
+        fontFamily:fonts.regular,
+        textAlign:"center"
     }
 })
 export default styles

@@ -23,6 +23,7 @@ export default function ListingDetail(props) {
     const {favorites} = useSelector(state=>state.user)
     const uid = auth().currentUser.uid
     const isSelected = favorites?.find(fav=>fav.id == item.id)
+    const [favIsSelected,setFavIsSelected] = useState(isSelected)
     const [supplierData,setSupplierData] = useState(null)
     const [selectedImage,setSelectedImage] = useState(item.listingImages[0])
     const dispatch = useDispatch()
@@ -36,6 +37,7 @@ export default function ListingDetail(props) {
         })
     },[])
     const handleFav = async() => {
+        setFavIsSelected(!favIsSelected)
         if(isSelected){
             firestore().collection("Users").doc(uid).collection("Favorites").doc(item.id).delete()
             .then(()=>{
@@ -75,34 +77,11 @@ export default function ListingDetail(props) {
     }
     const handleShare = async() => {
         try {
-            let buo = await branch.createBranchUniversalObject(`item/${item.id}`, {
-                title: item.title,
-                contentDescription: item.about,
-                contentMetadata: {
-                  customMetadata: {
-                    key1: 'value1'
-                  }
-                }
-              })
-              let linkProperties = {
-                feature: 'sharing',
-                channel: 'facebook',
-                campaign: 'content 123 launch'  
-              }
-              
-              let controlParams = {
-                $desktop_url: 'https://example.com/home',
-                custom: 'data'   
-              }
-              let shareOptions = { 
-                messageHeader: 'Check this out', 
-                messageBody: 'No really, check this out!' 
-              }
-              let {url} = await buo.generateShortUrl(linkProperties, controlParams)
+            
               const imageLink = await Helper.imageUrlToBase64(item.listingImages[0])
               Share.open({
                 title:item.name,
-                message:url,
+                message:item.shareUrl,
                 url:imageLink
               })
         } catch (error) {
@@ -140,7 +119,7 @@ export default function ListingDetail(props) {
                     resizeMode='contain'
                     defaultSource={images.imagePlaceholder}
                 />
-                <ScrollView horizontal mt={5} mx={2} width={"100%"} bgColor={"red"} showsHorizontalScrollIndicator={false}>
+                <ScrollView horizontal mt={5} alignSelf={"center"} width={"95%"} bgColor={"red"} showsHorizontalScrollIndicator={false}>
                     {
                         item.listingImages.length>1 && item.listingImages.map((img)=>{
                             return(
@@ -171,7 +150,7 @@ export default function ListingDetail(props) {
                    </View>
                    <HStack>
                     <TouchableOpacity onPress={handleShare}>
-                        <Center bgColor={"white"} p={1} borderRadius={20} mr={2}>
+                        <Center bgColor={"white"} p={2} borderRadius={20} mr={2}>
                             <Icon
                                     as={MaterialCommunityIcons}
                                     name={"share-variant"}
@@ -181,10 +160,10 @@ export default function ListingDetail(props) {
                         </Center>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleFav}>
-                        <Center bgColor={"white"} p={1} borderRadius={20}>
+                        <Center bgColor={"white"} p={2} borderRadius={20}>
                             <Icon
                                     as={MaterialCommunityIcons}
-                                    name={isSelected?"heart":"heart-outline"}
+                                    name={favIsSelected?"heart":"heart-outline"}
                                     color={colors.appDefaultColor}
                                     size={"lg"}
                             />
@@ -199,7 +178,7 @@ export default function ListingDetail(props) {
                 <MyButton
                     title={"Message"}
                     txtStyle={{color:"white"}}
-                    containerStyle={{marginTop:20}}
+                    containerStyle={{marginTop:20,borderRadius:18}}
                     onPress={handleChat}
                 />
             </View>

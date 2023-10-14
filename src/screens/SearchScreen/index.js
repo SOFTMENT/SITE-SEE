@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Platform, View} from 'react-native';
 
 import algoliasearch from 'algoliasearch';
@@ -6,10 +6,12 @@ import {FlatList, HStack, IconButton, Input} from 'native-base';
 import Header from '../../components/Header';
 import colors from '../../theme/colors';
 import styles from './styles';
-import { spacing } from '../../common/variables';
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {spacing} from '../../common/variables';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import UserProductCard from '../UserScreens/UserProductCard';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
+import NoResults from '../../components/NoResults';
+import CenteredLoader from '../../components/CenteredLoader';
 
 const algoliaClient = algoliasearch(
   'MOMHBUJFM8',
@@ -18,25 +20,40 @@ const algoliaClient = algoliasearch(
 const index = algoliaClient.initIndex('title');
 let firstLoad = true;
 
-const SearchScreen = (props) => {
+const SearchScreen = props => {
   const {route, navigation} = props;
-  const [value,setValue] = useState("")
-  const [hits,setHits] = useState([])
+  const [value, setValue] = useState('');
+  const [hits, setHits] = useState([]);
+  const [noData, setNoData] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {favorites} = useSelector(state => state.user);
-  const {latitude,longitude} = useSelector(state => state.user.currentPosition);
+  const {latitude, longitude} = useSelector(
+    state => state.user.currentPosition,
+  );
   const search = () => {
-    index.search(value,
-    {
+    setLoading(true);
+    index
+      .search(value, {
         aroundLatLng: `${latitude},${longitude}`,
-        aroundRadius:7000
-    }
-    )
-    .then(({hits})=>{
-        setHits(hits)
-    })
-  }
+        aroundRadius: 7000,
+      })
+      .then(({hits}) => {
+        if (hits.length == 0) setNoData(true);
+        else setNoData(false);
+        setHits(hits);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
   const renderCard = ({item}) => {
-    return <UserProductCard item={item} favorites={favorites} navigation={navigation}/>
+    return (
+      <UserProductCard
+        item={item}
+        favorites={favorites}
+        navigation={navigation}
+      />
+    );
   };
   const keyExtractor = item => {
     return item.id;
@@ -62,12 +79,13 @@ const SearchScreen = (props) => {
             value={value}
             onSubmitEditing={() => search()}
             autoFocus
-            autoComplete='off'
-            autoCapitalize='none'
+            autoComplete="off"
+            autoCapitalize="none"
           />
           <IconButton
             //variant={"solid"}
             bg={colors.appPrimary}
+            px={3}
             borderRadius={10}
             // borderWidth={1}
             // borderColor={"gray.400"}
@@ -76,20 +94,26 @@ const SearchScreen = (props) => {
               size: 'xl',
               name: 'magnify',
               color: 'white',
-              marginLeft: spacing.extraExtraSmall,
               as: MaterialCommunityIcons,
             }}
           />
         </HStack>
-        <FlatList
-          style={{paddingHorizontal: spacing.medium, flex: 1}}
-          data={hits}
-          numColumns={2}
-          renderItem={renderCard}
-          keyExtractor={keyExtractor}
-          bounces={false}
-          showsVerticalScrollIndicator={false}
-        />
+
+        {loading ? (
+          <CenteredLoader />
+        ) : noData ? (
+          <NoResults />
+        ) : (
+          <FlatList
+            style={{paddingHorizontal: spacing.medium, flex: 1}}
+            data={hits}
+            numColumns={2}
+            renderItem={renderCard}
+            keyExtractor={keyExtractor}
+            bounces={false}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
       </View>
     </View>
   );

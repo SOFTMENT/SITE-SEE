@@ -80,34 +80,44 @@ const Chat = props => {
           <View style={styles.rightMsgInner}>
             <Text style={styles.txt}>{item.message}</Text>
           </View>
-          <Text style={styles.timeAgo}>
+          <Text style={[styles.timeAgoRight]}>
             {item.date?.toDate() ? timeAgo.format(item.date?.toDate()) : ''}
           </Text>
         </View>
       ) : (
-        <FastImage
-          defaultSource={images.imagePlaceholder}
-          source={{uri: item.img}}
-          style={styles.rightImage}
-          resizeMode="cover"
-        />
+        <View>
+          <FastImage
+            defaultSource={images.imagePlaceholder}
+            source={{uri: item.img}}
+            style={styles.rightImage}
+            resizeMode="cover"
+          />
+          <Text style={[styles.timeAgoRight,{marginBottom:10}]}>
+            {item.date?.toDate() ? timeAgo.format(item.date?.toDate()) : ''}
+          </Text>
+        </View>
       );
     return item.message ? (
       <View style={styles.leftMsg}>
         <View style={styles.leftMsgInner}>
           <Text style={styles.txt}>{item.message}</Text>
         </View>
-        <Text style={styles.timeAgo}>
+        <Text style={styles.timeAgoLeft}>
           {item.date?.toDate() ? timeAgo.format(item.date?.toDate()) : ''}
         </Text>
       </View>
     ) : (
-      <FastImage
-        defaultSource={images.imagePlaceholder}
-        source={{uri: item.img}}
-        style={styles.leftImage}
-        resizeMode="cover"
-      />
+      <View>
+        <FastImage
+          defaultSource={images.imagePlaceholder}
+          source={{uri: item.img}}
+          style={styles.leftImage}
+          resizeMode="cover"
+        />
+        <Text style={[styles.timeAgoLeft,{marginBottom:10}]}>
+          {item.date?.toDate() ? timeAgo.format(item.date?.toDate()) : ''}
+        </Text>
+      </View>
     );
   };
   const keyExtractor = item => {
@@ -209,17 +219,17 @@ const Chat = props => {
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''}>
         <HStack style={styles.inputBox} alignItems={'center'}>
           <TextInput
-            style={{flex: 1, color: 'black'}}
+            style={{flex: 1, color: 'black',maxHeight:100}}
             value={chatText}
-            onSubmitEditing={() => {
-              handleSubmit(chatText);
-              setChatText('');
-            }}
+            // onSubmitEditing={() => {
+            //   handleSubmit(chatText);
+            //   setChatText('');
+            // }}
             onChangeText={txt => setChatText(txt)}
             autoCorrect={false}
             autoCapitalize="none"
             placeholder={'Type Here'}
-            returnKeyType="send"
+            //returnKeyType="send"
             placeholderTextColor={'gray'}
             multiline={true}
             //editable={chatActive}
@@ -253,7 +263,7 @@ const Chat = props => {
       </KeyboardAvoidingView>
     );
   };
-  
+
   return (
     <View style={styles.container}>
       <AvatarHeader

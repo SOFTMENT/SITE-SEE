@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import { fontSizes, spacing } from "../../../common/variables";
 import fonts from "../../../../assets/fonts";
 import colors from "../../../theme/colors";
+import { responsiveSize } from "../../../common/util";
 
 const styles =  StyleSheet.create({
     img:{
@@ -16,9 +17,9 @@ const styles =  StyleSheet.create({
     },
     name:{
         color:colors.white,
-        fontFamily:fonts.medium,
         fontFamily:fonts.regular,
-        fontSize:fontSizes.extraExtraSmall
+        fontSize:responsiveSize(10.5),
+        marginTop:4
     }
 })
 export default styles

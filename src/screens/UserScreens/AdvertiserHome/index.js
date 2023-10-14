@@ -59,23 +59,41 @@ export default function UserHome(props) {
     onOpenComplete:({error,params,uri})=>{
       if (!error) {
         // Handle the deep link data here
-        const customData = params['$deeplink_path'];
+        const customData = params['key1'];
         // Perform actions based on the deep link data
         const id = params['$canonical_identifier']
-        console.log(id)
+        
         if(id){
-          try {
-            firestore()
-            .collection("Listing")
-            .doc(id.split('/')[1])
-            .get()
-            .then(doc=>{
-              const item = doc.data()
-              if(doc.exists)
-              navigation.navigate("ListingDetail",{item})
-            })
-          } catch (error) {
-            
+          if(customData == 'user'){
+            try {
+              firestore()
+              .collection("Users")
+              .doc(id.split('/')[1])
+              .get()
+              .then(doc=>{
+                const item = doc.data()
+                if(doc.exists)
+                navigation.navigate("ListingBySupplier",{supplierId:item.id,supplierData:item})
+              })
+            } catch (error) {
+              
+            }
+          }
+          else
+          {
+            try {
+              firestore()
+              .collection("Listing")
+              .doc(id.split('/')[1])
+              .get()
+              .then(doc=>{
+                const item = doc.data()
+                if(doc.exists)
+                navigation.navigate("ListingDetail",{item})
+              })
+            } catch (error) {
+              
+            }
           }
         }
       }

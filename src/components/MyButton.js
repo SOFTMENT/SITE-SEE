@@ -34,7 +34,7 @@ const MyButton = (props) => {
                     <Icon
                         as={MaterialCommunityIcons}
                         name={rightIcon}
-                        color={colors.appDefaultColor}
+                        color={"white"}
                         size={'lg'}
                         ml={1}
                     />
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         marginVertical:spacing.small,
     },
     btnText:{
-        color:colors.appDefaultColor,
+        color:colors.white,
         fontFamily:fonts.bold,
         fontSize:fontSizes.extraSmall,
     },

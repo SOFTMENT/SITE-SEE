@@ -6,6 +6,7 @@ import images from '../../../assets/images';
 import { spacing } from '../../../common/variables';
 import MyButton from '../../../components/MyButton';
 import styles from './styles';
+import colors from '../../../theme/colors';
 export default function OnboardingScreen(props) {
   const {navigation} = props;
   const inset = useSafeAreaInsets();
@@ -30,11 +31,14 @@ export default function OnboardingScreen(props) {
             containerStyle={styles.btn}
             icon={"account-outline"}
             onPress={()=>handleNavigation(1)}
+            txtStyle={{color:colors.appDefaultColor}}
+
           />
           <MyButton 
             icon={"cart-variant"}
             title={"Supplier"} 
             containerStyle={styles.btn}
+            txtStyle={{color:colors.appDefaultColor}}
             onPress={()=>handleNavigation(2)}
             />
         </HStack>

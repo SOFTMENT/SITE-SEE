@@ -58,7 +58,7 @@ export default StyleSheet.create({
         color: "white",
     },
     btn: {
-        marginTop: spacing.medium,
+        marginTop: spacing.extraExtraLarge,
         borderRadius:spacing.large
     },
     borderViewContainer: {

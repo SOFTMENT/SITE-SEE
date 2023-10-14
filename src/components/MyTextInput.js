@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.extraExtraSmall,
     color: colors.white,
     fontFamily: fonts.medium,
-    marginBottom:spacing.extraSmall,
+    marginBottom:spacing.small,
     //backgroundColor:"red"
   },
   passContainer: {},

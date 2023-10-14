@@ -16,6 +16,7 @@ import VendorProfile from '../screens/VendorScreens/VendorProfile';
 import colors from '../theme/colors';
 import AddListing from '../screens/VendorScreens/AddListing';
 import EditListing from '../screens/VendorScreens/EditListing';
+import NotificationScreen from '../screens/NotificationScreen';
 const Tab = createBottomTabNavigator();
 const VendorSpacesStack = createNativeStackNavigator();
 const InboxStack = createNativeStackNavigator();
@@ -32,6 +33,8 @@ const MyVendorProfileStack = () => {
         name="VendorProfile"
         component={VendorProfile}
       />
+            <VendorProfileStack.Screen name='NotificationScreen' component={NotificationScreen}/>
+
       <VendorProfileStack.Screen
         name="VendorAccountDetail"
         component={AccountDetailsScreen}

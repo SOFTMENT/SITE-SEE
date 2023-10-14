@@ -138,7 +138,11 @@ export default function ListingBySupplier(props) {
   return (
     <View
       style={styles.container}>
-      <Header back navigation={navigation} extraStyle={{paddingBottom: 0}} />
+      <Header 
+        rightIsSupplier={true}
+        back 
+        navigation={navigation} extraStyle={{paddingBottom: 0}} rightIcon={'dots-vertical'}
+        rightIsComponent={true}/>
       {supplierData && (
         <VStack alignSelf={'center'} alignItems={'center'}>
           <AvatarIcon

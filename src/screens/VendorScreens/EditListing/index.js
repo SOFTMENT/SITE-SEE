@@ -202,7 +202,7 @@ export default function EditListing(props) {
                 style={styles.addmore}
                 onPress={() => handleImage(index + 1)}>
                 <TouchableOpacity
-                  onPress={() => handleClose(index)}
+                  onPress={() => handleClose(index)+1}
                   style={{
                     position: 'absolute',
                     zIndex: 1000,
@@ -276,7 +276,7 @@ export default function EditListing(props) {
             //components: 'country:us',
           }}
         />
-         <Text style={styles.title}>Enter listing category</Text>
+         <Text style={styles.title}>Select listing category</Text>
         <Select
           _actionSheet={{useRNModal: true}}
           accessibilityLabel="Select Category"

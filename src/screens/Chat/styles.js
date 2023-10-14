@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         aspectRatio:16/9,
         borderWidth:2,
         borderColor:colors.appDefaultColor,
-        borderRadius:spacing.small
+        borderRadius:spacing.small,
     },
     leftImage:{
         alignSelf:"flex-start",
@@ -45,11 +45,19 @@ const styles = StyleSheet.create({
         color:"black",
         fontFamily:fonts.medium
     },
-    timeAgo:{
+    timeAgoLeft:{
         color:"white",
         fontFamily:fonts.regular,
         fontSize:fontSizes.tiny,
-        marginTop:2
+        marginTop:2,
+        alignSelf:"flex-start"
+    },
+    timeAgoRight:{
+        color:"white",
+        fontFamily:fonts.regular,
+        fontSize:fontSizes.tiny,
+        marginTop:2,
+        alignSelf:"flex-end"
     },
     rightMsg:{
         marginVertical:spacing.small,

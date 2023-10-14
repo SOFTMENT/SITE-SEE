@@ -6,12 +6,12 @@ import colors from "../../theme/colors";
 
 export default StyleSheet.create({
     settingsText:{
-        backgroundColor:colors.appPrimaryUltraLight,
+        backgroundColor:"#969cdc",
         paddingVertical:Platform.OS=="ios"?spacing.semiMedium:spacing.small,
         paddingLeft:spacing.medium,
         fontSize:responsiveSize(13),
-        fontFamily:fonts.semiBold,
-        color:"rgba(0, 0, 0, 0.67)"
+        fontFamily:fonts.medium,
+        color:"rgba(0, 0, 0, 1)"
      },
      subMenu:{
         flexDirection:"row",

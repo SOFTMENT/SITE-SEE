@@ -3,7 +3,7 @@ import firestore, {firebase} from '@react-native-firebase/firestore';
 import {format} from 'date-fns';
 import {FlatList, HStack, Icon, Link, VStack, View} from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {Text, TouchableOpacity} from 'react-native';
+import {Keyboard, Text, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
@@ -79,7 +79,8 @@ export default function FavoritesScreen(props) {
     }
   }
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+      <View style={styles.container} >
       <Header 
         isSearch  
         searchValue={searchValue}
@@ -95,6 +96,7 @@ export default function FavoritesScreen(props) {
         <NoResults />
       ) : (
         <FlatList
+          
           style={{paddingHorizontal: spacing.medium, flex: 1}}
           data={filteredData}
           numColumns={2}
@@ -104,6 +106,7 @@ export default function FavoritesScreen(props) {
           showsVerticalScrollIndicator={false}
         />
       )}
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }

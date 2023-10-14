@@ -62,7 +62,7 @@ const styles =  StyleSheet.create({
     },
     desView:{
         padding:spacing.medium,
-        backgroundColor:"#A1AAF2",
+        backgroundColor:"rgba(161,170,242,0.5)",
         marginTop:10,
         borderRadius:spacing.small
     },

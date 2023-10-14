@@ -1,116 +1,96 @@
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import styles from './styles';
-import Header from '../../../components/Header';
-import FastImage from 'react-native-fast-image';
-import {
-  HStack,
-  Icon,
-  Select,
-  useDisclose,
-  VStack,
-  ScrollView,
-} from 'native-base';
-import ImageLabeling from '@react-native-ml-kit/image-labeling';
-import PhotoPicker from '../../../components/PhotoPicker';
-import MyTextInput from '../../../components/MyTextInput';
-import {spacing} from '../../../common/variables';
-import colors from '../../../theme/colors';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {propertyCategories} from '../../../config/appConfig';
-import MyButton from '../../../components/MyButton';
-import LocationSelector from '../../../components/LocationSelector';
-import Util from '../../../common/util';
-import Helper from '../../../common/Helper';
 import auth, {firebase} from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import LoaderComponent from '../../../components/LoaderComponent';
 import {geohashForLocation} from 'geofire-common';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Icon, ScrollView, Select, VStack, useDisclose} from 'native-base';
+import React, {useEffect, useRef, useState} from 'react';
+import {Keyboard, Platform, Text, TouchableOpacity, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import { useSelector } from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux';
+import Helper from '../../../common/Helper';
+import Util from '../../../common/util';
+import {spacing} from '../../../common/variables';
+import Header from '../../../components/Header';
+import LoaderComponent from '../../../components/LoaderComponent';
+import MyButton from '../../../components/MyButton';
+import MyTextInput from '../../../components/MyTextInput';
+import PhotoPicker from '../../../components/PhotoPicker';
+import colors from '../../../theme/colors';
+import styles from './styles';
+import {useIsFocused, useRoute} from '@react-navigation/native';
+import branch from 'react-native-branch';
 
 export default function AddListing(props) {
-  const {navigation, route} = props;
-  //const {getSpaces} = route.params
+  const {navigation} = props;
   const {isOpen, onToggle, onClose, onOpen} = useDisclose();
   const [locationAllState, setLocationAllState] = useState({
     address: null,
     location: {},
   });
-  const categories = useSelector(state=>state.user.categories)
+  const placesRef = useRef(null);
+  const categories = useSelector(state => state.user.categories);
   const [about, setAbout] = useState('');
   const [title, setTitle] = useState('');
   const [images, setImages] = useState([]);
   const [index, setIndex] = useState(0);
-  const [category, setCategory] = useState(categories[0]);
+  const [category, setCategory] = useState('');
   const [loaderVisibility, setLoaderVisibility] = useState(false);
+  const {latitude, longitude} =
+    useSelector(state => state.user.currentPosition) ?? {};
+  const location = useSelector(state => state.user.currentLocation) ?? {};
+  useEffect(() => {
+    if (location) {
+      placesRef.current.setAddressText(location);
+      setLocationAllState({
+        address: location,
+        location: {
+          latitude,
+          longitude,
+        },
+      });
+    }
+  }, [location]);
   const handleImage = index => {
+    Keyboard.dismiss();
     setIndex(index);
     onToggle();
   };
-  useEffect(()=>{
-    console.log(locationAllState)
-  },[locationAllState])
   const clearData = () => {
-    setTitle('')
-    setAbout('')
-    setImages([])
-    setIndex(0)
-    setCategory(categories[0])
-    setLocationAllState({
-        address: null,
-        location: {},
-    })
-  }
+    setTitle('');
+    setAbout('');
+    setImages([]);
+    setIndex(0);
+    setCategory('');
+    // setLocationAllState({
+    //     address: null,
+    //     location: {},
+    // })
+  };
   const selectImage = img => {
-    if(img){
+    if (img) {
       if (images?.[index] != undefined) {
         setImages(images.map((imgg, i) => (index == i ? img : imgg)));
       } else setImages([...images, img]);
     }
-   
   };
-  const generateLabels = async() => {
-    let labels = []
-    for(const img of images){
-      const label = await ImageLabeling.label(Platform.OS=="ios"?`file:///${img.path}`:img.path)
-      label.map(item=>{
-        const index = labels.findIndex(v=>v.text == item.text)
-        if(index>=0){
-          labels[index] = {
-            ...labels[index],
-            confidence:Math.max(labels[index].confidence,item.confidence)
-          }
-        }
-        else{
-          labels.push(item)
-        }
-      })
-      labels.sort((obj1,obj2)=>obj2.confidence-obj1.confidence)
-    }
-    return labels.slice(0,5)
-  }
+
   const handleAddSpace = async () => {
     // const labels = await ImageLabeling.label("https://firebasestorage.googleapis.com/v0/b/site-see-32c16.appspot.com/o/ListingIma);
     //     console.log(labels)
     //     return
-   //const labels = await ImageLabeling.label(Platform.OS=="ios"?`file:///${img.path}`:img.path)
-  //  const labels = await generateLabels()
-  //  console.log(labels)
-   //return
+    //const labels = await ImageLabeling.label(Platform.OS=="ios"?`file:///${img.path}`:img.path)
+    //  const labels = await generateLabels()
+    //  console.log(labels)
+    //return
     if (!images[0]) {
       Util.showMessage('error', 'First image is compulsory');
-    } else if (!title) {
+    } else if (!title.trim()) {
       Util.showMessage('error', 'Please provide a valid title');
-    } else if (!about) {
+    } else if (!category) {
+      Util.showMessage('error', 'Please select a category');
+    } else if (!about.trim()) {
       Util.showMessage('error', 'Please provide a valid description');
     } else if (!locationAllState.address) {
       Util.showMessage('error', 'Please add a valid location');
@@ -124,46 +104,80 @@ export default function AddListing(props) {
           locationAllState.location.longitude,
         ]);
         const ref = firestore().collection('Listing').doc();
-        
-        Promise.all(images.map((image,ind)=>{
+
+        Promise.all(
+          images.map((image, ind) => {
             return Helper.uploadImage(
-                `ListingImage/${ref.id}_${ind+1}.png`,
-                image,
-              );
-        }))
-        .then( async listingImages=>{
+              `ListingImage/${ref.id}_${ind + 1}.png`,
+              image,
+            );
+          }),
+        )
+          .then(async listingImages => {
+            let buo = await branch.createBranchUniversalObject(
+              `item/${ref.id}`,
+              {
+                title,
+                contentDescription: about,
+                contentMetadata: {
+                  customMetadata: {
+                    key1: 'value1',
+                  },
+                },
+              },
+            );
+            //   let linkProperties = {
+            //     feature: 'sharing',
+            //     channel: 'facebook',
+            //     campaign: 'content 123 launch'
+            //   }
+
+            //   let controlParams = {
+            //     $desktop_url: 'https://example.com/home',
+            //     custom: 'data'
+            //   }
+            //   let shareOptions = {
+            //     messageHeader: 'Check this out',
+            //     messageBody: 'No really, check this out!'
+            //   }
+            let {url} = await buo.generateShortUrl();
             await ref.set({
-            id: ref.id,
-            listingImages,
-            createTime: firebase.firestore.FieldValue.serverTimestamp(),
-            title,
-            supplierId:uid,
-            about,
-            category,
-            geohash: hash,
-            _geoloc:{
+              id: ref.id,
+              listingImages,
+              shareUrl:url,
+              createTime: firebase.firestore.FieldValue.serverTimestamp(),
+              title,
+              supplierId: uid,
+              about,
+              category,
+              geohash: hash,
+              _geoloc: {
                 lat: locationAllState?.location?.latitude ?? '',
                 lng: locationAllState?.location?.longitude ?? '',
-            },
-            location: {
+              },
+              location: {
                 address: locationAllState.address,
                 lat: locationAllState?.location?.latitude ?? '',
                 lng: locationAllState?.location?.longitude ?? '',
-            },
+              },
             });
-           Util.showMessage('success', 'Success', 'Listing added successfully');
-           clearData()
-        })
-        .finally(()=>{
-            setLoaderVisibility(false)
-        })
-        
+            Util.showMessage(
+              'success',
+              'Success',
+              'Listing added successfully',
+            );
+            clearData();
+            navigation.navigate('MyListingScreen');
+          })
+          .finally(() => {
+            setLoaderVisibility(false);
+          });
       } catch (error) {
         console.log(error);
       }
     }
   };
-  
+
   const handleClose = index => {
     setImages(images.filter((img, i) => index != i));
   };
@@ -172,8 +186,8 @@ export default function AddListing(props) {
       style={styles.container}
       nestedScrollEnabled={false}
       bounces={false}
-      keyboardShouldPersistTaps={'handled'}>
-      <Header navigation={navigation} title="Add Listing" />
+      keyboardShouldPersistTaps={'always'}>
+      <Header navigation={navigation} title="Add Listing" back />
       <View style={styles.mainView}>
         <TouchableOpacity
           style={styles.thumbnailView}
@@ -199,36 +213,37 @@ export default function AddListing(props) {
           horizontal
           showsHorizontalScrollIndicator={false}
           bounces={false}>
-          {images.length >1 && images.slice(1).map((img, index) => {
-            return (
-              <TouchableOpacity
-                style={styles.addmore}
-                onPress={() => handleImage(index + 1)}>
+          {images.length > 1 &&
+            images.slice(1).map((img, index) => {
+              return (
                 <TouchableOpacity
-                  onPress={() => handleClose(index)}
-                  style={{
-                    position: 'absolute',
-                    zIndex: 1000,
-                    // backgroundColor:"rgba(0,0,0,0.5)",
-                    // padding:5,
-                    top: 2,
-                    right: 2,
-                  }}>
-                  <Icon
-                    name="close-circle-outline"
-                    as={MaterialCommunityIcons}
-                    size="md"
-                    color={'white'}
+                  style={styles.addmore}
+                  onPress={() => handleImage(index + 1)}>
+                  <TouchableOpacity
+                    onPress={() => handleClose(index + 1)}
+                    style={{
+                      position: 'absolute',
+                      zIndex: 1000,
+                      // backgroundColor:"rgba(0,0,0,0.5)",
+                      // padding:5,
+                      top: 2,
+                      right: 2,
+                    }}>
+                    <Icon
+                      name="close-circle-outline"
+                      as={MaterialCommunityIcons}
+                      size="md"
+                      color={'white'}
+                    />
+                  </TouchableOpacity>
+                  <FastImage
+                    source={{uri: img.uri}}
+                    style={{width: '100%', height: '100%'}}
+                    resizeMode="contain"
                   />
                 </TouchableOpacity>
-                <FastImage
-                  source={{uri: img.uri}}
-                  style={{width: '100%', height: '100%'}}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-            );
-          })}
+              );
+            })}
           {images[0] && images.length < 10 && (
             <TouchableOpacity style={styles.addmore} onPress={handleImage}>
               <Icon name="plus" as={MaterialCommunityIcons} size="3xl" />
@@ -236,7 +251,7 @@ export default function AddListing(props) {
           )}
         </ScrollView>
         <MyTextInput
-          containerStyle={{marginTop:20}}
+          containerStyle={{marginTop: 20}}
           //iconName={"lock-outline"}
           //isPass
           placeholder={'Listing Name'}
@@ -246,29 +261,31 @@ export default function AddListing(props) {
         />
         <Text style={styles.title}>Listing location</Text>
         <GooglePlacesAutocomplete
+          ref={placesRef}
           //keyboardShouldPersistTaps={'always'}
           textInputProps={{
-            //   onChangeText: (txt) => setAddress(txt),
-            //   value: address,
+            // onChangeText: (txt) => setAddress(txt),
+            // value: address,
             placeholderTextColor: 'gray',
             //value:address
           }}
           fetchDetails={true}
           styles={{
-           
-            textInput:{
-                borderRadius:20
-            }
+            textInput: {
+              borderRadius: 20,
+            },
           }}
           //styles={styles.autoCompleteStyles}
           placeholder={'Search address'}
           onPress={(data, details = null) => {
-            console.log(data.description)
-            setLocationAllState({...locationAllState,address:data.description,
-                location:{
-                    latitude: details.geometry.location.lat,
-                    longitude: details.geometry.location.lng,
-                }
+            console.log(address);
+            setLocationAllState({
+              ...locationAllState,
+              address: data.description,
+              location: {
+                latitude: details.geometry.location.lat,
+                longitude: details.geometry.location.lng,
+              },
             });
           }}
           query={{
@@ -277,11 +294,11 @@ export default function AddListing(props) {
             //components: 'country:us',
           }}
         />
-         <Text style={styles.title}>Enter listing category</Text>
+        <Text style={styles.title}>Select listing category</Text>
         <Select
           _actionSheet={{useRNModal: true}}
           accessibilityLabel="Select Category"
-          placeholder="Category"
+          placeholder="Select"
           //px={spacing.medium}
           bgColor={'white'}
           py={Platform.OS == 'ios' ? 4 : 2}
@@ -300,22 +317,16 @@ export default function AddListing(props) {
           selectedValue={category}
           color={'black'}
           onValueChange={itemValue => setCategory(itemValue)}>
-          {categories.map((item,index) => {
-            return (
-              <Select.Item
-                key={index}
-                value={item}
-                label={item}
-              />
-            );
+          {categories.map((item, index) => {
+            return <Select.Item key={index} value={item} label={item} />;
           })}
         </Select>
-        
+
         {/* <Text style={styles.title}>Brief Description</Text> */}
         <MyTextInput
           numberOfLines={2}
-          containerStyle={{marginTop:20}}
-          txtInputStyle={{height: 100,textAlignVertical: 'top'}}
+          containerStyle={{marginTop: 20}}
+          txtInputStyle={{height: 100, textAlignVertical: 'top'}}
           multiline={true}
           //iconName={"lock-outline"}
           //isPass
@@ -324,18 +335,15 @@ export default function AddListing(props) {
           onChangeText={txt => setAbout(txt)}
           //keyboardType={"number-pad"}
         />
-       
-       
+
         <MyButton
           title={'Add Listing'}
           containerStyle={{
             marginTop: 20,
           }}
-          txtStyle={
-            {
-                color:"white"
-            }
-          }
+          txtStyle={{
+            color: 'white',
+          }}
           onPress={handleAddSpace}
         />
       </View>

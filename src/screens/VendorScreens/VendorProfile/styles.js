@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import fonts from "../../../../assets/fonts";
-import Util from "../../../common/util";
+import Util, { responsiveSize } from "../../../common/util";
 import { fontSizes, spacing } from "../../../common/variables";
 import colors from "../../../theme/colors";
 
@@ -34,24 +34,24 @@ export default StyleSheet.create({
         borderRadius: 200 
     },
     image:{ 
-        width:Util.getWidth(30), 
+        width:Util.getWidth(15), 
         aspectRatio:1,
         borderRadius: 200 
     },
     name:{
-        textAlign:"center",
         fontSize:fontSizes.medium,
-        fontFamily:fonts.bold,
+        fontFamily:fonts.semiBold,
         color:"white",
         marginTop:spacing.medium,
-        marginBottom:spacing.extraExtraSmall
+        marginBottom:spacing.extraExtraSmall,
+        textAlign:"left"
     },
     email:{
-        textAlign:"center",
-        fontSize:fontSizes.extraExtraSmall,
-        fontFamily:fonts.regular,
+        fontSize:responsiveSize(11),
+        fontFamily:fonts.medium,
         color:"white",
-        marginVertical:spacing.extraExtraSmall
+        marginTop:spacing.extraExtraSmall,
+        marginBottom:spacing.small,
     },
     orderView:{
         backgroundColor:colors.appPrimary,
@@ -70,5 +70,10 @@ export default StyleSheet.create({
         fontSize:fontSizes.extraExtraSmall,
         fontFamily:fonts.medium,
         color:"white",
-    }
+    },
+    emailLight:{
+        fontSize:responsiveSize(10.5),marginLeft:5,
+        fontFamily:fonts.light,
+
+    },
 })

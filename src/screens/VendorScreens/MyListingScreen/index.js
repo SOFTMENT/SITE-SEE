@@ -9,13 +9,15 @@ import {useSelector} from 'react-redux';
 import {uniqBy} from 'lodash';
 import CenteredLoader from '../../../components/CenteredLoader';
 import NoResults from '../../../components/NoResults';
-import {FlatList, HStack, Icon, VStack} from 'native-base';
+import {Center, FlatList, HStack, Icon, Link, VStack} from 'native-base';
 import FastImage from 'react-native-fast-image';
 import {spacing} from '../../../common/variables';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../../../theme/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useIsFocused } from '@react-navigation/native';
+import MyButton from '../../../components/MyButton';
+import images from '../../../assets/images';
 
 const radius = 10 * 1000;
 const MyListingScreen = props => {
@@ -25,6 +27,9 @@ const MyListingScreen = props => {
   const [loading, setLoading] = useState(false);
   const {latitude, longitude} = useSelector(
     state => state.user.currentPosition,
+  );
+  const address = useSelector(
+    state => state.user.currentLocation,
   );
   const {name} = useSelector(state=>state.user.userData)
   const isFocused = useIsFocused();
@@ -42,6 +47,7 @@ const MyListingScreen = props => {
         .collection('Listing')
         .where('supplierId', '==', auth().currentUser.uid)
         .orderBy('geohash')
+        .orderBy('createTime','desc')
         .startAt(b[0])
         .endAt(b[1]);
       promises.push(query.get());
@@ -85,6 +91,7 @@ const MyListingScreen = props => {
     return (
       <View style={{flex:0.5,margin:5}}>
           <FastImage
+            defaultSource={images.imagePlaceholder}
             source={{uri: item.listingImages[0]}}
             style={styles.img}
             resizeMode="contain">
@@ -122,7 +129,7 @@ const MyListingScreen = props => {
   return (
     <View style={styles.container}>
       <Header
-        rightIcon={'plus'}
+        rightIcon={'add'}
         onRightIconPress={() => {
           navigation.navigate('AddListings');
         }}
@@ -133,7 +140,20 @@ const MyListingScreen = props => {
       {loading ? (
         <CenteredLoader />
       ) : noData ? (
-        <NoResults />
+        <Center flex={1} p={3}>
+          <Text style={styles.noItem}>
+            {`No product found for location: \n${address}`}
+          </Text>
+          <Link 
+            onPress={()=>navigation.navigate('AddListings',)}
+            _text={{
+            color:colors.appDefaultColor,
+            textDecoration:"none",
+            fontWeight:"medium"
+          }}>
+            Add Product
+          </Link>
+        </Center>
       ) : (
         <FlatList
           style={{paddingHorizontal: spacing.medium, flex: 1}}
