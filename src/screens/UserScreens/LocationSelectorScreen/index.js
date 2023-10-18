@@ -23,6 +23,9 @@ export default LocationSelectorScreen = props => {
   const dispatch = useDispatch()
 
   const confirmPressed = () => {
+    if(address == '' || loc == null){
+      return
+    }
     dispatch(setCurrentLocation(address))
     dispatch(setCurrentPosition(loc))
     navigation.goBack()
