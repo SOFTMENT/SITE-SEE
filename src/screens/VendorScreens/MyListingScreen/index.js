@@ -19,7 +19,7 @@ import { useIsFocused } from '@react-navigation/native';
 import MyButton from '../../../components/MyButton';
 import images from '../../../assets/images';
 
-const radius = 10 * 1000;
+const radius = 60;
 const MyListingScreen = props => {
   const {navigation} = props;
   const [listings, setListings] = useState([]);
@@ -155,8 +155,11 @@ const MyListingScreen = props => {
           </Link>
         </Center>
       ) : (
-        <FlatList
-          style={{paddingHorizontal: spacing.medium, flex: 1}}
+        <View style={{flex:1}}>
+          {/* <Text style={[styles.address,{color:colors.appDefaultColor}]}>{"Showing listings around :"}</Text> */}
+          <Text style={styles.address}>{address}</Text>
+          <FlatList
+          style={{paddingHorizontal: spacing.medium, flex: 1,marginVertical:5}}
           data={listings}
           numColumns={2}
           renderItem={renderCard}
@@ -164,6 +167,7 @@ const MyListingScreen = props => {
           bounces={false}
           showsVerticalScrollIndicator={false}
         />
+        </View>
       )}
     </View>
   );

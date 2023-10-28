@@ -167,7 +167,10 @@ export default function AddListing(props) {
               'Listing added successfully',
             );
             clearData();
-            navigation.navigate('MyListingScreen');
+            if(location)
+              navigation.navigate('MyListingScreen');
+            else
+              navigation.navigate('VendorAllListing');
           })
           .finally(() => {
             setLoaderVisibility(false);
@@ -273,12 +276,12 @@ export default function AddListing(props) {
           styles={{
             textInput: {
               borderRadius: 20,
+              backgroundColor:colors.whiteDark
             },
           }}
           //styles={styles.autoCompleteStyles}
           placeholder={'Search address'}
           onPress={(data, details = null) => {
-            console.log(address);
             setLocationAllState({
               ...locationAllState,
               address: data.description,
@@ -300,14 +303,14 @@ export default function AddListing(props) {
           accessibilityLabel="Select Category"
           placeholder="Select"
           //px={spacing.medium}
-          bgColor={'white'}
+          bgColor={colors.whiteDark}
           py={Platform.OS == 'ios' ? 4 : 2}
           borderRadius={spacing.large}
-          borderWidth={1}
-          borderColor={colors.borderColor}
+          borderWidth={0}
+          // borderColor={colors.borderColor}
           dropdownIcon={
             <Icon
-              bgColor={'white'}
+              //bgColor={'white'}
               name="chevron-down"
               as={MaterialCommunityIcons}
               size="md"

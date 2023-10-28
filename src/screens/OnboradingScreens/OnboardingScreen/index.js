@@ -17,6 +17,7 @@ export default function OnboardingScreen(props) {
     <View style={[styles.container, {paddingTop: inset.top + spacing.medium}]}>
       <View style={styles.logoView}>
         <Image source={images.logo} style={styles.logo} resizeMode="contain" />
+        {/* <Text style={[styles.areyou,{fontSize:30}]}>Site See</Text> */}
         <Image
           source={images.siteSeeText}
           style={styles.siteSee}
@@ -27,7 +28,7 @@ export default function OnboardingScreen(props) {
         <Text style={styles.areyou}>Are you?</Text>
         <HStack width={"100%"} justifyContent={"space-between"}>
           <MyButton 
-            title={"User"} 
+            title={"A User"} 
             containerStyle={styles.btn}
             icon={"account-outline"}
             onPress={()=>handleNavigation(1)}
@@ -36,7 +37,7 @@ export default function OnboardingScreen(props) {
           />
           <MyButton 
             icon={"cart-variant"}
-            title={"Supplier"} 
+            title={"A Supplier"} 
             containerStyle={styles.btn}
             txtStyle={{color:colors.appDefaultColor}}
             onPress={()=>handleNavigation(2)}

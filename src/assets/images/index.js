@@ -1,5 +1,5 @@
 export default {
-    logo: require("./logo.png"),
+    logo: require("./logo.jpeg"),
     //backArrow: require("./back-arrow.png"),
     // upArrow:require("./upArrow.png"),
     // downArrow:require("./downArrow.png"),
@@ -44,5 +44,6 @@ export default {
     withdrawal:require("./withdrawal.png"),
     siteSeeText:require("./SiteSee.png"),
     siteSeeVertical:require("./siteSeeVertical.png"),
-    tapToSee:require("./tapToSee.png")
+    tapToSee:require("./tapToSee.png"),
+    locationIcon:require("./location-pin.png")
 }

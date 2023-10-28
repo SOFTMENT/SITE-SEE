@@ -46,13 +46,13 @@ const AvatarHeader = props => {
         <IconButton
         onPress={handleBack}
         _pressed={{backgroundColor: 'transparent'}}
-        style={{backgroundColor:"white",borderRadius:30}}
+        style={{backgroundColor:"black",borderRadius:30}}
         icon={
           <Icon
             as={Ionicons}
             size="lg"
             name="arrow-back"
-            color={'black'}
+            color={'white'}
           />
         }
       />
@@ -68,12 +68,12 @@ const AvatarHeader = props => {
             placement="bottom right"
             trigger={triggerProps => {
               return (
-                <Pressable {...triggerProps} style={{backgroundColor:"white",borderRadius:30,width:40,height:40,justifyContent:"center",alignItems:'center'}}>
+                <Pressable {...triggerProps} style={{backgroundColor:"black",borderRadius:30,width:40,height:40,justifyContent:"center",alignItems:'center'}}>
                   <Icon
                     as={MaterialCommunityIcons}
                     size="lg"
                     name={"dots-vertical"}
-                    color={'black'}
+                    color={'white'}
                 />
                 </Pressable>
               );
@@ -83,7 +83,7 @@ const AvatarHeader = props => {
         ) : (
           <IconButton
             //bgColor={"red.100"}
-            style={{backgroundColor:"white",borderRadius:30}}
+            style={{backgroundColor:"black",borderRadius:30}}
             onPress={onRightIconPress}
             _pressed={{backgroundColor: 'transparent'}}
             icon={
@@ -91,7 +91,7 @@ const AvatarHeader = props => {
                 as={Ionicons}
                 size="lg"
                 name={rightIcon}
-                color={'black'}
+                color={'white'}
               />
             }
           />
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   title: {
     //flex:1,
     //textAlign:"center",
-    color: 'white',
+    color: 'black',
     fontFamily: fonts.semiBold,
     fontSize: fontSizes.small,
     flex: 1,

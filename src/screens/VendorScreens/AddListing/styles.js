@@ -23,7 +23,9 @@ const styles =  StyleSheet.create({
         marginVertical:spacing.extraSmall,
         overflow:"hidden",
         backgroundColor:colors.white,
-        alignSelf:"center"
+        alignSelf:"center",
+        borderWidth:1,
+        borderColor:colors.borderColor
     },
     updateText:{
         color:"gray",
@@ -31,7 +33,7 @@ const styles =  StyleSheet.create({
         fontFamily:fonts.regular
     },
     title:{
-        color:"white",
+        color:"black",
         fontFamily: fonts.medium,
         fontSize: fontSizes.extraExtraSmall,
         marginBottom:spacing.small,
@@ -61,7 +63,9 @@ const styles =  StyleSheet.create({
         height:100,
         width:100,
         borderRadius:5,
-        backgroundColor:"white",
+        backgroundColor:colors.whiteDark,
+        borderWidth:1,
+        borderColor:"gray",
         justifyContent:"center",
         alignItems:'center',
         marginTop:5,

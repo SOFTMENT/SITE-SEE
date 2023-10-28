@@ -41,44 +41,42 @@ export default StyleSheet.create({
     name:{
         fontSize:fontSizes.medium,
         fontFamily:fonts.semiBold,
-        color:"white",
-        marginTop:spacing.medium,
-        marginBottom:spacing.extraExtraSmall,
+        color:"black",
         textAlign:"left"
     },
     email:{
         fontSize:responsiveSize(11),
         fontFamily:fonts.medium,
-        color:"white",
+        color:"black",
         marginTop:spacing.extraExtraSmall,
-        marginBottom:spacing.small
-    },
-    emailLight:{
-        fontSize:responsiveSize(10.5),marginLeft:5,
-        fontFamily:fonts.light
+        marginBottom:spacing.small,
     },
     orderView:{
         backgroundColor:colors.appPrimary,
         padding:spacing.medium,
         marginHorizontal:spacing.mediumLarge,
-        borderRadius:spacing.small,
-        marginVertical:spacing.small
+        borderRadius:spacing.small
     },
     value:{
         textAlign:"center",
         fontSize:fontSizes.medium,
         fontFamily:fonts.bold,
-        color:"white",
+        color:"black",
     },
     title:{
         textAlign:"center",
         fontSize:fontSizes.extraExtraSmall,
         fontFamily:fonts.medium,
-        color:"white",
+        color:"black",
     },
-    imageEdit:{
-        position:"absolute",
-        bottom:10,
-        right:10
+    emailLight:{
+        fontSize:responsiveSize(10.5),marginLeft:5,
+        fontFamily:fonts.light,
     },
+    tap:{
+        fontSize:fontSizes.extraExtraSmall,
+        color:colors.appDefaultColor,
+        marginTop:2,
+        fontFamily:fonts.light
+    }
 })

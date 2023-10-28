@@ -11,14 +11,14 @@ const styles =  StyleSheet.create({
     },
     imageContainerSmall:{
         borderRadius:spacing.small,
-        backgroundColor:"#C7CCF0",
+        backgroundColor:"rgba(255,255,255,0.9)",
         padding:spacing.small,
         marginHorizontal:3
     },
     imageContainer:{
         paddingVertical:spacing.large,
         borderRadius:spacing.large,
-        backgroundColor:"#A1AAF2",
+        backgroundColor:"rgba(255,0,0,0.1)",
         marginHorizontal:spacing.medium
     },
     imageSmall:{
@@ -33,7 +33,7 @@ const styles =  StyleSheet.create({
         //overflow:"hidden"
     },
     title:{
-        color:"white",
+        color:"black",
         fontSize:fontSizes.small,
         fontFamily:fonts.bold,
         marginTop:20
@@ -55,14 +55,14 @@ const styles =  StyleSheet.create({
         marginTop:20
     },
     about:{
-        color:"white",
+        color:"black",
         fontSize:responsiveSize(11),
         fontFamily:fonts.medium,
         lineHeight:20
     },
     desView:{
         padding:spacing.medium,
-        backgroundColor:"rgba(161,170,242,0.5)",
+        backgroundColor:"rgba(255,0,0,0.1)",
         marginTop:10,
         borderRadius:spacing.small
     },

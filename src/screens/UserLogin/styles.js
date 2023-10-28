@@ -22,7 +22,7 @@ export default StyleSheet.create({
     },
     login:{
         fontFamily:fonts.medium,
-        color:colors.white,
+        color:colors.blackText,
         fontSize:fontSizes.extraExtraLarge,
         marginLeft:30
     },
@@ -30,7 +30,7 @@ export default StyleSheet.create({
         height:"75%",
         width:2,
         marginLeft:30,
-        backgroundColor:colors.white
+        backgroundColor:colors.appDefaultColor
     },
     logo:{
         //height:Util.getHeight(30),
@@ -80,7 +80,7 @@ export default StyleSheet.create({
         borderRadius:spacing.large,
     },
     or:{
-        color:colors.white,
+        color:colors.black,
         textAlign:"center",
         marginVertical:spacing.large,
         fontFamily:fonts.bold,
@@ -88,7 +88,7 @@ export default StyleSheet.create({
         marginHorizontal:spacing.extraExtraSmall
     },
     register:{
-        color:colors.white,
+        color:colors.black,
         textAlign:"center",
         marginVertical:spacing.extraExtraLarge,
         fontFamily:fonts.regular,
@@ -115,7 +115,7 @@ export default StyleSheet.create({
      height:0.5,
      flex:1,
     // width:"100%",
-     backgroundColor:"white",
+     backgroundColor:"black",
      
     },
     socialView:{

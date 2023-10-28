@@ -223,13 +223,15 @@ export default function UserHome(props) {
       </View>
       <Text style={styles.currentLocation}>{`Current Location:`}</Text>
       <Text style={styles.currentLocationBold}>{location}</Text>
-      <TouchableOpacity style={{alignSelf: 'center'}} onPress={()=>{handleImage()}}>
-        <Text style={styles.tapToSeeText}>Tap to SiteSee</Text>
-        <Image
-          source={images.tapToSee}
-          style={styles.tapToSee}
-          resizeMode="contain"
-        />
+      <TouchableOpacity style={{alignSelf: 'center',width:"100%"}} onPress={()=>{handleImage()}}>
+        <Text style={styles.tapToSeeText}>Tap to SiteSii</Text>
+        <View style={styles.logoBorder}>
+          <Image
+            source={images.logo}
+            style={styles.tapToSee}
+            resizeMode="contain"
+          />
+        </View>
       </TouchableOpacity>
       <View style={styles.borderViewContainer}>
         <View style={styles.borderView}></View>

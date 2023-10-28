@@ -41,15 +41,13 @@ export default StyleSheet.create({
     name:{
         fontSize:fontSizes.medium,
         fontFamily:fonts.semiBold,
-        color:"white",
-        marginTop:spacing.medium,
-        marginBottom:spacing.extraExtraSmall,
+        color:"black",
         textAlign:"left"
     },
     email:{
         fontSize:responsiveSize(11),
         fontFamily:fonts.medium,
-        color:"white",
+        color:"black",
         marginTop:spacing.extraExtraSmall,
         marginBottom:spacing.small,
     },
@@ -63,17 +61,22 @@ export default StyleSheet.create({
         textAlign:"center",
         fontSize:fontSizes.medium,
         fontFamily:fonts.bold,
-        color:"white",
+        color:"black",
     },
     title:{
         textAlign:"center",
         fontSize:fontSizes.extraExtraSmall,
         fontFamily:fonts.medium,
-        color:"white",
+        color:"black",
     },
     emailLight:{
         fontSize:responsiveSize(10.5),marginLeft:5,
         fontFamily:fonts.light,
-
     },
+    tap:{
+        fontSize:fontSizes.extraExtraSmall,
+        color:colors.appDefaultColor,
+        marginTop:2,
+        fontFamily:fonts.light
+    }
 })

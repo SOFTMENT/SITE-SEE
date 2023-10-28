@@ -17,6 +17,8 @@ import MyButton from '../../../components/MyButton'
 import { setFavorites } from '../../../store/userSlice'
 import colors from '../../../theme/colors'
 import styles from './styles'
+import messaging from '@react-native-firebase/messaging'
+import axios from 'axios'
 export default function ListingDetail(props) {
     const { route , navigation} = props
     const { item } = route.params
@@ -33,9 +35,35 @@ export default function ListingDetail(props) {
         .doc(item.supplierId)
         .get()
         .then(doc=>{
+            notifySupplier(doc.data().fcmToken)
             setSupplierData(doc.data())
         })
     },[])
+    const notifySupplier = async(fcmToken) => {
+       if(!fcmToken)return
+       console.log(fcmToken)
+       axios({
+        method:"post",
+        url:"https://fcm.googleapis.com/fcm/send",
+        headers:{
+            "Content-Type":"application/json",
+            "Authorization":`key=AAAANw3r-Ao:APA91bGVtL8cL1_UBi23cRxICx_EtFlll6cLMgi2tfEv5uYq-1--CdETb4rB63czJ-bxacfoD9y4nTNNP8spT6lg1hGFP5HIOrzE1HEE4tf4t7VFC9NFfymGZ4w9lHsxcsF3c6WTQusr`
+        },
+        data:{
+            to:fcmToken,
+                notification:{
+                    title:"Hey",
+                    body:`Someone just viewed your one of the listing(${item.title}).`
+                }
+        }
+       })
+       .then(res=>{
+        console.log(res.data)
+       })
+       .catch(err=>{
+        console.log(err)
+       })
+    }
     const handleFav = async() => {
         setFavIsSelected(!favIsSelected)
         if(isSelected){
@@ -71,7 +99,9 @@ export default function ListingDetail(props) {
     }
     const handleChat = () => {
         const lastMessage={
-            senderUid:item.supplierId
+            senderUid:item.supplierId,
+            regarding:`This conversation is related to your listing named '${item.title}'`,
+            imageUri:item.listingImages[0]
         }
         navigation.navigate("PersonalChat",{lastMessage})
     }
@@ -150,21 +180,21 @@ export default function ListingDetail(props) {
                    </View>
                    <HStack>
                     <TouchableOpacity onPress={handleShare}>
-                        <Center bgColor={"white"} p={2} borderRadius={20} mr={2}>
+                        <Center bgColor={"black"} p={2} borderRadius={20} mr={2}>
                             <Icon
                                     as={MaterialCommunityIcons}
                                     name={"share-variant"}
-                                    color={colors.appDefaultColor}
+                                    color={colors.white}
                                     size={"lg"}
                             />
                         </Center>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleFav}>
-                        <Center bgColor={"white"} p={2} borderRadius={20}>
+                        <Center bgColor={"black"} p={2} borderRadius={20}>
                             <Icon
                                     as={MaterialCommunityIcons}
-                                    name={favIsSelected?"heart":"heart-outline"}
-                                    color={colors.appDefaultColor}
+                                    name={'heart'}
+                                    color={favIsSelected?colors.appDefaultColor: colors.white}
                                     size={"lg"}
                             />
                         </Center>
@@ -178,7 +208,7 @@ export default function ListingDetail(props) {
                 <MyButton
                     title={"Message"}
                     txtStyle={{color:"white"}}
-                    containerStyle={{marginTop:20,borderRadius:18}}
+                    containerStyle={{marginTop:20,borderRadius:18,backgroundColor:"black"}}
                     onPress={handleChat}
                 />
             </View>

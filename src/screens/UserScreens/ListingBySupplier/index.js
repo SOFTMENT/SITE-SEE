@@ -158,15 +158,15 @@ export default function ListingBySupplier(props) {
         </VStack>
       )}
       <HStack
-        bgColor={'white'}
+        bgColor={colors.appDefaultColor}
         p={2}
         px={6}
         my={4}
         alignItems={'center'}
         justifyContent={'space-between'}>
-        <Text>Products</Text>
+        <Text style={styles.product}>Products</Text>
         <Link
-          _text={{color: colors.appDefaultColor}}
+          _text={{color: colors.white}}
           onPress={() => handleChat()}>
           Message
         </Link>

@@ -26,8 +26,13 @@ const styles =  StyleSheet.create({
         fontFamily:fonts.medium,
         fontSize:fontSizes.extraSmall,
     },
-    name:{
+    product:{
         color:colors.white,
+        fontFamily:fonts.medium,
+        fontSize:fontSizes.extraExtraSmall,
+    },
+    name:{
+        color:colors.black,
         fontFamily:fonts.medium,
         fontSize:fontSizes.small,
         marginTop:10

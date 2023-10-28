@@ -1,20 +1,18 @@
-import {startCase} from 'lodash';
-import React, {useEffect, useState} from 'react';
-import {AppState, Platform, Text, TextInput, View} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch, useSelector} from 'react-redux';
-import images from '../../../assets/images';
-import {spacing} from '../../../common/variables';
-import AvatarIcon from '../../../components/AvatarIcon';
-import styles from './styles';
-import {Icon, Link} from 'native-base';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import {setCategories, setCurrentLocation, setCurrentPosition} from '../../../store/userSlice';
-import LocationRequiredModal from '../../../components/LocationRequiredModal';
-import { handleLocation } from '../../../common/LocationHelper';
+import firestore from '@react-native-firebase/firestore';
+import { Icon, Link } from 'native-base';
+import React, { useEffect, useState } from 'react';
+import { AppState, Platform, Pressable, Text, View } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import firestore from '@react-native-firebase/firestore'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDispatch, useSelector } from 'react-redux';
+import images from '../../../assets/images';
+import { handleLocation } from '../../../common/LocationHelper';
+import { spacing } from '../../../common/variables';
+import AvatarIcon from '../../../components/AvatarIcon';
+import LocationRequiredModal from '../../../components/LocationRequiredModal';
+import { setCategories, setCurrentLocation, setCurrentPosition } from '../../../store/userSlice';
+import styles from './styles';
 let sub = null
 export default function VendorHome(props) {
   const {navigation} = props;
@@ -109,14 +107,15 @@ export default function VendorHome(props) {
             callLocationPermission()
         }}
         _text={{
-          color: 'white',
+          color: 'black',
           textDecoration: 'none',
-          fontWeight: 'bold',
+          fontWeight: '900',
+          fontSize:22
         }}
         style={{
           alignSelf: 'center',
           borderBottomWidth: 1,
-          borderBottomColor: 'white',
+          borderBottomColor: 'black',
         }}>
         Use Current Location
       </Link>
@@ -125,7 +124,7 @@ export default function VendorHome(props) {
         <Text style={styles.or}> OR </Text>
         <View style={styles.borderView}></View>
       </View>
-      <View style={styles.searchContainer}>
+      {/* <View style={styles.searchContainer}>
         <Icon
           as={MaterialCommunityIcons}
           size="lg"
@@ -145,16 +144,18 @@ export default function VendorHome(props) {
           styles={{
             textInput: {
               padding: 0,
-              backgroundColor: 'transparent',
-              alignItems:'center'
+              backgroundColor: "transparent",
+              alignItems:'center',
             },
             container: {
               padding: 0,
-              alignItems:'center'
+              alignItems:'center',
+              backgroundColor: "transparent",
             },
             textInputContainer: {
               padding: 0,
-              alignItems:'center'
+              alignItems:'center',
+              backgroundColor: "transparent",
             },
           }}
           placeholder={'Search address'}
@@ -188,7 +189,44 @@ export default function VendorHome(props) {
             //components: 'country:us',
           }}
         />
+      </View> */}
+       <Pressable
+          style={[styles.searchBox, {marginRight: 10}]}
+          backgroundColor={'gray.800'}
+          onPress={() => navigation.navigate('LocationSelectorScreen',{isVendor:true})}>
+          <Icon
+            as={MaterialCommunityIcons}
+            size="lg"
+            name="map-marker-radius"
+            mr={5}
+            color={'black'}
+          />
+          <Text style={styles.placeholder}>Search address</Text>
+        </Pressable>
+      <View style={styles.borderViewContainer}>
+        <View style={styles.borderView}></View>
+        <Text style={styles.or}> OR </Text>
+        <View style={styles.borderView}></View>
       </View>
+      <Link
+        mt={5}
+        onPress={()=>{
+            navigation.navigate("VendorAllListing")
+        }}
+        _text={{
+          color: 'black',
+          textDecoration: 'none',
+          fontWeight: '900',
+          fontSize:22
+        }}
+        style={{
+          alignSelf: 'center',
+          borderBottomWidth: 1,
+          borderBottomColor: 'black',
+        }}>
+        Show All Listings
+      </Link>
+     
       <LocationRequiredModal
         handleNotNow={handleNotNow}
         visible={locationModal}

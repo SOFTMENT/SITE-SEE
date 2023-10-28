@@ -61,6 +61,28 @@ const OnBoardPhoto = (props) => {
             }
         }
     }
+    const handleSkip = async() => {
+        const uid = auth().currentUser.uid
+        try {
+            setLoading(true)
+            firestore()
+            .collection("Users")
+            .doc(uid)
+            .update(
+                {
+                    profileCompleted: true,
+                }
+            )
+            .then(() => {
+                setLoading(false)
+                navigateAndReset("HomeScreen")
+            })
+            
+        } catch (error) {
+            setLoading(false)
+            //console.log(error)
+        }
+    }
     return (
         <View style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
             <Header navigation={navigation} title="Let's complete your profile" />
@@ -98,8 +120,23 @@ const OnBoardPhoto = (props) => {
                     //icon={"chevron-right"}
                     onPress={() => onToggle()}
                 />
+                <MyButton
+                    title={"Skip"}
+                    txtStyle={{ color: "white" }}
+                    //loading={loading}
+                    containerStyle={{
+                        marginTop:32,
+                        width:"70%",
+                        backgroundColor:'black'
+                        // position: "absolute",
+                        // bottom: spacing.large
+                    }}
+                    //loa
+                    //icon={"chevron-right"}
+                    onPress={() => handleSkip()}
+                />
             </View>
-            <LoaderComponent visible={loading} title="Uploading..."/>
+            <LoaderComponent visible={loading} title="Just a moment..."/>
             <PhotoPicker isOpen={isOpen} onClose={onClose} setImage={setProfilePic} />
         </View>
     )

@@ -46,14 +46,14 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
   },
   currentLocation: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     fontFamily: fonts.regular,
     fontSize: fontSizes.small,
     marginTop: 30,
   },
   currentLocationBold: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     fontFamily: fonts.medium,
     fontSize: fontSizes.medium,
@@ -61,16 +61,29 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   tapToSee: {
-    height: 200,
+    height: 150,
+    aspectRatio:1,
+    backgroundColor:'red'
+  },
+  logoBorder:{
+    borderColor:colors.appDefaultColor,
+    backgroundColor:"white",
+    borderWidth:2,
+    width:"60%",
+    alignSelf:"center",
+    alignItems:"center",
+    marginTop:5,
+    padding:10,
+    borderRadius:10
   },
   tapToSeeText: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     fontFamily: fonts.regular,
     fontSize: fontSizes.extraExtraSmall,
   },
   or: {
-    color: colors.white,
+    color: colors.black,
     textAlign: 'center',
     marginVertical: spacing.large,
     fontFamily: fonts.bold,
@@ -88,7 +101,7 @@ const styles = StyleSheet.create({
     height: 0.5,
     flex: 1,
     // width:"100%",
-    backgroundColor: 'white',
+    backgroundColor: 'black',
   },
 });
 export default styles;

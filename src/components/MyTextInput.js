@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.small,
     //paddingVertical:0,
     alignItems: 'center',
-    backgroundColor: colors.white,
+    backgroundColor: colors.whiteDark,
   },
   lowerBorderStyle: {
     borderBottomWidth: 0.3,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     fontSize: fontSizes.extraExtraSmall,
-    color: colors.white,
+    color: colors.black,
     fontFamily: fonts.medium,
     marginBottom:spacing.small,
     //backgroundColor:"red"

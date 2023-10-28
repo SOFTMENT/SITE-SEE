@@ -104,7 +104,7 @@ export default function PhotoPicker(props) {
                             onPress={handleCamera}
                             mx="2" 
                             variant="solid" 
-                            bg={colors.appPrimary} 
+                            bg={colors.appDefaultColor} 
                             colorScheme="gray" 
                             borderRadius="full" 
                             icon={<Icon as={MaterialCommunityIcons} 
@@ -117,7 +117,7 @@ export default function PhotoPicker(props) {
                             onPress={handleImage}
                             mx="2" 
                             variant="solid" 
-                            bg={colors.appPrimary} 
+                            bg={colors.appDefaultColor} 
                             colorScheme="gray" 
                             borderRadius="full" 
                             icon={<Icon as={MaterialCommunityIcons} 

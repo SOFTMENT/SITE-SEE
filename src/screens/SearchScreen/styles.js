@@ -42,5 +42,34 @@ export default StyleSheet.create({
         textAlign:"center",
         fontFamily: 'Nunito Sans',
         fontSize: responsiveSize(13),
+    },
+    term:{
+        color:'black',
+        fontFamily:fonts.medium
+    },
+    searchHistory:{
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 1,
+            height: 0,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 5,
+        marginHorizontal:10,
+        borderRadius:10,
+        elevation: 3,
+        backgroundColor:"white"
+    },
+    searchH:{
+        borderBottomWidth:0.3,
+        borderColor:colors.borderColor,
+        padding:15,
+    },
+    recentSearch:{
+        fontFamily:fonts.medium,
+        color:colors.appDefaultColor,
+        fontSize:fontSizes.extraSmall,
+        marginLeft:spacing.medium,
+        marginBottom:10
     }
 })

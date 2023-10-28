@@ -294,13 +294,13 @@ export default AccountMenuList = (props) => {
                                             key={subItem.label}
                                             disabled={loaderVisibility || subItem.disabled}
                                         >
-                                            <View style={{padding:4,justifyContent:"center",alignItems:'center',backgroundColor:'white',borderRadius:30}}>
+                                            <View style={{padding:4,justifyContent:"center",alignItems:'center',backgroundColor:'black',borderRadius:30}}>
                                             <Icon
                                                 // style={styles.subMenuImage}
                                                 name={subItem.icon}
                                                 as={subItem.asMaterial?MaterialCommunityIcons: Ionicons}
                                                 size={"md"}
-                                                color="#414245"
+                                                color="white"
                                             />
                                             </View>
                                             <View style={styles.subMenuContainer}>

@@ -122,6 +122,7 @@ export default function EditListing(props) {
             });
            Util.showMessage('success', 'Success', 'Listing updated successfully');
            clearData()
+           navigation.goBack()
         })
         .finally(()=>{
             setLoaderVisibility(false)
@@ -169,7 +170,7 @@ export default function EditListing(props) {
       nestedScrollEnabled={false}
       bounces={false}
       keyboardShouldPersistTaps={'handled'}>
-      <Header navigation={navigation} title="Edit Listing" back rightIcon={"delete"} onRightIconPress={handleDelete}/>
+      <Header navigation={navigation} title="Edit Listing" back rightIcon={"trash-outline"} onRightIconPress={handleDelete}/>
       <View style={styles.mainView}>
         <TouchableOpacity
           style={styles.thumbnailView}
@@ -254,9 +255,9 @@ export default function EditListing(props) {
           }}
           fetchDetails={true}
           styles={{
-           
             textInput:{
-                borderRadius:20
+              borderRadius: 20,
+              backgroundColor:colors.whiteDark
             }
           }}
           //styles={styles.autoCompleteStyles}
@@ -282,11 +283,10 @@ export default function EditListing(props) {
           accessibilityLabel="Select Category"
           placeholder="Category"
           //px={spacing.medium}
-          bgColor={'white'}
+          bgColor={colors.whiteDark}
           py={Platform.OS == 'ios' ? 4 : 2}
           borderRadius={spacing.large}
-          borderWidth={1}
-          borderColor={colors.borderColor}
+          borderWidth={0}
           dropdownIcon={
             <Icon
               bgColor={'white'}

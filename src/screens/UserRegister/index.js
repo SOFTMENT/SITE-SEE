@@ -345,23 +345,36 @@ const UserRegister = (props) => {
                     {/* <Text style={styles.areYou}>
                         Register
                     </Text> */}
-                    <MyTextInput
-                        containerStyle={{ marginVertical: spacing.small }}
-                        //iconName={"account-outline"}
-                        placeholder={"First Name"}
-                        value={name}
-                        onChangeText={(txt) => setName(txt)}
-                        subPlace={"Enter your first name"}
+                    {
+                        tab == 1 ?
+                        <View>
+                            <MyTextInput
+                                containerStyle={{ marginVertical: spacing.small }}
+                                //iconName={"account-outline"}
+                                placeholder={"First Name"}
+                                value={name}
+                                onChangeText={(txt) => setName(txt)}
+                                subPlace={"Enter your first name"}
 
-                    />
-                    <MyTextInput
-                        containerStyle={{ marginVertical: spacing.small }}
-                        //iconName={"account-outline"}
-                        placeholder={"Last Name"}
-                        subPlace={"Enter your last name"}
-                        value={lastName}
-                        onChangeText={(txt) => setLastName(txt)}
-                    />
+                            />
+                            <MyTextInput
+                                containerStyle={{ marginVertical: spacing.small }}
+                                //iconName={"account-outline"}
+                                placeholder={"Last Name"}
+                                subPlace={"Enter your last name"}
+                                value={lastName}
+                                onChangeText={(txt) => setLastName(txt)}
+                            />
+                        </View>:
+                        <MyTextInput
+                            containerStyle={{ marginVertical: spacing.small }}
+                            //iconName={"account-outline"}
+                            placeholder={"Company Name"}
+                            subPlace={"Enter your company name"}
+                            value={name}
+                            onChangeText={(txt) => setName(txt)}
+                        />
+                    }
                     <MyTextInput
                         containerStyle={{ marginVertical: spacing.small }}
                         //iconName={"email-outline"}

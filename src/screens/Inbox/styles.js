@@ -39,10 +39,10 @@ const styles = StyleSheet.create({
     title: {
         fontFamily:fonts.semiBold,
         fontSize: fontSizes.extraSmall,
-        color: "white",
+        color: "black",
     },
     text: {
-        color: "#8C94D2",
+        color: "rgba(0,0,0,0.5)",
         fontSize: fontSizes.extraExtraSmall,
         fontFamily: fonts.medium,
         letterSpacing: 1,
@@ -50,12 +50,11 @@ const styles = StyleSheet.create({
         marginTop:3
     },
     smallTxt: {
-        color: "#8C94D2",
+        color: "rgba(0,0,0,0.5)",
         fontSize: 10,
         // fontWeight: "bold",
         letterSpacing: 1,
         marginBottom: 10
-
     },
     header: {
         flexDirection: "row",

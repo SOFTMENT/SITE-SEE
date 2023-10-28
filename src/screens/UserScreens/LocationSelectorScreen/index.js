@@ -10,9 +10,12 @@ import Header from '../../../components/Header';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentLocation, setCurrentPosition } from '../../../store/userSlice';
+import images from '../../../assets/images';
 export default LocationSelectorScreen = props => {
-  const {navigation} = props
+  const {navigation,route} = props
+  const isVendor = route?.params?.isVendor
   const mapRef = useRef(null);
+  const placesRef = useRef()
   const {setLocationAllState, locationAllState} = props;
   const [localLocation, setLocaLocation] = useState({
     latitude: 22.7196,
@@ -28,20 +31,32 @@ export default LocationSelectorScreen = props => {
     }
     dispatch(setCurrentLocation(address))
     dispatch(setCurrentPosition(loc))
+    if(isVendor){
+      navigation.navigate("MyListingScreen")
+    }
+    else
     navigation.goBack()
     
   };
   const getAddressFromCoordinates = async (latitude, longitude) => {
     try {
-      console.log('here');
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyA0s1sqV20wmXHfso3aF1Zl9b2Skw53SsY`,
       );
       const json = await response.json();
+      placesRef.current.setAddressText(json.results[0]?.formatted_address)
       setAddress(json.results[0]?.formatted_address);
-      //console.log(json.results[0])
-      return json?.results[0];
-      // return json.movies;
+      setLoc({
+        latitude: json.results[0]?.geometry.location.lat,
+        longitude: json.results[0]?.geometry.location.lng
+      });
+      const location = {
+        latitude: latitude,
+        longitude: longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      };
+      setLocaLocation(location);
     } catch (error) {
       console.error(error);
     }
@@ -67,11 +82,12 @@ export default LocationSelectorScreen = props => {
       onPress={event => {
       }}>
          <Marker
-        //draggable
-        coordinate={localLocation}
-        // onDragEnd={(event)=>{
-        //   console.log(event.nativeEvent.)
-        // }}
+          image={images.locationIcon}
+          draggable
+          coordinate={localLocation}
+          onDragEnd={(event)=>{
+            getAddressFromCoordinates(event.nativeEvent.coordinate.latitude,event.nativeEvent.coordinate.longitude)
+          }}
       />
       </MapView>
       <View style={[styles.headingView,{paddingTop:Platform.OS == "ios" ?insets.top:10}]}>
@@ -83,6 +99,7 @@ export default LocationSelectorScreen = props => {
           <Icon as={MaterialCommunityIcons} name="chevron-left" size={'xl'} color={"gray.900"}/>
         </TouchableOpacity>
         <GooglePlacesAutocomplete
+          ref={placesRef}
           keyboardShouldPersistTaps={'always'}
           textInputProps={{
             //   onChangeText: (txt) => setAddress(txt),

@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     title:{
         fontSize:fontSizes.large,
         fontFamily:fonts.bold,
-        color:"white",
+        color:"black",
         textAlign:"center",
         marginHorizontal:50,
         marginTop:50
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     subtitle:{
         fontSize:fontSizes.small,
         fontFamily:fonts.regular,
-        color:"white",
+        color:"black",
         textAlign:"center",
         marginHorizontal:50,
         marginTop:spacing.large
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     },
     notNow:{
         flex:0.45,
-        borderColor:colors.appPrimary,
+        borderColor:colors.appDefaultColor,
         borderWidth:1,
         backgroundColor:"white"
     }

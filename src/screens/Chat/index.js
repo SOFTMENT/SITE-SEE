@@ -48,6 +48,10 @@ const Chat = props => {
   useEffect(() => {
     if (lastMessage) {
       const {senderUid} = lastMessage;
+      if(lastMessage.regarding){
+        handleSubmit(lastMessage.regarding)
+        sendImage(lastMessage.imageUri,true)
+      }
       getRecipientData(senderUid);
       const unsubscribe = firestore()
         .collection('Chats')
@@ -137,12 +141,12 @@ const Chat = props => {
       Util.showMessage('error', 'Something went wrong');
     }
   };
-  const sendImage = async img => {
+  const sendImage = async (img,isUri) => {
     try {
       let docId = firestore().collection('Chats').doc().id;
-      const imgUri = await Helper.uploadImage(
+      const imgUri = isUri ? img:await Helper.uploadImage(
         `ChatImage/${uid}/${docId.png}`,
-        img.uri,
+        img,
       );
       const messageObj = {
         img: imgUri,

@@ -17,6 +17,7 @@ import colors from '../theme/colors';
 import AddListing from '../screens/VendorScreens/AddListing';
 import EditListing from '../screens/VendorScreens/EditListing';
 import NotificationScreen from '../screens/NotificationScreen';
+import VendorAllListing from '../screens/VendorScreens/VendorAllListing';
 const Tab = createBottomTabNavigator();
 const VendorSpacesStack = createNativeStackNavigator();
 const InboxStack = createNativeStackNavigator();
@@ -61,7 +62,10 @@ const MyVendorHomeStack = () => {
       <VendorHomeStack.Screen name="HomeScreen" component={VendorHome} />
       <VendorHomeStack.Screen name="PersonalChat" component={Chat} />
       <VendorHomeStack.Screen name="MyListingScreen" component={MyListingScreen} />
+      <VendorHomeStack.Screen name="VendorAllListing" component={VendorAllListing} />
       <VendorHomeStack.Screen name="EditListing" component={EditListing} />
+      <VendorHomeStack.Screen name='LocationSelectorScreen' component={LocationSelectorScreen}/>
+
     </VendorHomeStack.Navigator>
   );
 };
@@ -84,7 +88,7 @@ function VendorBottomTab() {
         //tabBarHideOnKeyboard:true,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: colors.appDefaultColor,
+          backgroundColor: colors.black,
           borderTopWidth: 0,
           paddingBottom: Platform.OS == 'android' ? 7 : 15,
           height: Platform.OS == 'android' ? 60 : 70,
@@ -101,8 +105,8 @@ function VendorBottomTab() {
           fontFamily: fonts.bold,
           fontSize: fontSizes.extraExtraSmall,
         },
-        tabBarActiveTintColor: colors.backgroundColor,
-        tabBarInactiveTintColor: "#D4DAD8",
+        tabBarActiveTintColor: colors.appDefaultColor,
+        tabBarInactiveTintColor: "white",
       }}>
       <Tab.Screen
         name="Home"
@@ -115,7 +119,7 @@ function VendorBottomTab() {
                   styles.activeBackground,
                   {
                     backgroundColor:
-                      colors.backgroundColor == color ? 'white' : 'transparent',
+                      colors.appDefaultColor == color ? 'white' : 'transparent',
                   },
                 ]}>
                 <HomeIcon width={size} height={size} fill={color} />
@@ -136,7 +140,7 @@ function VendorBottomTab() {
                   styles.activeBackground,
                   {
                     backgroundColor:
-                      colors.backgroundColor == color ? 'white' : 'transparent',
+                      colors.appDefaultColor == color ? 'white' : 'transparent',
                   },
                 ]}>
                 <Icon
@@ -161,7 +165,7 @@ function VendorBottomTab() {
                   styles.activeBackground,
                   {
                     backgroundColor:
-                      colors.backgroundColor == color ? 'white' : 'transparent',
+                      colors.appDefaultColor == color ? 'white' : 'transparent',
                   },
                 ]}>
                 <Icon
@@ -186,7 +190,7 @@ function VendorBottomTab() {
                   styles.activeBackground,
                   {
                     backgroundColor:
-                      colors.backgroundColor == color ? 'white' : 'transparent',
+                      colors.appDefaultColor == color ? 'white' : 'transparent',
                   },
                 ]}>
                 <Icon

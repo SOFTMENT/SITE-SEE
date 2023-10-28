@@ -14,12 +14,12 @@ const styles = StyleSheet.create({
         borderRadius:spacing.semiMedium
     },
     title:{
-        color:colors.white,
+        color:colors.black,
         fontFamily:fonts.medium,
         fontSize:fontSizes.extraSmall
     },
     name:{
-        color:colors.white,
+        color:colors.black,
         fontFamily:fonts.medium,
         fontFamily:fonts.regular
     },
@@ -27,6 +27,12 @@ const styles = StyleSheet.create({
         color:colors.white,
         fontFamily:fonts.regular,
         textAlign:"center"
+    },
+    address:{
+        color:colors.appDefaultColor,
+        fontFamily:fonts.medium,
+        fontSize:fontSizes.extraSmall,
+        marginHorizontal:spacing.medium
     }
 })
 export default styles

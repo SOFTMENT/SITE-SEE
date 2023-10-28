@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         backgroundColor:colors.backgroundColor
     },
     noData:{
-        color:"white",
+        color:"black",
         fontFamily:fonts.semiBold
     },
     rightImage:{
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         width:200,
         aspectRatio:16/9,
         borderWidth:2,
-        borderColor:colors.appDefaultColor,
+        borderColor:colors.black,
         borderRadius:spacing.small,
     },
     leftImage:{
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         width:200,
         aspectRatio:16/9,
         borderWidth:2,
-        borderColor:colors.appDefaultColor,
+        borderColor:colors.black,
         borderRadius:spacing.small
     },
     inputBox:{
@@ -42,18 +42,18 @@ const styles = StyleSheet.create({
         marginBottom:20
     },
     txt:{
-        color:"black",
+        color:"white",
         fontFamily:fonts.medium
     },
     timeAgoLeft:{
-        color:"white",
+        color:"gray",
         fontFamily:fonts.regular,
         fontSize:fontSizes.tiny,
         marginTop:2,
         alignSelf:"flex-start"
     },
     timeAgoRight:{
-        color:"white",
+        color:"gray",
         fontFamily:fonts.regular,
         fontSize:fontSizes.tiny,
         marginTop:2,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     },
     rightMsgInner:{
         padding:spacing.medium,
-        backgroundColor:colors.white,
+        backgroundColor:colors.black,
         width:undefined,
         borderTopLeftRadius:spacing.medium,
         borderBottomLeftRadius:spacing.medium,
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     },
     leftMsgInner:{
         padding:spacing.medium,
-        backgroundColor:colors.white,
+        backgroundColor:colors.black,
         width:undefined,
         borderTopRightRadius:spacing.medium,
         borderBottomLeftRadius:spacing.medium,

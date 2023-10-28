@@ -26,6 +26,7 @@ import MyListingScreenUser from '../screens/UserScreens/MyListingScreenUser';
 import ListingDetail from '../screens/UserScreens/ListingDetail';
 import ListingBySupplier from '../screens/UserScreens/ListingBySupplier';
 import NotificationScreen from '../screens/NotificationScreen';
+import UserSearchHistory from '../screens/UserScreens/UserSearchHistory';
 const Tab = createBottomTabNavigator();
 const AdHomeStack = createNativeStackNavigator()
 const AdOrderStack = createNativeStackNavigator()
@@ -85,6 +86,7 @@ const MyAdHomeStack = () => {
             <AdHomeStack.Screen name='PaymentScreen' component={PaymentScreen}/>
             <AdHomeStack.Screen name='SearchScreen' component={SearchScreen}/>
             <AdHomeStack.Screen name='ServiceProviderProfiles' component={ServiceProviderProfiles}/>
+            <AdHomeStack.Screen name='UserSearchHistory' component={UserSearchHistory}/>
         </AdHomeStack.Navigator>
     )
 }
@@ -109,7 +111,7 @@ function UserBottomTab() {
                 headerShown: false,
                 tabBarShowLabel: false,
                 tabBarStyle: {
-                    backgroundColor: colors.appDefaultColor,
+                    backgroundColor: colors.black,
                     borderTopWidth: 0,
                     paddingBottom:Platform.OS == 'android' ? 7:15,
                     height:Platform.OS =="android"?60:70,
@@ -128,15 +130,15 @@ function UserBottomTab() {
                     fontFamily:fonts.bold,
                     fontSize:fontSizes.extraExtraSmall
                 },
-                tabBarActiveTintColor: colors.backgroundColor,
-                tabBarInactiveTintColor: "#D4DAD8",
+                tabBarActiveTintColor: colors.appDefaultColor,
+                tabBarInactiveTintColor: "white",
             }}
         >
             <Tab.Screen name="Home" component={MyAdHomeStack}
                 options={{
                     tabBarIcon: ({ color, size }) => {
                         return (
-                            <View style={[styles.activeBackground,{backgroundColor:colors.backgroundColor == color?"white":"transparent"}]}>
+                            <View style={[styles.activeBackground,{backgroundColor:colors.appDefaultColor == color?"white":"transparent"}]}>
                                 <HomeIcon width={size} height={size} fill={color}/>
                             </View>
                         )
@@ -148,7 +150,7 @@ function UserBottomTab() {
                 options={{
                     tabBarIcon: ({ color, size }) => {
                         return (
-                            <View style={[styles.activeBackground,{backgroundColor:colors.backgroundColor == color?"white":"transparent"}]}>
+                            <View style={[styles.activeBackground,{backgroundColor:colors.appDefaultColor == color?"white":"transparent"}]}>
                             <Icon
                                 as={MaterialCommunityIcons}
                                 name='heart'
@@ -164,10 +166,10 @@ function UserBottomTab() {
                 options={{
                     tabBarIcon: ({ color, size }) => {
                         return (
-                            <View style={[styles.activeBackground,{backgroundColor:colors.backgroundColor == color?"white":"transparent"}]}>
+                            <View style={[styles.activeBackground,{backgroundColor:colors.appDefaultColor == color?"white":"transparent"}]}>
                             <Icon
                                 as={MaterialCommunityIcons}
-                                name='forum'
+                                name='email'
                                 color={color}
                                 size={size}
                             />
@@ -180,7 +182,7 @@ function UserBottomTab() {
                 options={{
                     tabBarIcon: ({ color, size }) => {
                         return (
-                            <View style={[styles.activeBackground,{backgroundColor:colors.backgroundColor == color?"white":"transparent"}]}>
+                            <View style={[styles.activeBackground,{backgroundColor:colors.appDefaultColor == color?"white":"transparent"}]}>
                             <Icon
                                 as={MaterialCommunityIcons}
                                 name='account'

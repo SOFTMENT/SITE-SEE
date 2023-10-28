@@ -35,7 +35,7 @@ const LocationRequiredModal = (props) => {
                     title={"Not Now"}
                     containerStyle={styles.notNow}
                     onPress={handleNotNow}
-                    txtStyle={{color:colors.appPrimary}}
+                    txtStyle={{color:colors.appDefaultColor}}
                 />
             </HStack>
         </Modal>

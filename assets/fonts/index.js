@@ -1,9 +1,10 @@
 
 export default {
-    bold:"Montserrat-Bold",
-    light:"Montserrat-Light",
+    bold:"CenturyGothic-Bold",
+    light:"ArialNarrow",
     //light:"Montserrat-Light",
-    regular:"Montserrat-Regular",
-    semiBold:"Montserrat-SemiBold",
-    medium:"Montserrat-Medium"
+    // regular:"Montserrat-Regular",
+    regular:"ArialNarrow",
+    semiBold:"CenturyGothic-Bold",
+    medium:"Arial-Mdm",
 }

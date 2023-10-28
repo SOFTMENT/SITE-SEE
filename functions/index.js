@@ -99,7 +99,7 @@ exports.compareImagePhashes = functions.https.onCall(async (data, context) => {
 });
 const getDocsByLocation = location => {
     return new Promise(function (resolve,reject){
-    const radius = 6000
+    const radius = 60
     const latitude = location.latitude
     const longitude = location.longitude
     const bounds = geohashQueryBounds([latitude, longitude], radius);

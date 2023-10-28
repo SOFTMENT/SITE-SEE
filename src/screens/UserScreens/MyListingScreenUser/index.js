@@ -1,5 +1,5 @@
 import { useIsFocused } from '@react-navigation/native';
-import { FlatList } from 'native-base';
+import { FlatList, HStack } from 'native-base';
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,9 @@ import NoResults from '../../../components/NoResults';
 import styles from './styles';
 
 import UserProductCard from '../UserProductCard';
+import { Text } from 'react-native';
+import colors from '../../../theme/colors';
+import MyButton from '../../../components/MyButton';
 
 const radius = 10 * 1000;
 const MyListingScreenUser = props => {
@@ -17,6 +20,7 @@ const MyListingScreenUser = props => {
   const data = route.params.data
   const dispatch = useDispatch()
   const [listings, setListings] = useState(data);
+  const [showAll,setShowAll] = useState(false)
   const [noData, setNoData] = useState(data.length == 0);
   const [loading, setLoading] = useState(false);
   const {latitude, longitude} = useSelector(
@@ -93,15 +97,29 @@ const MyListingScreenUser = props => {
       ) : noData ? (
         <NoResults />
       ) : (
+        <View style={{flex:1}}>
         <FlatList
           style={{paddingHorizontal: spacing.medium, flex: 1}}
-          data={listings}
+          data={showAll?listings:listings.slice(0,1)}
           numColumns={2}
           renderItem={renderCard}
           keyExtractor={keyExtractor}
           bounces={false}
           showsVerticalScrollIndicator={false}
         />
+       {
+         !showAll &&
+         <HStack px={5}backgroundColor={colors.appDefaultColor} alignItems={"center"} justifyContent={"space-between"}>
+            <Text style={styles.notRight}>Not the right listing?</Text>
+            <MyButton
+              onPress={()=>setShowAll(true)}
+              title={"View all listings"}
+              txtStyle={{color:colors.appDefaultColor}}
+              containerStyle={{margin:0,backgroundColor:"white",width:"auto"}}
+            />
+         </HStack>
+       }
+        </View>
       )}
     </View>
   );

@@ -2,28 +2,20 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "assets/fonts/Montserrat-Bold.ttf",
-      "sha1": "04052dc3b846609216de1e0cbcec337c6b6e74f6"
+      "path": "assets/fonts/Arial-Mdm.ttf",
+      "sha1": "f500ce2af19b434fcca06e91ac27747155bf2f91"
     },
     {
-      "path": "assets/fonts/Montserrat-Light.ttf",
-      "sha1": "6f21894a80049259ef71fcba135218695b41b67a"
+      "path": "assets/fonts/ArialNarrow.ttf",
+      "sha1": "66e81e620ae96df1f1b35d8ef57ea42a7f327265"
     },
     {
-      "path": "assets/fonts/Montserrat-Medium.ttf",
-      "sha1": "6b57d12e018c64352e202f8ef3bf7f431f76d935"
-    },
-    {
-      "path": "assets/fonts/Montserrat-Regular.ttf",
-      "sha1": "de57aa03e4821fdbe6c34ec2c895e8b5c914e837"
-    },
-    {
-      "path": "assets/fonts/Montserrat-SemiBold.ttf",
-      "sha1": "8580dec824bbdb6ce24d04d3aaf360776339f0a7"
+      "path": "assets/fonts/CenturyGothic-Bold.otf",
+      "sha1": "ed33e1307a491d78eadea9f5c62e021b94f339d1"
     },
     {
       "path": "assets/fonts/index.js",
-      "sha1": "1f6c2875fb64a14b5b27a1dbf41afa31f51f7ff8"
+      "sha1": "59b07229a1e6829414c4ae5930c5c4f096110085"
     }
   ]
 }

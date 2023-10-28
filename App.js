@@ -8,6 +8,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import AppRoot from './src';
 import { store } from './src/store';
+import fonts from './assets/fonts';
 GoogleSignin.configure({
   iosClientId: "236456769546-hbphvbuod79njv10uba6ocf62gc01gj2.apps.googleusercontent.com",
   webClientId:"236456769546-6kto9osph04hr0mjr3i2jf07h7rpjkjp.apps.googleusercontent.com"
@@ -23,6 +24,7 @@ const App = () => {
     messaging().onMessage(onMessageReceived);
   }, [])
   async function onMessageReceived(message) {
+    console.log(message)
     await notifee.requestPermission()
     // Create a channel (required for Android)
     const channelId = await notifee.createChannel({
@@ -48,47 +50,47 @@ const App = () => {
     fontConfig: {
       Mulish: {
         100: {
-          normal: "Montserrat-Light",
+          normal: fonts.light
           //italic: "Roboto-LightItalic",
         },
         200: {
-          normal: "Montserrat-Light",
+          normal: fonts.light
           //italic: "Roboto-LightItalic",
         },
         300: {
-          normal: "Montserrat-Regular",
+          normal: fonts.regular,
           //italic: "Roboto-LightItalic",
         },
         400: {
-          normal: "Montserrat-Regular",
+          normal: fonts.regular,
           //italic: "Roboto-Italic",
         },
         500: {
-          normal: "Montserrat-Medium"
+          normal: fonts.medium
         },
         600: {
-          normal: "Montserrat-Medium"
+          normal: fonts.medium
         },
         700: {
-          normal: 'Montserrat-SemiBold',
+          normal: fonts.medium
         },
         800: {
-          normal: 'Montserrat-SemiBold',
+          normal: fonts.medium
         },
         900: {
-          normal: "Montserrat-Bold"
+          normal: fonts.bold,
         },
         1000: {
-          normal: "Montserrat-Bold"
+          normal: fonts.bold
         }
       },
     },
 
     // Make sure values below matches any of the keys in `fontConfig`
     fonts: {
-      heading: "Montserrat",
-      body: "Montserrat",
-      mono: "Montserrat",
+      heading: "ArialNarrow",
+      body: "ArialNarrow",
+      mono: "ArialNarrow",
     },
   });
   return (

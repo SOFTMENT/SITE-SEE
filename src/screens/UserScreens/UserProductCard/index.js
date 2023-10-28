@@ -90,7 +90,7 @@ const UserProductCard = ({item,navigation,favorites}) => {
           <Icon
             as={MaterialCommunityIcons}
             name={favIsSelected ? 'heart' : 'heart-outline'}
-            color={favIsSelected ? colors.appPrimary : 'black'}
+            color={favIsSelected ? colors.appDefaultColor : 'black'}
             size={'lg'}
           /></TouchableOpacity>
           <FastImage

@@ -18,13 +18,13 @@ export default StyleSheet.create({
     logoutText:{
         fontFamily:fonts.semiBold,
         fontSize:fontSizes.extraExtraSmall,
-        color:"white",
+        color:"black",
         marginRight:spacing.small
     },
     heading:{
         fontFamily:fonts.semiBold,
         fontSize:fontSizes.extraSmall,
-        color:"white",
+        color:"black",
     },
     logContainer:{
         flexDirection:'row',
@@ -46,7 +46,7 @@ export default StyleSheet.create({
         borderRadius:spacing.small,
         padding:spacing.medium,
         borderColor:colors.borderColor,
-        color:"white",
+        color:"black",
         fontFamily:fonts.regular,
         marginVertical:10
     },
@@ -55,7 +55,7 @@ export default StyleSheet.create({
         borderRadius:spacing.small,
         padding:spacing.medium,
         borderColor:colors.borderColor,
-        color:"white",
+        color:"black",
         fontFamily:fonts.regular,
         height:100
     },
@@ -69,13 +69,13 @@ export default StyleSheet.create({
     name:{
         fontFamily:fonts.semiBold,
         fontSize:fontSizes.extraSmall,
-        color:"white"
+        color:"black"
     },
     email:{
         fontFamily:fonts.regular,
         fontSize:fontSizes.extraExtraSmall,
         marginTop:spacing.extraExtraSmall,
-        color:"white"
+        color:"black"
     },
     btnView:{
         flexDirection:"row",

@@ -75,6 +75,14 @@ const HomeScreen = props => {
         .get()
         .then(async user => {
           if (user.exists) {
+            // await messaging().registerDeviceForRemoteMessages()
+            const token = await messaging().getToken()
+            firestore()
+            .collection("Users")
+            .doc(user.id)
+            .update({
+              fcmToken:token
+            })
             const val = await AsyncStorage.getItem('userType');
             if (user.data().profileCompleted) {
               if (val == null || val == 'User') {

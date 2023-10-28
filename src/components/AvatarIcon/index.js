@@ -16,7 +16,7 @@ export default AvatarIcon = ({uri,style,size,defaultSource,pressable,onPress}) =
                 style={[styles.imageStyle,size&&{width:size,height:size,borderRadius:size/2},style]}
                 resizeMode={"cover"}
                 source={{uri:uri}}
-                defaultSource={defaultSource?defaultSource:images.imagePlaceholder}
+                defaultSource={defaultSource?defaultSource:images.defaultUser}
             />
         </TouchableOpacity>
     )

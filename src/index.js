@@ -47,7 +47,7 @@ const toastConfig = {
 const AppRoot = () =>{
     return(
         <Fragment>
-            <StatusBar barStyle={"light-content"}/>
+            <StatusBar barStyle={"dark-content"}/>
             <AppNavigator/>
             <Toast config={toastConfig}/>
         </Fragment>

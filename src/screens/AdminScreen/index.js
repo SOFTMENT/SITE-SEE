@@ -31,7 +31,7 @@ const AdminScreen = (props) => {
     },[])
     const getData = async() => {
         try {
-            unsubsctibe = firestore()
+            unsubscribe = firestore()
             .collection("Category")
             .onSnapshot(snap=>{
                 const localData = []
@@ -95,7 +95,7 @@ const AdminScreen = (props) => {
     }
     const renderData = ({item}) => {
         return(
-            <HStack bgColor={"white"} p={3} borderRadius={6} alignItems={"center"} mb={3}>
+            <HStack borderColor={"black"} borderWidth={1} p={3} borderRadius={6} alignItems={"center"} mb={3}>
                 <Text>
                     {item.categoryName}
                 </Text>
@@ -113,7 +113,7 @@ const AdminScreen = (props) => {
     const keyExtractor = (item) => item.id
     return (
         <ScrollView style={styles.container}>
-            <Header title="Site See"/>
+            <Header title="SiteSii"/>
             <View style={styles.titleView}>
                 <Text style={styles.logoutText}>{`Hello, \nAdmin`}</Text>
                 <TouchableOpacity style={styles.logContainer} onPress={logout}>
@@ -121,11 +121,11 @@ const AdminScreen = (props) => {
                         name="logout"
                         size={"lg"}
                         as={MaterialCommunityIcons}
-                        color="white"
+                        color="black"
                     />
                 </TouchableOpacity>
             </View>
-            <Text style={styles.heading}>Send Notification</Text>
+            {/* <Text style={styles.heading}>Send Notification</Text>
             <TextInput
                 value={title}
                 onChangeText={(txt)=>setTitle(txt)}
@@ -147,15 +147,15 @@ const AdminScreen = (props) => {
                 containerStyle={{marginVertical:10}}
                 txtStyle={{color:"white"}}
                 onPress={sendNotification}
-            />
+            /> */}
             <HStack>
             <Text style={styles.heading}>Manage Categories</Text>
              <TouchableOpacity style={styles.logContainer} onPress={()=>setVisible(true)}>
                     <Icon
                         name="plus"
-                        size={"lg"}
+                        size={"xl"}
                         as={MaterialCommunityIcons}
-                        color="white"
+                        color={colors.appDefaultColor}
                     />
                 </TouchableOpacity>
             </HStack>

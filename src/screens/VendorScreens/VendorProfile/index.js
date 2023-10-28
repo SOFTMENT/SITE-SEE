@@ -1,26 +1,27 @@
-import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {HStack, ScrollView, useDisclose, VStack} from 'native-base';
-import React, {useEffect, useState} from 'react';
-import {Alert, Text, TouchableOpacity, View} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+import { HStack, Icon, IconButton, ScrollView, useDisclose, VStack } from 'native-base';
+import React, { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {connect, useDispatch, useSelector} from 'react-redux';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import images from '../../../assets/images';
 import Helper from '../../../common/Helper';
-import {spacing} from '../../../common/variables';
 import AccountMenuList from '../../../components/AccountMenuList';
 import Header from '../../../components/Header';
 import PhotoPicker from '../../../components/PhotoPicker';
-import {navigateAndReset} from '../../../navigators/RootNavigation';
+import { setUserData } from '../../../store/userSlice';
+import colors from '../../../theme/colors';
 import styles from './styles';
-import firestore from '@react-native-firebase/firestore';
-import Util from '../../../common/util';
-import {setUserData} from '../../../store/userSlice';
+import { spacing } from '../../../common/variables';
+import UpdateNameDialog from '../../../components/UpdateNameDialog';
+
 const VendorProfile = props => {
   const {navigation, userData, state} = props;
   const {profilePic, name, uid} = userData;
   const {favorites, orderCount} = useSelector(state => state.user);
   const [profileImage, setProfileImage] = useState(null);
+  const [menuOpen,setMenuOpen] = useState(false)
   const dispatch = useDispatch();
   useEffect(() => {
     if (profileImage) {
@@ -82,18 +83,35 @@ const VendorProfile = props => {
         // onRightIconPress={logout}
       />
       <HStack mx={5} mt={5}>
-        <TouchableOpacity
-          onPress={handleProfile}
-          style={{borderWidth: 5, borderColor: '#969cdc', borderRadius: 200}}>
-          <FastImage
-            source={profileImage ? profileImage:(profilePic?{uri:profilePic}:images.imagePlaceholder)}
-            defaultSource={images.defaultUser}
-            resizeMode="cover"
-            style={styles.image}
-          />
-        </TouchableOpacity>
+        <VStack alignItems={"center"}>
+          <TouchableOpacity
+            onPress={handleProfile}
+            style={{borderWidth: 5, borderColor: colors.appDefaultColor, borderRadius: 200}}>
+            <FastImage
+              source={profileImage ? profileImage:(profilePic?{uri:profilePic}:images.defaultUser)}
+              defaultSource={images.defaultUser}
+              resizeMode="cover"
+              style={styles.image}
+            />
+          </TouchableOpacity >
+          <TouchableOpacity  onPress={handleProfile}>
+            <Text style={styles.tap}>Tap to edit</Text>
+          </TouchableOpacity>
+        </VStack>
         <VStack ml={5}>
-          <Text style={styles.name}>{userData.name}</Text>
+          <HStack alignItems={"center"} marginTop={spacing.medium}
+        >
+            <Text style={styles.name}>{userData.name}</Text>
+            <IconButton 
+              onPress={()=>setMenuOpen(true)}
+              icon={
+              <Icon
+                as={MaterialCommunityIcons}
+                name='pen'
+                color={colors.appDefaultColor}
+              />
+            }/>
+          </HStack>
           <HStack alignItems={'center'} width={"100%"}>
             <Text style={styles.email}>Email</Text>
             <Text numberOfLines={2} style={[styles.email, styles.emailLight]}>
@@ -126,6 +144,7 @@ const VendorProfile = props => {
         setImage={setProfileImage}
         //isCover={mode == "image"}
       />
+      <UpdateNameDialog visible={menuOpen} setMenuOpen={setMenuOpen} title={"Business name"}/>
     </ScrollView>
   );
 };

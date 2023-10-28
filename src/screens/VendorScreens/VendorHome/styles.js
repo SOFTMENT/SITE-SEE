@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   hello: {
-    color: 'white',
+    color: 'black',
     fontSize: fontSizes.small,
     fontFamily: fonts.medium,
   },
@@ -42,10 +42,10 @@ const styles = StyleSheet.create({
     height: 0.5,
     flex: 1,
     // width:"100%",
-    backgroundColor: 'white',
+    backgroundColor: 'gray',
   },
   or: {
-    color: colors.white,
+    color: colors.black,
     textAlign: 'center',
     marginVertical: spacing.large,
     fontFamily: fonts.bold,
@@ -53,11 +53,13 @@ const styles = StyleSheet.create({
     marginHorizontal: spacing.extraExtraSmall,
   },
   searchContainer:{
-    backgroundColor:"white",
+    backgroundColor:colors.white,
     flexDirection:"row",
     alignItems:"flex-start",
     paddingHorizontal:10,
-    borderRadius:20
+    borderRadius:20,
+    borderWidth:1,
+    borderColor:colors.borderColor
   },
   autoCompleteStyles: {
     container: {
@@ -105,6 +107,20 @@ const styles = StyleSheet.create({
       fontSize: responsiveSize(12),
       noWrap: true,
     },
+    
+    placeholder: {
+      color: 'black',
+      fontSize: fontSizes.extraExtraSmall,
+      fontFamily: fonts.regular,
+    },
+  },
+  searchBox: {
+    backgroundColor: '#EEEDED',
+    borderRadius: spacing.large,
+    padding: spacing.medium,
+    marginVertical: spacing.medium,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 export default styles;

@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
         borderWidth:1
     },
     areyou:{
-        color:colors.white,
-        fontFamily:fonts.bold,
+        color:colors.black,
+        fontFamily:fonts.semiBold,
         fontSize:fontSizes.medium,
         marginBottom:10
     }

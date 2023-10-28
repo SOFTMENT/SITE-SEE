@@ -6,12 +6,12 @@ import colors from "../../theme/colors";
 
 export default StyleSheet.create({
     settingsText:{
-        backgroundColor:"#969cdc",
+        backgroundColor:"black",
         paddingVertical:Platform.OS=="ios"?spacing.semiMedium:spacing.small,
         paddingLeft:spacing.medium,
         fontSize:responsiveSize(13),
         fontFamily:fonts.medium,
-        color:"rgba(0, 0, 0, 1)"
+        color:"white"
      },
      subMenu:{
         flexDirection:"row",
@@ -28,7 +28,7 @@ export default StyleSheet.create({
      subMenuTitle:{
         fontSize:responsiveSize(13),
         fontFamily:fonts.regular,
-        color:"white",
+        color:"black",
      },
      subMenuContainer:{
          flex:1,

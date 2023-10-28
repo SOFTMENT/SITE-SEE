@@ -337,7 +337,7 @@ const UserLogin = (props) => {
                     <Image
                         source={images.siteSeeVertical}
                         resizeMode="contain"
-                        style={styles.siteSee}
+                        style={[styles.siteSee]}
                     />
                     <View
                         style={styles.borderViewTop}
@@ -387,7 +387,7 @@ const UserLogin = (props) => {
                         mt={5}
                         onPress={handleForget}
                         _text={{
-                            color:"white",
+                            color:"black",
                             textDecoration:"none"
                         }}
                         style={{
@@ -411,7 +411,7 @@ const UserLogin = (props) => {
                             _text={{color:colors.appDefaultColor,fontWeight:'medium'}}
                             bg={"white"}
                             borderWidth={1}
-                            borderColor={'rgba(0, 0, 0, 0.17)'}
+                            borderColor={colors.appDefaultColor}
                             borderRadius={10}
                             flex={1}
                             //style={styles.socialBtn}
@@ -424,7 +424,7 @@ const UserLogin = (props) => {
                                 bg={"white"}
                                 onPress={appleLogin}
                                 borderWidth={1}
-                                borderColor={'rgba(0, 0, 0, 0.17)'}
+                                borderColor={colors.appDefaultColor}
                                 borderRadius={10}
                                 leftIcon={
                                     <Image source={images.apple} style={[styles.icon, { tintColor: colors.black }]} />

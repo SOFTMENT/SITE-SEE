@@ -11,12 +11,12 @@ const styles =  StyleSheet.create({
         borderRadius:spacing.semiMedium
     },
     title:{
-        color:colors.white,
+        color:colors.black,
         fontFamily:fonts.medium,
         fontSize:fontSizes.extraSmall
     },
     name:{
-        color:colors.white,
+        color:colors.black,
         fontFamily:fonts.regular,
         fontSize:responsiveSize(10.5),
         marginTop:4

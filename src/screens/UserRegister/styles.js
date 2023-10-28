@@ -22,7 +22,7 @@ export default StyleSheet.create({
     },
     login:{
         fontFamily:fonts.medium,
-        color:colors.white,
+        color:colors.black,
         fontSize:fontSizes.extraExtraLarge,
         marginLeft:30
     },
@@ -30,7 +30,7 @@ export default StyleSheet.create({
         height:"75%",
         width:2,
         marginLeft:30,
-        backgroundColor:colors.white
+        backgroundColor:colors.appDefaultColor
     },
     logo:{
         //height:Util.getHeight(30),

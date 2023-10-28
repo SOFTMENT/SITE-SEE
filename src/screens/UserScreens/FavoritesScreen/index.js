@@ -1,22 +1,15 @@
 import auth from '@react-native-firebase/auth';
-import firestore, {firebase} from '@react-native-firebase/firestore';
-import {format} from 'date-fns';
-import {FlatList, HStack, Icon, Link, VStack, View} from 'native-base';
-import React, {useEffect, useState} from 'react';
-import {Keyboard, Text, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useDispatch, useSelector} from 'react-redux';
-import images from '../../../assets/images';
-import {spacing} from '../../../common/variables';
-import AvatarIcon from '../../../components/AvatarIcon';
-import Header from '../../../components/Header';
-import {setFavorites} from '../../../store/userSlice';
-import colors from '../../../theme/colors';
-import styles from './styles';
+import firestore from '@react-native-firebase/firestore';
+import { FlatList, View } from 'native-base';
+import React, { useEffect, useState } from 'react';
+import { Keyboard, Text, TouchableWithoutFeedback } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { spacing } from '../../../common/variables';
 import CenteredLoader from '../../../components/CenteredLoader';
+import Header from '../../../components/Header';
 import NoResults from '../../../components/NoResults';
 import UserProductCard from '../UserProductCard';
+import styles from './styles';
 
 export default function FavoritesScreen(props) {
   const {route, navigation} = props;
@@ -96,7 +89,6 @@ export default function FavoritesScreen(props) {
         <NoResults />
       ) : (
         <FlatList
-          
           style={{paddingHorizontal: spacing.medium, flex: 1}}
           data={filteredData}
           numColumns={2}
