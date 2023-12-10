@@ -1,7 +1,7 @@
 import { useIsFocused } from '@react-navigation/native';
 import { FlatList, HStack } from 'native-base';
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { spacing } from '../../../common/variables';
 import CenteredLoader from '../../../components/CenteredLoader';
@@ -98,6 +98,11 @@ const MyListingScreenUser = props => {
         <NoResults />
       ) : (
         <View style={{flex:1}}>
+        <TouchableOpacity onPress={()=>{
+          navigation.navigate("UserSearchHistory")
+        }}>
+          <Text style={styles.recentSearch}>Show Search History</Text>
+        </TouchableOpacity>
         <FlatList
           style={{paddingHorizontal: spacing.medium, flex: 1}}
           data={showAll?listings:listings.slice(0,1)}

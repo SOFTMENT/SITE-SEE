@@ -12,6 +12,13 @@ const styles = StyleSheet.create({
         fontFamily:fonts.bold,
         fontSize:fontSizes.extraSmall,
         color:"white"
+    },
+    recentSearch:{
+        fontFamily:fonts.medium,
+        color:colors.appDefaultColor,
+        fontSize:fontSizes.extraSmall,
+        marginLeft:spacing.medium,
+        marginBottom:10
     }
 })
 export default styles

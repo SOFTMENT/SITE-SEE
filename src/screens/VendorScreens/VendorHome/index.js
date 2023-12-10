@@ -13,6 +13,7 @@ import AvatarIcon from '../../../components/AvatarIcon';
 import LocationRequiredModal from '../../../components/LocationRequiredModal';
 import { setCategories, setCurrentLocation, setCurrentPosition } from '../../../store/userSlice';
 import styles from './styles';
+import colors from '../../../theme/colors';
 let sub = null
 export default function VendorHome(props) {
   const {navigation} = props;
@@ -107,7 +108,7 @@ export default function VendorHome(props) {
             callLocationPermission()
         }}
         _text={{
-          color: 'black',
+          color: colors.appDefaultColor,
           textDecoration: 'none',
           fontWeight: '900',
           fontSize:22
@@ -115,7 +116,7 @@ export default function VendorHome(props) {
         style={{
           alignSelf: 'center',
           borderBottomWidth: 1,
-          borderBottomColor: 'black',
+          borderBottomColor: colors.appDefaultColor,
         }}>
         Use Current Location
       </Link>
@@ -192,7 +193,6 @@ export default function VendorHome(props) {
       </View> */}
        <Pressable
           style={[styles.searchBox, {marginRight: 10}]}
-          backgroundColor={'gray.800'}
           onPress={() => navigation.navigate('LocationSelectorScreen',{isVendor:true})}>
           <Icon
             as={MaterialCommunityIcons}
@@ -214,7 +214,7 @@ export default function VendorHome(props) {
             navigation.navigate("VendorAllListing")
         }}
         _text={{
-          color: 'black',
+          color: colors.appDefaultColor,
           textDecoration: 'none',
           fontWeight: '900',
           fontSize:22
@@ -222,7 +222,7 @@ export default function VendorHome(props) {
         style={{
           alignSelf: 'center',
           borderBottomWidth: 1,
-          borderBottomColor: 'black',
+          borderBottomColor: colors.appDefaultColor,
         }}>
         Show All Listings
       </Link>

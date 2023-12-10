@@ -92,7 +92,10 @@ const SearchScreen = props => {
     setLoading(true);
     // updateSearchHistory(term)
     index
-      .search(term, )
+      .search(term,{
+        aroundLatLng: `${latitude},${longitude}`,
+        aroundRadius: 60,
+      } )
       .then(({hits}) => {
         if (hits.length == 0) setNoData(true);
         else setNoData(false);

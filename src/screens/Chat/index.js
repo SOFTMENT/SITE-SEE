@@ -1,4 +1,4 @@
-import auth, {firebase} from '@react-native-firebase/auth';
+import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import TimeAgo from 'javascript-time-ago';
 import {
@@ -6,29 +6,27 @@ import {
   Icon,
   IconButton,
   KeyboardAvoidingView,
-  Menu,
-  ScrollView,
-  useDisclose,
+  useDisclose
 } from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Platform,
-  Pressable,
   Text,
   TextInput,
-  View,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
+import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import images from '../../assets/images';
+import Helper from '../../common/Helper';
 import Util from '../../common/util';
 import AvatarHeader from '../../components/AvatarHeader';
-import styles from './styles';
 import PhotoPicker from '../../components/PhotoPicker';
-import Helper from '../../common/Helper';
-import FastImage from 'react-native-fast-image';
-import images from '../../assets/images';
+import styles from './styles';
+import colors from '../../theme/colors';
 const Chat = props => {
   const {userData, navigation, route} = props;
   const {params} = route;
@@ -49,8 +47,7 @@ const Chat = props => {
     if (lastMessage) {
       const {senderUid} = lastMessage;
       if(lastMessage.regarding){
-        handleSubmit(lastMessage.regarding)
-        sendImage(lastMessage.imageUri,true)
+       handleImageWithText(lastMessage)
       }
       getRecipientData(senderUid);
       const unsubscribe = firestore()
@@ -77,31 +74,86 @@ const Chat = props => {
       senderName: data.name,
     });
   };
+  const navigateToListing = (item) => {
+    console.log(item)
+    try {
+      firestore()
+      .collection("Listing")
+      .doc(item.listingId)
+      .get()
+      .then((res)=>{
+        console.log("here",item)
+        if(res.exists){
+          navigation.navigate("VendorListingDetail",{item:res.data()})
+        }
+      })
+    } catch (error) {
+      
+    }
+  }
   const renderChats = ({item}) => {
     if (item.senderUid == uid)
-      return item.message ? (
-        <View style={styles.rightMsg}>
-          <View style={styles.rightMsgInner}>
-            <Text style={styles.txt}>{item.message}</Text>
-          </View>
-          <Text style={[styles.timeAgoRight]}>
-            {item.date?.toDate() ? timeAgo.format(item.date?.toDate()) : ''}
-          </Text>
+    return  item.isImgWithText?
+   <View>
+     <View 
+      style={[styles.rightMsg,{backgroundColor:colors.black,borderRadius:10,width:200}]}>
+        <FastImage
+          defaultSource={images.imagePlaceholder}
+          source={{uri: item.img}}
+          style={[styles.rightImage,{borderWidth:0}]}
+          resizeMode="cover"
+        />
+        <Text style={[styles.txt,{padding:10}]}>
+          {item.message}
+        </Text>
+      </View>
+       <Text style={[styles.timeAgoRight]}>
+       {item.date?.toDate() ? timeAgo.format(item.date?.toDate()) : ''}
+     </Text>
+   </View>
+    : item.message ? (
+      <View style={styles.rightMsg}>
+        <View style={styles.rightMsgInner}>
+          <Text style={styles.txt}>{item.message}</Text>
         </View>
-      ) : (
-        <View>
-          <FastImage
-            defaultSource={images.imagePlaceholder}
-            source={{uri: item.img}}
-            style={styles.rightImage}
-            resizeMode="cover"
-          />
-          <Text style={[styles.timeAgoRight,{marginBottom:10}]}>
-            {item.date?.toDate() ? timeAgo.format(item.date?.toDate()) : ''}
-          </Text>
-        </View>
-      );
-    return item.message ? (
+        <Text style={[styles.timeAgoRight]}>
+          {item.date?.toDate() ? timeAgo.format(item.date?.toDate()) : ''}
+        </Text>
+      </View>
+    ) : (
+      <View>
+        <FastImage
+          defaultSource={images.imagePlaceholder}
+          source={{uri: item.img}}
+          style={styles.rightImage}
+          resizeMode="cover"
+        />
+        <Text style={[styles.timeAgoRight,{marginBottom:10}]}>
+          {item.date?.toDate() ? timeAgo.format(item.date?.toDate()) : ''}
+        </Text>
+      </View>
+    );
+    return(
+    item.isImgWithText?
+    <TouchableOpacity onPress={()=>navigateToListing(item)}>
+     <View 
+      style={[styles.leftMsg,{backgroundColor:colors.black,borderRadius:10,width:200}]}>
+        <FastImage
+          defaultSource={images.imagePlaceholder}
+          source={{uri: item.img}}
+          style={[styles.leftImage,{borderWidth:0}]}
+          resizeMode="cover"
+        />
+        <Text style={[styles.txt,{padding:10}]}>
+          {item.message}
+        </Text>
+      </View>
+       <Text style={[styles.timeAgoLeft]}>
+       {item.date?.toDate() ? timeAgo.format(item.date?.toDate()) : ''}
+     </Text>
+   </TouchableOpacity>
+    :
+    item.message ? (
       <View style={styles.leftMsg}>
         <View style={styles.leftMsgInner}>
           <Text style={styles.txt}>{item.message}</Text>
@@ -122,7 +174,7 @@ const Chat = props => {
           {item.date?.toDate() ? timeAgo.format(item.date?.toDate()) : ''}
         </Text>
       </View>
-    );
+    ))
   };
   const keyExtractor = item => {
     return item.id;
@@ -174,6 +226,44 @@ const Chat = props => {
       //     //senderName: name,
       //     date: firebase.firestore.FieldValue.serverTimestamp(),
       // })
+      //setChatText("")
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleImageWithText = async () => {
+    try {
+      console.log(lastMessage)
+      let docId = firestore().collection('Chats').doc().id;
+      const messageObj = {
+        img: lastMessage.imageUri,
+        senderUid: uid,
+        messageId: docId,
+        message:lastMessage.regarding,
+        isImgWithText:true,
+        listingId:lastMessage.listingId,
+        //senderImage:profilePic,
+        date: firebase.firestore.FieldValue.serverTimestamp(),
+        //senderName: name
+      };
+      setMessage(docId, uid, lastMessage.senderUid, messageObj);
+      setMessage(docId, lastMessage.senderUid, uid, messageObj);
+      setMessage(lastMessage.senderUid, uid, "LastMessage", {
+          message: lastMessage.regarding,
+          senderUid: lastMessage.senderUid,
+          isRead: true,
+          //senderImage:lastMessage.senderImage,
+          //senderName: lastMessage.senderName,
+          date: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      setMessage(uid, lastMessage.senderUid, "LastMessage", {
+          message: lastMessage.regarding,
+          senderUid: uid,
+          isRead: false,
+          //senderImage:profilePic,
+          //senderName: name,
+          date: firebase.firestore.FieldValue.serverTimestamp(),
+      })
       //setChatText("")
     } catch (error) {
       console.log(error);

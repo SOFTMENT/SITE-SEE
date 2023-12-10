@@ -18,6 +18,7 @@ import AddListing from '../screens/VendorScreens/AddListing';
 import EditListing from '../screens/VendorScreens/EditListing';
 import NotificationScreen from '../screens/NotificationScreen';
 import VendorAllListing from '../screens/VendorScreens/VendorAllListing';
+import VendorListingDetail from '../screens/VendorScreens/VendorListingDetail';
 const Tab = createBottomTabNavigator();
 const VendorSpacesStack = createNativeStackNavigator();
 const InboxStack = createNativeStackNavigator();
@@ -77,6 +78,8 @@ const MyInboxStack = () => {
       }}>
       <InboxStack.Screen name="Inbox" component={Inbox} />
       <InboxStack.Screen name="PersonalChat" component={Chat} />
+      <InboxStack.Screen name='VendorListingDetail' component={VendorListingDetail}/>
+
     </InboxStack.Navigator>
   );
 };

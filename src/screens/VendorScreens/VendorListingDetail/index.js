@@ -17,7 +17,7 @@ import MyButton from '../../../components/MyButton'
 import { setFavorites } from '../../../store/userSlice'
 import colors from '../../../theme/colors'
 import styles from './styles'
-export default function ListingDetail(props) {
+export default function VendorListingDetail(props) {
     const { route , navigation} = props
     const { item } = route.params
     const {favorites} = useSelector(state=>state.user)
@@ -124,8 +124,8 @@ export default function ListingDetail(props) {
                 title={item.title}
                 back
                 navigation={navigation}
-                rightIcon={'dots-vertical'}
-                rightIsComponent={true}
+                // rightIcon={'dots-vertical'}
+                // rightIsComponent={true}
             />
             {/* <Carousel
                 style={{marginTop:-20}}
@@ -168,16 +168,15 @@ export default function ListingDetail(props) {
            </View>
             <View style={{padding:spacing.large,paddingTop:0,flex:1}}>
                 <HStack justifyContent={"space-between"} alignItems={"center"}>
-                   <View>
+                <Text style={styles.title}>{item?.location?.address}</Text>
+                   {/* <View>
                     <Text style={styles.title}>{item.title}</Text>
                         <HStack mt={2}>
                             <Text style={styles.supplier}>Supplier-</Text>
-                            <Link onPress={()=>navigation.navigate("ListingBySupplier",{supplierId:item.supplierId,supplierData})}>
-                                <Text style={[styles.supplier,{color:colors.appDefaultColor,fontFamily:fonts.medium,marginLeft:3}]}>{supplierData?.name}</Text>
-                            </Link>
+                            <Text style={[styles.supplier,{color:colors.appDefaultColor,fontFamily:fonts.medium,marginLeft:3}]}>{supplierData?.name}</Text>
                         </HStack>
-                   </View>
-                   <HStack>
+                   </View> */}
+                   {/* <HStack>
                     <TouchableOpacity onPress={handleShare}>
                         <Center bgColor={"black"} p={2} borderRadius={20} mr={2}>
                             <Icon
@@ -198,18 +197,18 @@ export default function ListingDetail(props) {
                             />
                         </Center>
                     </TouchableOpacity>
-                   </HStack>
+                   </HStack> */}
                 </HStack>
                 <Text style={styles.des}>Description</Text>
                 <View style={styles.desView}>
                     <Text style={styles.about}>{item.about}</Text>
                 </View>
-                <MyButton
+                {/* <MyButton
                     title={"Message"}
                     txtStyle={{color:"white"}}
                     containerStyle={{marginTop:20,borderRadius:18,backgroundColor:"black"}}
                     onPress={handleChat}
-                />
+                /> */}
             </View>
             
         </ScrollView>

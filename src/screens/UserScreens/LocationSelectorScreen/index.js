@@ -1,16 +1,17 @@
-import {Icon} from 'native-base';
-import React, {useRef, useState} from 'react';
-import {Modal, Platform, TouchableOpacity, View} from 'react-native';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import MapView, {Marker} from 'react-native-maps';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import styles from './styles';
-import MyButton from '../../../components/MyButton';
-import Header from '../../../components/Header';
+import { Icon } from 'native-base';
+import React, { useRef, useState } from 'react';
+import { Platform, Text, TouchableOpacity, View } from 'react-native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import MapView, { Marker } from 'react-native-maps';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentLocation, setCurrentPosition } from '../../../store/userSlice';
 import images from '../../../assets/images';
+import MyButton from '../../../components/MyButton';
+import { setCurrentLocation, setCurrentPosition } from '../../../store/userSlice';
+import styles from './styles';
+import Geolocation from 'react-native-geolocation-service';
+
 export default LocationSelectorScreen = props => {
   const {navigation,route} = props
   const isVendor = route?.params?.isVendor
@@ -63,6 +64,34 @@ export default LocationSelectorScreen = props => {
   };
   const insets = useSafeAreaInsets()
   const {latitude,longitude} = useSelector(state=>state.user.currentPosition)
+  const useCurrentLocation = () => {
+    Geolocation.getCurrentPosition(
+      value => {
+        const location = {
+          latitude: value.coords.latitude,
+          longitude: value.coords.longitude,
+        };
+        dispatch(setCurrentPosition(location));
+        dispatchLocationAddress(location.latitude, location.longitude);
+      },
+      error => {},
+      {
+        enableHighAccuracy: true,
+      },
+    );
+  };
+  const dispatchLocationAddress = async (latitude, longitude) => {
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyA0s1sqV20wmXHfso3aF1Zl9b2Skw53SsY`,
+      );
+      const json = await response.json();
+      dispatch(setCurrentLocation(json.results[0]?.formatted_address));
+      navigation.goBack()
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <View style={{flex:1}}>
     <MapView
@@ -82,7 +111,7 @@ export default LocationSelectorScreen = props => {
       onPress={event => {
       }}>
          <Marker
-          image={images.locationIcon}
+          //image={images.locationIcon}
           draggable
           coordinate={localLocation}
           onDragEnd={(event)=>{
@@ -133,9 +162,12 @@ export default LocationSelectorScreen = props => {
           }}
         />
       </View>
-
-     
-
+      {
+        !isVendor &&
+        <TouchableOpacity onPress={useCurrentLocation}>
+          <Text style={styles.locInstead}>Use current location</Text>
+        </TouchableOpacity>
+      }
       <MyButton
         title={'Confim'}
         containerStyle={styles.confirmBtn}

@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import fonts from "../../../../assets/fonts";
 import Util, { responsiveSize } from "../../../common/util";
-import { itemSizes, spacing } from "../../../common/variables";
+import { fontSizes, itemSizes, spacing } from "../../../common/variables";
 import colors from "../../../theme/colors";
 
 export default StyleSheet.create({
@@ -79,6 +79,13 @@ export default StyleSheet.create({
           fontSize:responsiveSize(13),
           fontFamily:fonts.medium,
      },
-   
+     locInstead:{
+        fontFamily:fonts.medium,
+        color:"#146AF6",
+        textAlign:"center",
+        marginLeft:20,
+        marginTop:10,
+        fontSize:fontSizes.extraSmall
+     }
    
 })

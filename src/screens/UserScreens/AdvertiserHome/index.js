@@ -1,5 +1,5 @@
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import firestore, { firebase } from '@react-native-firebase/firestore';
 import { HStack, Icon, ScrollView, useDisclose } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import {
@@ -117,9 +117,9 @@ export default function UserHome(props) {
       imageUrl:data,
       location:{latitude,longitude}
     })
-    .then(response => {
+    .then(async response => {
       setLoaderVisibility(false)
-      console.log(response.data)
+      await handleSearchHistory(response.data.similarityArray)
       navigation.navigate("MyListingScreenUser",{data:response.data.similarityArray})
     }).catch(err=>{
       console.log(err)
@@ -128,6 +128,26 @@ export default function UserHome(props) {
       setLoaderVisibility(false)
     })
   };
+  const handleSearchHistory = async(hits) => {
+    if(hits.length == 0)return
+    try {
+      const listingIds = hits.slice(0,1).map((hit)=>hit.id)
+      setLoaderVisibility(true)
+      await firestore()
+      .collection("Users")
+      .doc(auth().currentUser.uid)
+      .collection("SearchHistory")
+      .add({
+        searchTime:firebase.firestore.FieldValue.serverTimestamp(),
+        listingIds,
+      })
+    } catch (error) {
+      
+    }
+    finally{
+      setLoaderVisibility(false)
+    }
+  }
   const getFavorites = async () => {
     try {
       const uid = auth().currentUser.uid;
