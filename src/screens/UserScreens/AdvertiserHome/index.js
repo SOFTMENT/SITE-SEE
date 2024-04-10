@@ -47,6 +47,7 @@ export default function UserHome(props) {
     const sub = AppState.addEventListener('change', () => {
       handleLocation(handleLocationAcceptance, handleLocationRejection);
     });
+    //navigation.navigate('LocationSelectorScreen',{fromAdHome:true})
     return () => {
       //focusListener.remove();
       unsubscribe()
@@ -249,7 +250,7 @@ export default function UserHome(props) {
           <Image
             source={images.logo}
             style={styles.tapToSee}
-            resizeMode="contain"
+            resizeMode="cover"
           />
         </View>
       </TouchableOpacity>

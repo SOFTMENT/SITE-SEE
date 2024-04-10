@@ -14,7 +14,7 @@ const MyButton = (props) => {
         <TouchableOpacity
             disabled={loading || disabled}
             onPress={onPress}
-            style={[styles.container,containerStyle]}>
+            style={[styles.container,containerStyle,disabled&&{opacity:0.5}]}>
                 {/* {icon} */}
                 {/* {!loading && icon} */}
                 {

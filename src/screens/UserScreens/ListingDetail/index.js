@@ -20,6 +20,7 @@ import styles from './styles'
 export default function ListingDetail(props) {
     const { route , navigation} = props
     const { item } = route.params
+    console.log(item)
     const {favorites} = useSelector(state=>state.user)
     const uid = auth().currentUser.uid
     const isSelected = favorites?.find(fav=>fav.id == item.id)
@@ -37,6 +38,9 @@ export default function ListingDetail(props) {
             setSupplierData(doc.data())
         })
     },[])
+    useEffect(()=>{
+        setSelectedImage(item.listingImages[0])
+    },[item])
     const notifySupplier = async(fcmToken) => {
        if(!fcmToken)return
        console.log(fcmToken)

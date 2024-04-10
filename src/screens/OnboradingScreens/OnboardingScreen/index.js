@@ -18,11 +18,11 @@ export default function OnboardingScreen(props) {
       <View style={styles.logoView}>
         <Image source={images.logo} style={styles.logo} resizeMode="contain" />
         {/* <Text style={[styles.areyou,{fontSize:30}]}>Site See</Text> */}
-        <Image
+        {/* <Image
           source={images.siteSeeText}
           style={styles.siteSee}
           resizeMode="contain"
-        />
+        /> */}
       </View>
       <View style={styles.btnView}>
         <Text style={styles.areyou}>Are you?</Text>

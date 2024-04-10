@@ -12,14 +12,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     logo: {
-        height: 300,
+        height: 400,
         //height: 200,
     },
     siteSee: {
         height: 35,
     },
     logoView: {
-        flex: 0.6,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },

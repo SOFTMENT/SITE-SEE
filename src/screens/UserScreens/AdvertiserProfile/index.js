@@ -82,7 +82,7 @@ const AdvertiserProfile = props => {
         // rightIcon={"logout"}
         // onRightIconPress={logout}
       />
-      <HStack mx={5} mt={5}>
+      <HStack mx={5} mt={5} alignItems={"center"}>
         <VStack alignItems={"center"}>
           <TouchableOpacity
             onPress={handleProfile}
@@ -99,7 +99,7 @@ const AdvertiserProfile = props => {
           </TouchableOpacity>
         </VStack>
         <VStack ml={5}>
-          <HStack alignItems={"center"} marginTop={spacing.medium}
+          <HStack alignItems={"center"} 
         >
             <Text style={styles.name}>{userData.name}</Text>
             <IconButton 

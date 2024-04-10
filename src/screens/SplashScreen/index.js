@@ -77,11 +77,11 @@ const SplashScreen = (props) => {
                     style={styles.logo}
                     resizeMode='contain'
                 />
-                <Image
+                {/* <Image
                     source={images.siteSeeText}
                     style={styles.siteSee}
                     resizeMode='contain'
-                />
+                /> */}
             </View>
             <View style={styles.loaderView}>
                 <ActivityIndicator color={colors.white} size="large"/>

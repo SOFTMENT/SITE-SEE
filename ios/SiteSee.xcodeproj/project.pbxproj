@@ -16,6 +16,7 @@
 		5224EEA05E2E4D9491838D72 /* ArialNarrow.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C1537D00AAE43A388008C30 /* ArialNarrow.ttf */; };
 		8004B8532961F93C008AA020 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8004B8522961F93C008AA020 /* GoogleService-Info.plist */; };
 		804C0EE12982E0FD0071AB43 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804C0EE02982E0FD0071AB43 /* File.swift */; };
+		8081A9D02B945489002BD981 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8081A9CF2B945489002BD981 /* StoreKit.framework */; };
 		80C6FB8E2963672A00F8567C /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80C6FB7E2963672A00F8567C /* Fontisto.ttf */; };
 		80C6FB8F2963672A00F8567C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80C6FB7F2963672A00F8567C /* Octicons.ttf */; };
 		80C6FB902963672A00F8567C /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80C6FB802963672A00F8567C /* Feather.ttf */; };
@@ -69,6 +70,7 @@
 		804C0ED92982DFC60071AB43 /* SiteSee-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SiteSee-Bridging-Header.h"; sourceTree = "<group>"; };
 		804C0EE02982E0FD0071AB43 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		805CA17929B49243000CFB5B /* SiteSee.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = SiteSee.entitlements; path = SiteSee/SiteSee.entitlements; sourceTree = "<group>"; };
+		8081A9CF2B945489002BD981 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		80C6FB7E2963672A00F8567C /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		80C6FB7F2963672A00F8567C /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		80C6FB802963672A00F8567C /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BDDBF402C9E6678CCCE6D47 /* Pods_SiteSee.framework in Frameworks */,
+				8081A9D02B945489002BD981 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +151,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8081A9CF2B945489002BD981 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				1ACCC6DDC62A0D90BE0CEB8D /* Pods_SiteSee.framework */,
 				C1FE2E4C004F98B5D696DCBA /* Pods_SiteSee_SiteSeeTests.framework */,
@@ -614,7 +618,7 @@
 				CODE_SIGN_ENTITLEMENTS = SiteSee/SiteSee.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = KY3VWX4S99;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SiteSee/Info.plist;
@@ -653,7 +657,7 @@
 				CODE_SIGN_ENTITLEMENTS = SiteSee/SiteSee.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = KY3VWX4S99;
 				INFOPLIST_FILE = SiteSee/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SiteSii;

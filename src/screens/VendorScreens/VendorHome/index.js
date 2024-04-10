@@ -24,6 +24,8 @@ export default function VendorHome(props) {
   const [locationModal, setLocationModal] = useState(false);
   useEffect(() => {
     getCategories()
+    callLocationPermission()
+    // navigation.navigate('LocationSelectorScreen',{isVendor:true})
     return () => {
       //focusListener.remove();
       if(sub)
@@ -40,8 +42,8 @@ export default function VendorHome(props) {
       dispatch(setCategories(localData.sort((a,b)=>a-b)))
     })
   }
-  const callLocationPermission = () => {
-    handleLocation(handleLocationAcceptance, handleLocationRejection);
+  const callLocationPermission = (getCurrent) => {
+    handleLocation(()=>handleLocationAcceptance(getCurrent), handleLocationRejection);
     sub = AppState.addEventListener('change', () => {
       handleLocation(handleLocationAcceptance, handleLocationRejection);
     });
@@ -52,7 +54,7 @@ export default function VendorHome(props) {
   const handleLocationRejection = () => {
     setLocationModal(true);
   };
-  const handleLocationAcceptance = () => {
+  const handleLocationAcceptance = (getCurrent) => {
     setLocationModal(false);
     Geolocation.getCurrentPosition(
       value => {
@@ -62,7 +64,10 @@ export default function VendorHome(props) {
         };
         dispatch(setCurrentPosition(location));
         getAddressFromCoordinates(location.latitude, location.longitude);
-        navigation.navigate("MyListingScreen")
+        if(getCurrent){
+          console.log(getCurrent)
+          navigation.navigate("MyListingScreen")
+        }
       },
       error => {},
       {
@@ -105,7 +110,7 @@ export default function VendorHome(props) {
       <Link
         mt={5}
         onPress={()=>{
-            callLocationPermission()
+            callLocationPermission(true)
         }}
         _text={{
           color: colors.appDefaultColor,
