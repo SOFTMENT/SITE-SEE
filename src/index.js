@@ -1,5 +1,5 @@
 import { Fragment } from "react"
-import { StatusBar, Text, View } from "react-native"
+import { Platform, StatusBar, Text, View } from "react-native"
 import AppNavigator from "./navigators/AppNavigator"
 import React from "react"
 import Toast, { BaseToast, ErrorToast, SuccessToast } from 'react-native-toast-message';
@@ -47,7 +47,7 @@ const toastConfig = {
 const AppRoot = () =>{
     return(
         <Fragment>
-            <StatusBar barStyle={"dark-content"}/>
+            <StatusBar barStyle={Platform.OS=="ios"?"dark-content":"light-content"}/>
             <AppNavigator/>
             <Toast config={toastConfig}/>
         </Fragment>

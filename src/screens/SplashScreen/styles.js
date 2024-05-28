@@ -8,7 +8,7 @@ export default StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'black',
+        backgroundColor: 'white',
         paddingBottom: spacing.small,
       },
       circleView: {

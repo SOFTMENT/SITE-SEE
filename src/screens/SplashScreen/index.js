@@ -84,7 +84,7 @@ const SplashScreen = (props) => {
                 /> */}
             </View>
             <View style={styles.loaderView}>
-                <ActivityIndicator color={colors.white} size="large"/>
+                <ActivityIndicator color={colors.appDefaultColor} size="large"/>
             </View>
         </View>
     )
