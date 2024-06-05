@@ -85,7 +85,7 @@ export default function VendorListingDetail(props) {
     const getFavorites = async() => {
         try {
             const uid = auth().currentUser.uid
-            const result = await firestore().collection("Users").doc(uid).collection("Favorites").get()
+            const result = await firestore().collection("Users").doc(uid).collection("Favorites").orderBy("favCreated","desc").get()
             let favs = []
             result.forEach(doc => {
                 favs.push({...doc.data(),favCreated:doc.data().favCreated.toDate().toDateString()})

@@ -62,7 +62,7 @@ const Header = ({
     //userData.share
   }
   return (
-    <View style={[styles.container, extraStyle, {paddingTop: Platform.OS == "ios"?insets.top:insets.top+15}]}>
+    <View style={[styles.container, extraStyle]}>
       {back ? (
         <IconButton
           onPress={onBackPress ? onBackPress : handleBack}

@@ -91,10 +91,14 @@ const AppNavigator = () => {
     return (
         <NavigationContainer
             ref={navigationRef}
+            
         >
             <Stack.Navigator initialRouteName="SplashScreen"
                 screenOptions={{
                     headerShown: false,
+                    gestureEnabled:true,
+                    gestureDirection: 'horizontal',
+                    fullScreenGestureEnabled:true 
             }}>
                 <Stack.Screen name="SplashScreen" component={SplashScreen} />
                 <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />

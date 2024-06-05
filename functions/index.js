@@ -49,7 +49,55 @@ function hashFeatures(features) {
   hash.update(featureString);
   return hash.digest('hex');
 }
-// Cloud Function to compare pHash values of two image URLs
+
+exports.compareIfListingAlreadyExists = functions.https.onCall(async (data, context) => {
+  try {
+    if (!model) {
+      await loadModel();
+    }
+
+    const imageUrl = data.imageUrl;
+    const supplierId = data.supplierId;
+    const res = await admin.firestore()
+      .collection("Listing")
+      .where("supplierId", "==", supplierId)
+      .get();
+    const docs = res.docs;
+
+    // Process the new image
+    const imageBuffer1 = base64UrlToImageBuffer(imageUrl);
+    const processedImage1 = preprocessImage(imageBuffer1);
+    const features1 = model.predict(processedImage1);
+
+    const threshold = 0.95; // Adjust the threshold as needed
+
+    for (const doc of docs) {
+      try {
+        const listingImageURL = doc.data().listingImages[0];
+        const response2 = await axios.get(listingImageURL, { responseType: 'arraybuffer' });
+        const imageBuffer2 = Buffer.from(response2.data, 'binary');
+        const processedImage2 = preprocessImage(imageBuffer2);
+        const features2 = model.predict(processedImage2);
+
+        const sim = cosineSimilarity(features1, features2).dataSync()[0];
+
+        if (sim >= 0.2) {
+          return {status:1}; // Images are similar, return 1
+        }
+      } catch (error) {
+        console.error(`Error downloading image for listing ${doc.id}:`, error);
+      }
+    }
+
+    return {status:0}; // No similar images found, return 0
+  } catch (error) {
+    console.error('Error comparing image pHashes:', error);
+    throw new functions.https.HttpsError(
+      'internal',
+      'Error comparing image pHashes',
+    );
+  }
+});
 
 exports.compareImagePhashes = functions.https.onCall(async (data, context) => {
   try {

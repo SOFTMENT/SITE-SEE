@@ -30,6 +30,9 @@ const MyVendorProfileStack = () => {
     <VendorProfileStack.Navigator
       screenOptions={{
         headerShown: false,
+        gestureEnabled:true,
+                gestureDirection: 'horizontal',
+                fullScreenGestureEnabled:true 
       }}>
       <VendorProfileStack.Screen
         name="VendorProfile"
@@ -49,6 +52,9 @@ const MyVendorAddListing = () => {
     <VendorAddListing.Navigator
       screenOptions={{
         headerShown: false,
+        gestureEnabled:true,
+                gestureDirection: 'horizontal',
+                fullScreenGestureEnabled:true 
       }}>
       <VendorAddListing.Screen name="AddListing" component={AddListing} />
     </VendorAddListing.Navigator>
@@ -59,6 +65,9 @@ const MyVendorHomeStack = () => {
     <VendorHomeStack.Navigator
       screenOptions={{
         headerShown: false,
+        gestureEnabled:true,
+        gestureDirection: 'horizontal',
+        fullScreenGestureEnabled:true 
       }}>
       <VendorHomeStack.Screen name="HomeScreen" component={VendorHome} />
       <VendorHomeStack.Screen name="PersonalChat" component={Chat} />
@@ -75,6 +84,9 @@ const MyInboxStack = () => {
     <InboxStack.Navigator
       screenOptions={{
         headerShown: false,
+        gestureEnabled:true,
+                gestureDirection: 'horizontal',
+                fullScreenGestureEnabled:true 
       }}>
       <InboxStack.Screen name="Inbox" component={Inbox} />
       <InboxStack.Screen name="PersonalChat" component={Chat} />

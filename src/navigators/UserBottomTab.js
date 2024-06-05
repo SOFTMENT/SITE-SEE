@@ -37,7 +37,10 @@ const MyFavoriteStack = () => {
     return(
         <FavoriteStack.Navigator
             screenOptions={{
-                headerShown:false
+                headerShown:false,
+                gestureEnabled:true,
+                gestureDirection: 'horizontal',
+                fullScreenGestureEnabled:true 
             }}
         >
             <FavoriteStack.Screen name='Favorite' component={FavoritesScreen}/>
@@ -49,7 +52,10 @@ const MyProfileStack = () => {
     return(
         <ProfileStack.Navigator
             screenOptions={{
-                headerShown:false
+                headerShown:false,
+                gestureEnabled:true,
+                gestureDirection: 'horizontal',
+                fullScreenGestureEnabled:true 
             }}
         >
             <ProfileStack.Screen name='ProfileScreen' component={AdvertiserProfile}/>
@@ -61,7 +67,10 @@ const MyInboxStack = () => {
     return(
         <InboxStack.Navigator
             screenOptions={{
-                headerShown:false
+                headerShown:false,
+                gestureEnabled:true,
+                gestureDirection: 'horizontal',
+                fullScreenGestureEnabled:true 
             }}
         >
             <InboxStack.Screen name='Inbox' component={Inbox}/>
@@ -73,7 +82,10 @@ const MyAdHomeStack = () => {
     return(
         <AdHomeStack.Navigator
             screenOptions={{
-                headerShown:false
+                headerShown:false,
+                gestureEnabled:true,
+                gestureDirection: 'horizontal',
+                fullScreenGestureEnabled:true 
             }}
         >
             <AdHomeStack.Screen name='AdHome' component={UserHome}/>
@@ -81,7 +93,7 @@ const MyAdHomeStack = () => {
             <AdHomeStack.Screen name='LocationSelectorScreen' component={LocationSelectorScreen}/>
             <AdHomeStack.Screen name='ListingDetail' component={ListingDetail}/>
             <AdHomeStack.Screen name='ListingBySupplier' component={ListingBySupplier}/>
-            <AdOrderStack.Screen name='PersonalChat' component={Chat}/>
+            <AdHomeStack.Screen name='PersonalChat' component={Chat}/>
             <AdHomeStack.Screen name='CategoryScreen' component={CategoryScreen}/>
             <AdHomeStack.Screen name='PaymentScreen' component={PaymentScreen}/>
             <AdHomeStack.Screen name='SearchScreen' component={SearchScreen}/>
@@ -136,13 +148,14 @@ function UserBottomTab() {
         >
             <Tab.Screen name="Home" component={MyAdHomeStack}
                 options={{
+                    
                     tabBarIcon: ({ color, size }) => {
                         return (
                             <View style={[styles.activeBackground,{backgroundColor:colors.appDefaultColor == color?"white":"transparent"}]}>
                                 <HomeIcon width={size} height={size} fill={color}/>
                             </View>
                         )
-                    }
+                    },
                 }}
             />
 

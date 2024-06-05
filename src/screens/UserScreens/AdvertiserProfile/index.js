@@ -94,13 +94,10 @@ const AdvertiserProfile = props => {
               style={styles.image}
             />
           </TouchableOpacity >
-          <TouchableOpacity  onPress={handleProfile}>
-            <Text style={styles.tap}>Tap to edit</Text>
-          </TouchableOpacity>
         </VStack>
         <VStack ml={5}>
           <HStack alignItems={"center"} 
-        >
+          >
             <Text style={styles.name}>{userData.name}</Text>
             <IconButton 
               onPress={()=>setMenuOpen(true)}
@@ -120,6 +117,9 @@ const AdvertiserProfile = props => {
           </HStack>
         </VStack>
       </HStack>
+      <TouchableOpacity  onPress={handleProfile} style={{marginLeft:30}}>
+            <Text style={styles.tap}>Tap to edit</Text>
+      </TouchableOpacity>
       {/* <HStack justifyContent={"space-evenly"} style={styles.orderView}>
                 <TouchableOpacity style={{flex:1}} onPress={()=>navigation.navigate("Orders")}>
                     <VStack justifyContent={"center"} flex={1}>

@@ -618,7 +618,7 @@
 				CODE_SIGN_ENTITLEMENTS = SiteSee/SiteSee.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = KY3VWX4S99;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SiteSee/Info.plist;
@@ -629,6 +629,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -659,7 +660,7 @@
 				CODE_SIGN_ENTITLEMENTS = SiteSee/SiteSee.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = KY3VWX4S99;
 				INFOPLIST_FILE = SiteSee/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SiteSii;
@@ -669,6 +670,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

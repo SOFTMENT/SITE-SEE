@@ -13,6 +13,7 @@ import CenteredLoader from '../../../components/CenteredLoader';
 import Header from '../../../components/Header';
 import colors from '../../../theme/colors';
 import styles from './styles';
+import { startCase } from 'lodash';
 
 let unsubscribe
 const VendorAllListing = props => {
@@ -44,13 +45,13 @@ const VendorAllListing = props => {
   };
   const renderCard = ({item}) => {
     return (
-      <View style={{flex:0.5,margin:5}}>
+      <TouchableOpacity style={{flex:0.5,margin:5}} onPress={()=>navigation.navigate("EditListing",{item})}>
           <FastImage
             defaultSource={images.imagePlaceholder}
             source={{uri: item.listingImages[0]}}
             style={styles.img}
             resizeMode="contain">
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={()=>navigation.navigate("EditListing",{item})}
               style={{
                 position: 'absolute',
@@ -69,13 +70,13 @@ const VendorAllListing = props => {
                 size="md"
                 color={colors.appDefaultColor}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </FastImage>
         <VStack direction={"column"} mt={2}>
-          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.title}>{startCase(item.title)}</Text>
           <Text style={styles.name}>{item?.location?.address}</Text>
         </VStack>
-      </View>
+      </TouchableOpacity>
     );
   };
   const keyExtractor = item => {

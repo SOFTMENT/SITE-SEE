@@ -39,8 +39,6 @@ const AvatarHeader = props => {
       style={[
         styles.container,
         extraStyle,
-        {paddingTop: insets.top},
-        Platform.OS == 'android' && {paddingTop: spacing.large},
       ]}>
       {back ? (
         <IconButton

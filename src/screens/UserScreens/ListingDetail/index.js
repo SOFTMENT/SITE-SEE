@@ -17,15 +17,17 @@ import MyButton from '../../../components/MyButton'
 import { setFavorites } from '../../../store/userSlice'
 import colors from '../../../theme/colors'
 import styles from './styles'
+import { startCase } from 'lodash'
+import linkingUtil from '../../../common/linkingUtil'
 export default function ListingDetail(props) {
     const { route , navigation} = props
     const { item } = route.params
-    console.log(item)
     const {favorites} = useSelector(state=>state.user)
     const uid = auth().currentUser.uid
     const isSelected = favorites?.find(fav=>fav.id == item.id)
     const [favIsSelected,setFavIsSelected] = useState(isSelected)
     const [supplierData,setSupplierData] = useState(null)
+    const [taggedSupplierData,setTaggedSupplierData] = useState(null)
     const [selectedImage,setSelectedImage] = useState(item.listingImages[0])
     const dispatch = useDispatch()
     useEffect(()=>{
@@ -34,16 +36,27 @@ export default function ListingDetail(props) {
         .doc(item.supplierId)
         .get()
         .then(doc=>{
-            notifySupplier(doc.data().fcmToken)
+            notifySupplier(doc.data().fcmToken,doc.data().uid)
             setSupplierData(doc.data())
         })
+        if(item?.supplierTag && typeof(item?.supplier) == 'string'){
+            firestore()
+            .collection("Users")
+            .doc(item?.supplierTag)
+            .get()
+            .then(doc=>{
+                console.log("here")
+                // notifySupplier(doc.data().fcmToken)
+                setTaggedSupplierData(doc.data())
+            })
+        }
     },[])
     useEffect(()=>{
         setSelectedImage(item.listingImages[0])
     },[item])
-    const notifySupplier = async(fcmToken) => {
+    const notifySupplier = async(fcmToken,userId) => {
        if(!fcmToken)return
-       console.log(fcmToken)
+    //    console.log(fcmToken)
        axios({
         method:"post",
         url:"https://fcm.googleapis.com/fcm/send",
@@ -53,14 +66,17 @@ export default function ListingDetail(props) {
         },
         data:{
             to:fcmToken,
-                notification:{
+                data:{
                     title:"Hey",
-                    body:`Someone just viewed your one of the listing(${item.title}).`
-                }
+                    body:`Someone just viewed your one of the listing(${item.title}).`,
+                    uid:userId
+                },
+                content_available:true,
+                priority:"high"
         }
        })
        .then(res=>{
-        console.log(res.data)
+        // console.log(res.data)
        })
        .catch(err=>{
         console.log(err)
@@ -89,7 +105,7 @@ export default function ListingDetail(props) {
     const getFavorites = async() => {
         try {
             const uid = auth().currentUser.uid
-            const result = await firestore().collection("Users").doc(uid).collection("Favorites").get()
+            const result = await firestore().collection("Users").doc(uid).collection("Favorites").orderBy("favCreated","desc").get()
             let favs = []
             result.forEach(doc => {
                 favs.push({...doc.data(),favCreated:doc.data().favCreated.toDate().toDateString()})
@@ -122,36 +138,32 @@ export default function ListingDetail(props) {
         }
           //let {channel, completed, error} = await buo.showShareSheet(shareOptions, linkProperties, controlParams)
     }
+    const handlePurchase = ()=> {
+        linkingUtil.openBrowser(item?.purchaseUrl)
+    }
     return (
         <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
             <Header
-                title={item.title}
+                title={startCase(item.title)}
                 back
                 navigation={navigation}
                 rightIcon={'dots-vertical'}
                 rightIsComponent={true}
             />
-            {/* <Carousel
-                style={{marginTop:-20}}
-                width={Util.getWidth(100)}
-                height={Util.getHeight(25)}
-                //autoPlay={true}
-                data={item.listingImages}
-                renderItem={renderCarousel}
-                scrollAnimationDuration={1000}
-                mode="parallax"
-                modeConfig={{
-                    parallaxScrollingScale: 0.9,
-                    parallaxScrollingOffset: 50,
-                }}
-            /> */}
            <View style={styles.imageContainer}>
                 <FastImage
                     source={{uri:selectedImage}}
                     style={styles.image}
                     resizeMode='contain'
                     defaultSource={images.imagePlaceholder}
-                />
+                >
+                    {
+                        item?.listingType && item?.listingType == "Temporary" &&
+                        <View style={styles.listingBadge}>
+                            <Text style={styles.listingBadgeText}>{item?.listingType}</Text>
+                        </View>
+                    }
+                </FastImage>
                 <ScrollView horizontal mt={5} alignSelf={"center"} width={"95%"} bgColor={"red"} showsHorizontalScrollIndicator={false}>
                     {
                         item.listingImages.length>1 && item.listingImages.map((img)=>{
@@ -173,13 +185,22 @@ export default function ListingDetail(props) {
             <View style={{padding:spacing.large,paddingTop:0,flex:1}}>
                 <HStack justifyContent={"space-between"} alignItems={"center"}>
                    <View>
-                    <Text style={styles.title}>{item.title}</Text>
+                    <Text style={styles.title}>{startCase(item.title)}</Text>
                         <HStack mt={2}>
-                            <Text style={styles.supplier}>Supplier-</Text>
+                            <Text style={styles.supplier}>Supplier - </Text>
                             <Link onPress={()=>navigation.navigate("ListingBySupplier",{supplierId:item.supplierId,supplierData})}>
-                                <Text style={[styles.supplier,{color:colors.appDefaultColor,fontFamily:fonts.medium,marginLeft:3}]}>{supplierData?.name}</Text>
+                                <Text style={[styles.supplier,{color:colors.appDefaultColor,fontFamily:fonts.medium,marginLeft:3}]}>{startCase(supplierData?.name)}</Text>
                             </Link>
                         </HStack>
+                        {
+                            item.supplierTag && typeof(item.supplierTag) == 'string' && 
+                            <HStack mt={2}>
+                                <Text style={styles.supplier}>Tag - </Text>
+                                <Link onPress={()=>navigation.navigate("ListingBySupplier",{supplierId:item.supplierTag,supplierData:taggedSupplierData})}>
+                                    <Text style={[styles.supplier,{color:colors.appDefaultColor,fontFamily:fonts.medium,marginLeft:3}]}>{startCase(taggedSupplierData?.name??"")}</Text>
+                                </Link>
+                            </HStack>
+                        }
                    </View>
                    <HStack>
                     <TouchableOpacity onPress={handleShare}>
@@ -211,8 +232,14 @@ export default function ListingDetail(props) {
                 <MyButton
                     title={"Message"}
                     txtStyle={{color:"white"}}
-                    containerStyle={{marginTop:20,borderRadius:18,backgroundColor:"black"}}
+                    containerStyle={{marginTop:20,borderRadius:spacing.small,backgroundColor:"black"}}
                     onPress={handleChat}
+                />
+                <MyButton
+                    title={"Purchase Now"}
+                    txtStyle={{color:"white"}}
+                    containerStyle={{marginTop:10,borderRadius:spacing.small}}
+                    onPress={handlePurchase}
                 />
             </View>
             

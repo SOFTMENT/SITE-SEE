@@ -6,7 +6,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {distanceBetween, geohashQueryBounds} from 'geofire-common';
 import {useSelector} from 'react-redux';
-import {uniqBy} from 'lodash';
+import {startCase, uniqBy} from 'lodash';
 import CenteredLoader from '../../../components/CenteredLoader';
 import NoResults from '../../../components/NoResults';
 import {Center, FlatList, HStack, Icon, Link, VStack} from 'native-base';
@@ -89,13 +89,13 @@ const MyListingScreen = props => {
   };
   const renderCard = ({item}) => {
     return (
-      <View style={{flex:0.5,margin:5}}>
+      <TouchableOpacity style={{flex:0.5,margin:5}}  onPress={()=>navigation.navigate("EditListing",{item})}>
           <FastImage
             defaultSource={images.imagePlaceholder}
             source={{uri: item.listingImages[0]}}
             style={styles.img}
             resizeMode="contain">
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={()=>navigation.navigate("EditListing",{item})}
               style={{
                 position: 'absolute',
@@ -114,13 +114,13 @@ const MyListingScreen = props => {
                 size="md"
                 color={colors.appDefaultColor}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </FastImage>
         <VStack direction={"column"} mt={2}>
-          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.title}>{startCase(item.title)}</Text>
           <Text style={styles.name}>{name}</Text>
         </VStack>
-      </View>
+      </TouchableOpacity>
     );
   };
   const keyExtractor = item => {

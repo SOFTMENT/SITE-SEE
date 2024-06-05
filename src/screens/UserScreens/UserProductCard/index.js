@@ -31,6 +31,7 @@ const UserProductCard = ({item,navigation,favorites}) => {
             .collection('Users')
             .doc(uid)
             .collection('Favorites')
+            .orderBy("favCreated","desc")
             .get();
           let favs = [];
           result.forEach(doc => {

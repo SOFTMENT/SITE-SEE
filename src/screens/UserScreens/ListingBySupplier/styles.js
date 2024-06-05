@@ -11,7 +11,6 @@ const styles =  StyleSheet.create({
     },
     
     supplier:{
-        color:"#898B91",
         fontSize:fontSizes.extraExtraSmall,
         fontFamily:fonts.regular,
         marginVertical:2

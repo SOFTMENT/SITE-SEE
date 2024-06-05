@@ -14,13 +14,12 @@ import Header from '../../../components/Header';
 import { setFavorites } from '../../../store/userSlice';
 import colors from '../../../theme/colors';
 import styles from './styles';
+import CenteredLoader from '../../../components/CenteredLoader';
 
 export default function ListingBySupplier(props) {
   const {route, navigation} = props;
   const {supplierId,supplierData} = route.params;
-  const {latitude, longitude} = useSelector(
-    state => state.user.currentPosition,
-  );
+  const [loading,setLoading] = useState(false)
   const {favorites} = useSelector(state => state.user);
   const [listings, setListings] = useState([]);
   const uid = auth().currentUser.uid;
@@ -32,6 +31,7 @@ export default function ListingBySupplier(props) {
   }, []);
   const getListingBySupplier = () => {
     try {
+      setLoading(true)
       firestore()
         .collection('Listing')
         .where('supplierId', '==', supplierId)
@@ -39,7 +39,10 @@ export default function ListingBySupplier(props) {
         .then(snapShot => {
           const newArray = snapShot.docs.map(doc => ({...doc.data()}));
           setListings(newArray ?? []);
-        });
+        })
+        .finally(()=>{
+          setLoading(false)
+        })
     } catch (error) {}
   };
   const handleFav = async (id, isSelected) => {
@@ -77,6 +80,7 @@ export default function ListingBySupplier(props) {
         .collection('Users')
         .doc(uid)
         .collection('Favorites')
+        .orderBy("favCreated","desc")
         .get();
       let favs = [];
       result.forEach(doc => {
@@ -135,6 +139,9 @@ export default function ListingBySupplier(props) {
   const keyExtractor = item => {
     return item.id;
   };
+  const openWebUrl = () => {
+
+  }
   return (
     <View
       style={styles.container}>
@@ -151,10 +158,17 @@ export default function ListingBySupplier(props) {
             style={{borderWidth: 1, borderColor: 'white'}}
           />
           <Text style={styles.name}>{supplierData?.name}</Text>
-          <Text style={styles.supplier}>
+          {/* <Text style={styles.supplier}>
             {' '}
             Joined {format(supplierData?.createdAt.toDate(), 'Lo MMMM')}
-          </Text>
+          </Text> */}
+           <Link
+            href={supplierData.webUrl}
+            isUnderlined={true}
+             _text={{color:"blue.500"}}
+            >
+            {supplierData.webUrl}
+          </Link>
         </VStack>
       )}
       <HStack
@@ -171,7 +185,10 @@ export default function ListingBySupplier(props) {
           Message
         </Link>
       </HStack>
-      <FlatList
+      {
+        loading?
+        <CenteredLoader/>:
+        <FlatList
         style={{paddingHorizontal: spacing.medium, flex: 1}}
         data={listings}
         numColumns={2}
@@ -180,6 +197,8 @@ export default function ListingBySupplier(props) {
         bounces={false}
         showsVerticalScrollIndicator={false}
       />
+      
+      }
     </View>
   );
 }

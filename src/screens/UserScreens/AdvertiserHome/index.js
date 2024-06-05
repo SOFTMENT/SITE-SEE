@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
-import firestore, { firebase } from '@react-native-firebase/firestore';
-import { HStack, Icon, ScrollView, useDisclose } from 'native-base';
-import React, { useEffect, useState } from 'react';
+import firestore, {firebase} from '@react-native-firebase/firestore';
+import {HStack, Icon, ScrollView, useDisclose} from 'native-base';
+import React, {useEffect, useState} from 'react';
 import {
   AppState,
   Image,
@@ -11,15 +11,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import RNFS from 'react-native-fs'
-import branch from 'react-native-branch'
-import functions from '@react-native-firebase/functions'
+import RNFS from 'react-native-fs';
+import branch from 'react-native-branch';
+import functions from '@react-native-firebase/functions';
 import Geolocation from 'react-native-geolocation-service';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useDispatch, useSelector } from 'react-redux';
-import { handleLocation } from '../../../common/LocationHelper';
-import { spacing } from '../../../common/variables';
+import {useDispatch, useSelector} from 'react-redux';
+import {handleLocation} from '../../../common/LocationHelper';
+import {spacing} from '../../../common/variables';
 import AvatarIcon from '../../../components/AvatarIcon';
 import LocationRequiredModal from '../../../components/LocationRequiredModal';
 import PhotoPicker from '../../../components/PhotoPicker';
@@ -31,17 +31,19 @@ import {
 import styles from './styles';
 import images from '../../../assets/images';
 import LoaderComponent from '../../../components/LoaderComponent';
+import axios from 'axios';
 const radius = 10 * 1000;
-let unsubscribe = ()=> {}
+let unsubscribe = () => {};
 export default function UserHome(props) {
   const {navigation} = props;
   const {isOpen, onToggle, onClose, onOpen} = useDisclose();
-  const [loaderVisibility,setLoaderVisibility] = useState(false)
+  const [loaderVisibility, setLoaderVisibility] = useState(false);
   const {latitude, longitude} =
     useSelector(state => state.user.currentPosition) ?? {};
   const location = useSelector(state => state.user.currentLocation) ?? {};
+  console.log('vaibajv', location);
   useEffect(() => {
-    subscribeBranchIO()
+    subscribeBranchIO();
     getFavorites();
     handleLocation(handleLocationAcceptance, handleLocationRejection);
     const sub = AppState.addEventListener('change', () => {
@@ -50,105 +52,102 @@ export default function UserHome(props) {
     //navigation.navigate('LocationSelectorScreen',{fromAdHome:true})
     return () => {
       //focusListener.remove();
-      unsubscribe()
+      unsubscribe();
       sub.remove();
     };
   }, []);
-  const subscribeBranchIO = async() => {
-      // Listener
-  unsubscribe = branch.subscribe({
-    onOpenComplete:({error,params,uri})=>{
-      if (!error) {
-        // Handle the deep link data here
-        const customData = params['key1'];
-        // Perform actions based on the deep link data
-        const id = params['$canonical_identifier']
-        
-        if(id){
-          if(customData == 'user'){
-            try {
-              firestore()
-              .collection("Users")
-              .doc(id.split('/')[1])
-              .get()
-              .then(doc=>{
-                const item = doc.data()
-                if(doc.exists)
-                navigation.navigate("ListingBySupplier",{supplierId:item.id,supplierData:item})
-              })
-            } catch (error) {
-              
-            }
-          }
-          else
-          {
-            try {
-              firestore()
-              .collection("Listing")
-              .doc(id.split('/')[1])
-              .get()
-              .then(doc=>{
-                const item = doc.data()
-                if(doc.exists)
-                navigation.navigate("ListingDetail",{item})
-              })
-            } catch (error) {
-              
+  const subscribeBranchIO = async () => {
+    // Listener
+    unsubscribe = branch.subscribe({
+      onOpenComplete: ({error, params, uri}) => {
+        if (!error) {
+          // Handle the deep link data here
+          const customData = params['key1'];
+          // Perform actions based on the deep link data
+          const id = params['$canonical_identifier'];
+
+          if (id) {
+            if (customData == 'user') {
+              try {
+                firestore()
+                  .collection('Users')
+                  .doc(id.split('/')[1])
+                  .get()
+                  .then(doc => {
+                    const item = doc.data();
+                    if (doc.exists)
+                      navigation.navigate('ListingBySupplier', {
+                        supplierId: item.id,
+                        supplierData: item,
+                      });
+                  });
+              } catch (error) {}
+            } else {
+              try {
+                firestore()
+                  .collection('Listing')
+                  .doc(id.split('/')[1])
+                  .get()
+                  .then(doc => {
+                    const item = doc.data();
+                    if (doc.exists)
+                      navigation.navigate('ListingDetail', {item});
+                  });
+              } catch (error) {}
             }
           }
         }
-      }
-    }
-  });
+      },
+    });
 
-  // let latestParams = await branch.getLatestReferringParams() // Params from last open
-  // let installParams = await branch.getFirstReferringParams() // Params from original install
-  }
+    // let latestParams = await branch.getLatestReferringParams() // Params from last open
+    // let installParams = await branch.getFirstReferringParams() // Params from original install
+  };
   const handleImage = index => {
     onToggle();
   };
   const selectImage = async img => {
-    if(!img)
-    return
-    setLoaderVisibility(true)
-    const data = await RNFS.readFile(decodeURI(img.uri), 'base64')
+    if (!img) return;
+    setLoaderVisibility(true);
+    const data = await RNFS.readFile(decodeURI(img.uri), 'base64');
     //functions().useEmulator('localhost', 5001);
     functions()
-    .httpsCallable('compareImagePhashes')({
-      imageUrl:data,
-      location:{latitude,longitude}
-    })
-    .then(async response => {
-      setLoaderVisibility(false)
-      await handleSearchHistory(response.data.similarityArray)
-      navigation.navigate("MyListingScreenUser",{data:response.data.similarityArray})
-    }).catch(err=>{
-      console.log(err)
-    })
-    .finally(()=>{
-      setLoaderVisibility(false)
-    })
-  };
-  const handleSearchHistory = async(hits) => {
-    if(hits.length == 0)return
-    try {
-      const listingIds = hits.slice(0,1).map((hit)=>hit.id)
-      setLoaderVisibility(true)
-      await firestore()
-      .collection("Users")
-      .doc(auth().currentUser.uid)
-      .collection("SearchHistory")
-      .add({
-        searchTime:firebase.firestore.FieldValue.serverTimestamp(),
-        listingIds,
+      .httpsCallable('compareImagePhashes')({
+        imageUrl: data,
+        location: {latitude, longitude},
       })
+      .then(async response => {
+        setLoaderVisibility(false);
+        await handleSearchHistory(response.data.similarityArray);
+        navigation.navigate('MyListingScreenUser', {
+          data: response.data.similarityArray,
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoaderVisibility(false);
+      });
+  };
+  const handleSearchHistory = async hits => {
+    if (hits.length == 0) return;
+    try {
+      const listingIds = hits.slice(0, 1).map(hit => hit.id);
+      setLoaderVisibility(true);
+      await firestore()
+        .collection('Users')
+        .doc(auth().currentUser.uid)
+        .collection('SearchHistory')
+        .add({
+          searchTime: firebase.firestore.FieldValue.serverTimestamp(),
+          listingIds,
+        });
     } catch (error) {
-      
+    } finally {
+      setLoaderVisibility(false);
     }
-    finally{
-      setLoaderVisibility(false)
-    }
-  }
+  };
   const getFavorites = async () => {
     try {
       const uid = auth().currentUser.uid;
@@ -156,6 +155,7 @@ export default function UserHome(props) {
         .collection('Users')
         .doc(uid)
         .collection('Favorites')
+        .orderBy("favCreated","desc")
         .get();
       let favs = [];
       result.forEach(doc => {
@@ -172,7 +172,7 @@ export default function UserHome(props) {
   const inset = useSafeAreaInsets();
   const dispatch = useDispatch();
   const {userData} = useSelector(state => state.user);
-  const currentPosition = useSelector(state=>state.user.currentPosition)
+  const currentPosition = useSelector(state => state.user.currentPosition);
   const {name, profilePic} = userData;
   const handleLocationRejection = () => {
     setLoading(false);
@@ -199,24 +199,26 @@ export default function UserHome(props) {
     );
   };
   const getAddressFromCoordinates = async (latitude, longitude) => {
+    console.log('hereee');
     try {
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyA0s1sqV20wmXHfso3aF1Zl9b2Skw53SsY`,
-      );
-      const json = await response.json();
+      const res = await axios({
+        url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyCFjK92eaOWd5f2Aj1U5enbOHuIZ3WKEew`,
+      });
+      const json = res.data;
+      console.log(json);
       dispatch(setCurrentLocation(json.results[0]?.formatted_address));
     } catch (error) {
-      console.error(error);
+      console.error('Error', error);
     }
   };
   return (
     <ScrollView
       style={[
         styles.container,
-        {
-          paddingTop:
-            Platform.OS == 'ios' ? inset.top : inset.top + spacing.small,
-        },
+        // {
+        //   paddingTop:
+        //     Platform.OS == 'ios' ? inset.top : inset.top + spacing.small,
+        // },
       ]}>
       <View style={styles.topView}>
         <Pressable
@@ -244,11 +246,15 @@ export default function UserHome(props) {
       </View>
       <Text style={styles.currentLocation}>{`Current Location:`}</Text>
       <Text style={styles.currentLocationBold}>{location}</Text>
-      <TouchableOpacity style={{alignSelf: 'center',width:"100%"}} onPress={()=>{handleImage()}}>
+      <TouchableOpacity
+        style={{alignSelf: 'center', width: '100%'}}
+        onPress={() => {
+          handleImage();
+        }}>
         <Text style={styles.tapToSeeText}>Tap to SiteSii</Text>
         <View style={styles.logoBorder}>
           <Image
-            source={images.logo}
+            source={images.tapToSee}
             style={styles.tapToSee}
             resizeMode="cover"
           />
@@ -264,8 +270,9 @@ export default function UserHome(props) {
           style={styles.searchBox}
           backgroundColor={'gray.800'}
           //onPress={handleRec}
-          onPress={() => navigation.navigate('SearchScreen',{currentPosition})}
-          >
+          onPress={() =>
+            navigation.navigate('SearchScreen', {currentPosition})
+          }>
           <Icon
             as={MaterialCommunityIcons}
             color={'black'}
@@ -300,14 +307,14 @@ export default function UserHome(props) {
           )
         }
       />
-       <PhotoPicker
+      <PhotoPicker
         isOpen={isOpen}
         onClose={onClose}
         isVideo={false}
         setImage={selectImage}
         isTF={true}
       />
-      <LoaderComponent visible={loaderVisibility} title={"Searching..."}/>
+      <LoaderComponent visible={loaderVisibility} title={'Searching...'} />
     </ScrollView>
   );
 }

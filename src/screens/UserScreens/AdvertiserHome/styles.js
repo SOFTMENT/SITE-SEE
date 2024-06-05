@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   tapToSee: {
-    height: 150,
+    height: 100,
     aspectRatio:1,
   },
   logoBorder:{
@@ -71,8 +71,10 @@ const styles = StyleSheet.create({
     width:"60%",
     alignSelf:"center",
     alignItems:"center",
+    justifyContent:"center",
     marginTop:5,
-    borderRadius:10
+    borderRadius:10,
+    height: 150,
   },
   tapToSeeText: {
     color: 'black',

@@ -15,7 +15,7 @@ export default AvatarIcon = ({uri,style,size,defaultSource,pressable,onPress}) =
             <FastImage
                 style={[styles.imageStyle,size&&{width:size,height:size,borderRadius:size/2},style]}
                 resizeMode={"cover"}
-                source={{uri:uri}}
+                source={uri?{uri:uri}:images.defaultUser}
                 defaultSource={defaultSource?defaultSource:images.defaultUser}
             />
         </TouchableOpacity>

@@ -1,17 +1,20 @@
-import auth, {firebase} from '@react-native-firebase/auth';
+import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {geohashForLocation} from 'geofire-common';
-import {Icon, ScrollView, Select, VStack, useDisclose} from 'native-base';
-import React, {useEffect, useRef, useState} from 'react';
-import {Keyboard, Platform, Text, TouchableOpacity, View} from 'react-native';
+import algoliasearch from 'algoliasearch';
+import { geohashForLocation } from 'geofire-common';
+import { debounce } from 'lodash';
+import { Icon, ScrollView, Select, VStack, useDisclose } from 'native-base';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ActivityIndicator, Keyboard, Platform, Pressable, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import branch from 'react-native-branch';
 import FastImage from 'react-native-fast-image';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Helper from '../../../common/Helper';
 import Util from '../../../common/util';
-import {spacing} from '../../../common/variables';
+import { spacing } from '../../../common/variables';
 import Header from '../../../components/Header';
 import LoaderComponent from '../../../components/LoaderComponent';
 import MyButton from '../../../components/MyButton';
@@ -19,12 +22,19 @@ import MyTextInput from '../../../components/MyTextInput';
 import PhotoPicker from '../../../components/PhotoPicker';
 import colors from '../../../theme/colors';
 import styles from './styles';
-import {useIsFocused, useRoute} from '@react-navigation/native';
-import branch from 'react-native-branch';
-
+import functions from '@react-native-firebase/functions'
+import RNFS from 'react-native-fs';
+import { listingTypes } from '../../../config/appConfig';
+import UserNameActionSheet from '../../../components/UserNameActionSheet';
+const algoliaClient = algoliasearch(
+  'MOMHBUJFM8',
+  '110bf4874cab087690527dec42643d51',
+);
+const searchIndex = algoliaClient.initIndex('name');
 export default function AddListing(props) {
   const {navigation} = props;
   const {isOpen, onToggle, onClose, onOpen} = useDisclose();
+  const {isOpen:isUserNameSheetOpen, onToggle:onUserNameSheetToggle, onClose:onUserNameSheetOnClose, } = useDisclose();
   const [locationAllState, setLocationAllState] = useState({
     address: null,
     location: {},
@@ -33,10 +43,16 @@ export default function AddListing(props) {
   const categories = useSelector(state => state.user.categories);
   const [about, setAbout] = useState('');
   const [title, setTitle] = useState('');
+  const [purchaseUrl, setPurchaseUrl] = useState('');
   const [images, setImages] = useState([]);
   const [index, setIndex] = useState(0);
   const [category, setCategory] = useState('');
+  const [listingType,setListingType] = useState('')
   const [loaderVisibility, setLoaderVisibility] = useState(false);
+  const [loading,setLoading] = useState(false)
+  const [query,setQuery] = useState("")
+  const [users,setUsers] = useState([])
+  const [supplierTag,setSupplierTag] = useState(null)
   const {latitude, longitude} =
     useSelector(state => state.user.currentPosition) ?? {};
   const location = useSelector(state => state.user.currentLocation) ?? {};
@@ -52,6 +68,27 @@ export default function AddListing(props) {
       });
     }
   }, [location]);
+  const getUserNamesData = useCallback(async(txt) => {
+      setLoading(true)
+      const res = await searchIndex
+      .search(txt, {
+        filters: 'membershipActive:true',
+        // restrictSearchableAttributes: ['name']
+      })
+      setUsers(res.hits.filter(hit=>hit.uid!=auth().currentUser.uid))
+      setLoading(false)
+  }, [query]);
+
+  const debouncedGetUserNamesData = useMemo(() => debounce(getUserNamesData, 1000), [getUserNamesData]);
+  const callDebounceFuntion = (txt) => {
+    setQuery(txt)
+    if (txt.trim().length) {
+      debouncedGetUserNamesData(txt);
+    }
+    else{
+      setUsers([])
+    }
+  }
   const handleImage = index => {
     Keyboard.dismiss();
     setIndex(index);
@@ -63,6 +100,10 @@ export default function AddListing(props) {
     setImages([]);
     setIndex(0);
     setCategory('');
+    setQuery('')
+    setSupplierTag(null)
+    setListingType('')
+    setPurchaseUrl('')
     // setLocationAllState({
     //     address: null,
     //     location: {},
@@ -86,15 +127,20 @@ export default function AddListing(props) {
     //return
     if (!images[0]) {
       Util.showMessage('error', 'First image is compulsory');
-    } else if (!title.trim()) {
+    } else if (!title.trim().length) {
       Util.showMessage('error', 'Please provide a valid title');
     } else if (!category) {
       Util.showMessage('error', 'Please select a category');
-    } else if (!about.trim()) {
+    }else if (!listingType) {
+      Util.showMessage('error', 'Please select a listing type');
+    }else if (!about.trim().length) {
       Util.showMessage('error', 'Please provide a valid description');
     } else if (!locationAllState.address) {
       Util.showMessage('error', 'Please add a valid location');
-    } else {
+    } else if (!purchaseUrl.trim().length) {
+      Util.showMessage('error', 'Please add a valid purchase link.');
+    }
+    else {
       try {
         setLoaderVisibility(true);
         const uid = auth().currentUser.uid;
@@ -104,7 +150,19 @@ export default function AddListing(props) {
           locationAllState.location.longitude,
         ]);
         const ref = firestore().collection('Listing').doc();
-
+        const base64image = await RNFS.readFile(decodeURI(images[0].uri), 'base64');
+        const res = await functions()
+            .httpsCallable('compareIfListingAlreadyExists')({
+              imageUrl: base64image,
+              supplierId: uid,
+            })
+            const compareData = res.data
+            console.log("ress",compareData)
+            if(compareData.status == 1){
+              Util.showMessage("error","This listing already exists.")
+              setLoaderVisibility(false)
+              return
+            }
         Promise.all(
           images.map((image, ind) => {
             return Helper.uploadImage(
@@ -114,6 +172,7 @@ export default function AddListing(props) {
           }),
         )
           .then(async listingImages => {
+            
             let buo = await branch.createBranchUniversalObject(
               `item/${ref.id}`,
               {
@@ -126,31 +185,19 @@ export default function AddListing(props) {
                 },
               },
             );
-            //   let linkProperties = {
-            //     feature: 'sharing',
-            //     channel: 'facebook',
-            //     campaign: 'content 123 launch'
-            //   }
-
-            //   let controlParams = {
-            //     $desktop_url: 'https://example.com/home',
-            //     custom: 'data'
-            //   }
-            //   let shareOptions = {
-            //     messageHeader: 'Check this out',
-            //     messageBody: 'No really, check this out!'
-            //   }
             let {url} = await buo.generateShortUrl();
-            await ref.set({
+            const obj = {
               id: ref.id,
               listingImages,
               shareUrl:url,
               createTime: firebase.firestore.FieldValue.serverTimestamp(),
-              title,
+              title:title.trim(),
               supplierId: uid,
-              about,
+              about:about.trim(),
               category,
               geohash: hash,
+              purchaseUrl:purchaseUrl.trim(),
+              listingType,
               _geoloc: {
                 lat: locationAllState?.location?.latitude ?? '',
                 lng: locationAllState?.location?.longitude ?? '',
@@ -160,7 +207,11 @@ export default function AddListing(props) {
                 lat: locationAllState?.location?.latitude ?? '',
                 lng: locationAllState?.location?.longitude ?? '',
               },
-            });
+            }
+            if(supplierTag){
+              obj.supplierTag = supplierTag
+            }
+            await ref.set(obj);
             Util.showMessage(
               'success',
               'Success',
@@ -176,6 +227,7 @@ export default function AddListing(props) {
             setLoaderVisibility(false);
           });
       } catch (error) {
+        setLoaderVisibility(false)
         console.log(error);
       }
     }
@@ -184,12 +236,18 @@ export default function AddListing(props) {
   const handleClose = index => {
     setImages(images.filter((img, i) => index != i));
   };
+  const handleTag = (uid, name) => {
+    onUserNameSheetOnClose()
+    setQuery(name)
+    setUsers([]) 
+    setSupplierTag(uid)
+  }
   return (
     <KeyboardAwareScrollView
       style={styles.container}
       nestedScrollEnabled={false}
       bounces={false}
-      keyboardShouldPersistTaps={'always'}>
+      keyboardShouldPersistTaps={"always"}>
       <Header navigation={navigation} title="Add Listing" back />
       <View style={styles.mainView}>
         <TouchableOpacity
@@ -259,6 +317,7 @@ export default function AddListing(props) {
           //isPass
           placeholder={'Listing Name'}
           value={title}
+          autoCapitalize={"words"}
           onChangeText={txt => setTitle(txt)}
           //keyboardType={"number-pad"}
         />
@@ -292,7 +351,7 @@ export default function AddListing(props) {
             });
           }}
           query={{
-            key: 'AIzaSyA0s1sqV20wmXHfso3aF1Zl9b2Skw53SsY',
+            key: 'AIzaSyCFjK92eaOWd5f2Aj1U5enbOHuIZ3WKEew',
             language: 'en',
             //components: 'country:us',
           }}
@@ -310,7 +369,7 @@ export default function AddListing(props) {
           // borderColor={colors.borderColor}
           dropdownIcon={
             <Icon
-              //bgColor={'white'}
+              //bgColor={colors.whiteDark}
               name="chevron-down"
               as={MaterialCommunityIcons}
               size="md"
@@ -324,7 +383,64 @@ export default function AddListing(props) {
             return <Select.Item key={index} value={item} label={item} />;
           })}
         </Select>
-
+        <Text style={styles.title}>Select listing type</Text>
+        <Select
+          //_actionSheet={{useRNModal: true}}
+          accessibilityLabel="Select Type"
+          placeholder="Select"
+          //px={spacing.medium}
+          bgColor={colors.whiteDark}
+          py={Platform.OS == 'ios' ? 4 : 2}
+          borderRadius={spacing.large}
+          borderWidth={0}
+          // borderColor={colors.borderColor}
+          dropdownIcon={
+            <Icon
+              //bgColor={colors.whiteDark}
+              name="chevron-down"
+              as={MaterialCommunityIcons}
+              size="md"
+              marginRight={3}
+            />
+          }
+          selectedValue={listingType}
+          color={'black'}
+          onValueChange={itemValue => setListingType(itemValue)}>
+          {listingTypes.map((item, index) => {
+            return <Select.Item key={index} value={item} label={item} />;
+          })}
+        </Select>
+        <Pressable onPress={onUserNameSheetToggle}>
+         <View pointerEvents='none'>
+         <MyTextInput
+          endIconButton={"chevron-down"}
+          containerStyle={{marginTop: 20}}
+          nonEditable={true}
+          value={query}
+          placeholder={'Tag Supplier'}
+          onChangeText={txt => callDebounceFuntion(txt)}
+          />
+         </View>
+        </Pressable>
+       
+          {/* {
+              loading &&
+             <ActivityIndicator size={"small"}/>
+          }
+          {users.slice(0,5).map(item=>{
+            return(
+              <TouchableOpacity onPress={()=>handleTag(item.uid,item.name)} style={{marginVertical:5,marginLeft:10,padding:6,borderWidth:1,borderRadius:10,borderColor:colors.borderColor}}>
+                <Text>@ {item.name}</Text>
+              </TouchableOpacity>
+            )
+          })} */}
+        <MyTextInput
+         containerStyle={{marginTop: 20}}
+         placeholder={'Purchase Link'}
+         value={purchaseUrl}
+         onChangeText={txt => setPurchaseUrl(txt)}
+          keyboardType={"url"}
+        />
         {/* <Text style={styles.title}>Brief Description</Text> */}
         <MyTextInput
           numberOfLines={2}
@@ -336,6 +452,7 @@ export default function AddListing(props) {
           placeholder={'Listing Description'}
           value={about}
           onChangeText={txt => setAbout(txt)}
+          autoCapitalize={"words"}
           //keyboardType={"number-pad"}
         />
 
@@ -360,6 +477,15 @@ export default function AddListing(props) {
       <LoaderComponent
         visible={loaderVisibility}
         title={'Uploading pictures'}
+      />
+      <UserNameActionSheet 
+        isOpen={isUserNameSheetOpen} 
+        onClose={onUserNameSheetOnClose}
+        callDebounceFuntion={callDebounceFuntion}
+        query={query}
+        loading={loading}
+        users={users}
+        handleTag={handleTag}
       />
     </KeyboardAwareScrollView>
   );

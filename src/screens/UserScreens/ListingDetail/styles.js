@@ -46,7 +46,8 @@ const styles =  StyleSheet.create({
     supplier:{
         color:"#898B91",
         fontSize:fontSizes.extraExtraSmall,
-        fontFamily:fonts.regular
+        fontFamily:fonts.regular,
+        includeFontPadding:false
     },
     des:{
         color:"black",
@@ -69,6 +70,19 @@ const styles =  StyleSheet.create({
     btn:{
         position:"absolute",
         bottom:10
+    },
+    listingBadge:{
+        position:"absolute",
+        top:5,
+        left:5,
+        padding:5,
+        backgroundColor:"rgba(0,0,0,0.5)",
+        borderRadius:6
+    },
+    listingBadgeText:{
+        color:"white",
+        fontFamily:fonts.regular,
+        fontSize:fontSizes.extraExtraSmall
     }
 })
 export default styles

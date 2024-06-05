@@ -10,16 +10,14 @@ import Helper from '../../../common/Helper';
 import AccountMenuList from '../../../components/AccountMenuList';
 import Header from '../../../components/Header';
 import PhotoPicker from '../../../components/PhotoPicker';
+import UpdateVendorProfileDialog from '../../../components/UpdateVendorProfileDialog';
 import { setUserData } from '../../../store/userSlice';
 import colors from '../../../theme/colors';
 import styles from './styles';
-import { spacing } from '../../../common/variables';
-import UpdateNameDialog from '../../../components/UpdateNameDialog';
 
 const VendorProfile = props => {
   const {navigation, userData, state} = props;
   const {profilePic, name, uid} = userData;
-  const {favorites, orderCount} = useSelector(state => state.user);
   const [profileImage, setProfileImage] = useState(null);
   const [menuOpen,setMenuOpen] = useState(false)
   const dispatch = useDispatch();
@@ -82,7 +80,7 @@ const VendorProfile = props => {
         // rightIcon={"logout"}
         // onRightIconPress={logout}
       />
-      <HStack mx={5} mt={5} alignItems={"center"}>
+      <HStack mx={5}alignItems={"center"}>
         <VStack alignItems={"center"}>
           <TouchableOpacity
             onPress={handleProfile}
@@ -94,9 +92,7 @@ const VendorProfile = props => {
               style={styles.image}
             />
           </TouchableOpacity >
-          <TouchableOpacity  onPress={handleProfile}>
-            <Text style={styles.tap}>Tap to edit</Text>
-          </TouchableOpacity>
+          
         </VStack>
         <VStack ml={5}>
           <HStack alignItems={"center"} 
@@ -120,6 +116,9 @@ const VendorProfile = props => {
           </HStack>
         </VStack>
       </HStack>
+      <TouchableOpacity onPress={handleProfile} style={{marginLeft:30}}>
+        <Text style={styles.tap}>Tap to edit</Text>
+      </TouchableOpacity>
       {/* <HStack justifyContent={"space-evenly"} style={styles.orderView}>
                 <TouchableOpacity style={{flex:1}} onPress={()=>navigation.navigate("Orders")}>
                     <VStack justifyContent={"center"} flex={1}>
@@ -144,7 +143,7 @@ const VendorProfile = props => {
         setImage={setProfileImage}
         //isCover={mode == "image"}
       />
-      <UpdateNameDialog visible={menuOpen} setMenuOpen={setMenuOpen} title={"Business name"}/>
+      <UpdateVendorProfileDialog visible={menuOpen} setMenuOpen={setMenuOpen} title={"Business Details"}/>
     </ScrollView>
   );
 };

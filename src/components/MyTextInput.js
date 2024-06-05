@@ -13,7 +13,7 @@ import React, {useState} from 'react';
 import fonts from '../../assets/fonts';
 import PropTypes from 'prop-types';
 import {Text} from 'react-native';
-import {Icon} from 'native-base';
+import {Icon, IconButton} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {responsiveSize} from '../common/util';
 const MyTextInput = ({
@@ -31,6 +31,9 @@ const MyTextInput = ({
   placeholderTextColor,
   txtInputStyle,
   multiline,
+  endIconButton,
+  endIconButtonPress,
+  autoCapitalize
 }) => {
   const [secureText, setSecureText] = useState(true);
   return (
@@ -52,7 +55,7 @@ const MyTextInput = ({
           style={[styles.input, txtInputStyle]}
           secureTextEntry={isPass ? secureText : false}
           multiline={multiline}
-          autoCapitalize="none"
+          autoCapitalize={autoCapitalize?autoCapitalize:"none"}
           autoCorrect={false}
           placeholder={subPlace}
           editable={!nonEditable}
@@ -65,6 +68,21 @@ const MyTextInput = ({
           value={value}
           keyboardType={keyboardType ? keyboardType : 'default'}
         />
+        {
+          endIconButton && 
+          <IconButton
+            p={0}
+            mr={1}
+            onPress={endIconButtonPress}
+          >
+            <Icon
+            as={MaterialCommunityIcons}
+            name={endIconButton}
+            color={colors.grey}
+            size={'md'}
+          />
+          </IconButton>
+        }
         {iconName && (
           <Icon
             as={MaterialCommunityIcons}

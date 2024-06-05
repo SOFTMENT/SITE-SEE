@@ -2,13 +2,17 @@ import notifee from '@notifee/react-native';
 import messaging from '@react-native-firebase/messaging';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { StripeProvider } from '@stripe/stripe-react-native';
-import { extendTheme, NativeBaseProvider } from 'native-base';
+import { extendTheme, NativeBaseProvider, View } from 'native-base';
 import React, { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import AppRoot from './src';
 import { store } from './src/store';
 import fonts from './assets/fonts';
+import auth from '@react-native-firebase/auth'
+import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Platform } from 'react-native';
 GoogleSignin.configure({
   iosClientId: "236456769546-hbphvbuod79njv10uba6ocf62gc01gj2.apps.googleusercontent.com",
   webClientId:"236456769546-6kto9osph04hr0mjr3i2jf07h7rpjkjp.apps.googleusercontent.com"
@@ -22,29 +26,32 @@ GoogleSignin.configure({
 const App = () => {
   useEffect(() => {
     messaging().onMessage(onMessageReceived);
+    messaging().setBackgroundMessageHandler(onMessageReceived);
   }, [])
   async function onMessageReceived(message) {
-    console.log(message)
     await notifee.requestPermission()
     // Create a channel (required for Android)
     const channelId = await notifee.createChannel({
       id: 'default',
       name: 'Default Channel',
     });
-    console.log(message)
-    // Display a notification
-    await notifee.displayNotification({
-      title: message.notification?.title ?? "Hey",
-      body: message.notification?.body ?? "We Hope You like the App",
-      android: {
-        channelId,
-        //smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
-        // pressAction is needed if you want the notification to open the app when pressed
-        pressAction: {
-          id: 'default',
+    // console.log(message.data.uid+"====",auth().currentUser.uid)
+    if(auth().currentUser.uid && auth().currentUser.uid==message.data.uid){
+      // Display a notification
+      await notifee.displayNotification({
+        title: message.data?.title ?? "Hey",
+        body: message.data?.body ?? "We Hope You like the App",
+        android: {
+          channelId,
+          //smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
+          // pressAction is needed if you want the notification to open the app when pressed
+          pressAction: {
+            id: 'default',
+          },
         },
-      },
-    });
+      });
+    }
+    
   }
   const theme = extendTheme({
     fontConfig: {
@@ -93,6 +100,7 @@ const App = () => {
       mono: "ArialNarrow",
     },
   });
+  const insets = useSafeAreaInsets()
   return (
     <GestureHandlerRootView style={{flex:1}}>
     <StripeProvider
@@ -102,13 +110,15 @@ const App = () => {
     >
         
             <Provider store={store}>
-            
+            <AutocompleteDropdownContextProvider>
                 <NativeBaseProvider theme={theme}>
                 
+                <View style={{flex:1,paddingTop: Platform.OS == "ios"?insets.top:insets.top+15}}>
                 <AppRoot />
+                </View>
                
                 </NativeBaseProvider>
-                
+                </AutocompleteDropdownContextProvider> 
             </Provider>
             
     </StripeProvider >

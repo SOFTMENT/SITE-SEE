@@ -78,7 +78,7 @@ export default function VendorHome(props) {
   const getAddressFromCoordinates = async (latitude, longitude) => {
     try {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyA0s1sqV20wmXHfso3aF1Zl9b2Skw53SsY`,
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyCFjK92eaOWd5f2Aj1U5enbOHuIZ3WKEew`,
       );
       const json = await response.json();
       dispatch(setCurrentLocation(json.results[0]?.formatted_address));
@@ -90,10 +90,6 @@ export default function VendorHome(props) {
     <View
       style={[
         styles.container,
-        {
-          paddingTop:
-            Platform.OS == 'ios' ? inset.top : inset.top + spacing.small,
-        },
       ]}>
       <View style={styles.topView}>
         <View>

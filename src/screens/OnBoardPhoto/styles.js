@@ -27,13 +27,13 @@ const styles = StyleSheet.create({
         color: "white",
     },
     mainView:{
-        padding: spacing.extraExtraLarge,
+        padding: spacing.extraLarge,
         paddingTop:0,
         flex:1,
     },
     topView:{
         //backgroundColor:"#202020",
-        width:Util.getWidth(50),
+        width:Util.getWidth(30),
         aspectRatio:1,
         alignSelf:"center",
         justifyContent:"center",
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         borderColor:'rgba(239, 51, 65, 0.03)'
      },
      insideView:{
-         width:Util.getWidth(40),
+         width:Util.getWidth(25),
          aspectRatio:1,
          alignSelf:"center",
          justifyContent:"center",
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
          borderRadius: 200 
      },
      image:{ 
-         width:Util.getWidth(30), 
+         width:Util.getWidth(25), 
          aspectRatio:1,
          borderRadius: 200 
      },
@@ -68,17 +68,17 @@ const styles = StyleSheet.create({
         marginBottom:spacing.extraSmall,
     },
     upload:{
-        color:colors.white,
+        color:colors.black,
         fontFamily:fonts.semiBold,
         fontSize:fontSizes.extraSmall,
-        textAlign:"center"
+        // textAlign:"center"
     },
     uploadSub:{
         color:colors.appDefaultColor,
         fontFamily:fonts.semiBold,
         fontSize:responsiveSize(10.5),
-        textAlign:"center",
-        marginTop:5
+        // textAlign:"center",
+        marginTop:6
     }
 })
 export default styles

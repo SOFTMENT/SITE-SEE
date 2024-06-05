@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         color:colors.appDefaultColor,
         fontFamily:fonts.medium,
         fontSize:fontSizes.extraSmall,
-        marginHorizontal:spacing.medium
+        marginHorizontal:spacing.mediumLarge
     }
 })
 export default styles

@@ -60,3 +60,7 @@ export const userBookingFilter =
       id: 2
     }
   ]
+  export const listingTypes = [
+    "Permanent",
+    "Temporary"
+  ]
