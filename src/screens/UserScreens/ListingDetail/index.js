@@ -139,7 +139,7 @@ export default function ListingDetail(props) {
           //let {channel, completed, error} = await buo.showShareSheet(shareOptions, linkProperties, controlParams)
     }
     const handlePurchase = ()=> {
-        linkingUtil.openBrowser(item?.purchaseUrl)
+        linkingUtil.openBrowser('www.softment.com')
     }
     return (
         <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>
@@ -235,12 +235,15 @@ export default function ListingDetail(props) {
                     containerStyle={{marginTop:20,borderRadius:spacing.small,backgroundColor:"black"}}
                     onPress={handleChat}
                 />
-                <MyButton
-                    title={"Purchase Now"}
-                    txtStyle={{color:"white"}}
-                    containerStyle={{marginTop:10,borderRadius:spacing.small}}
-                    onPress={handlePurchase}
-                />
+                {
+                    item.purchaseUrl && 
+                    <MyButton
+                        title={"Purchase Now"}
+                        txtStyle={{color:"white"}}
+                        containerStyle={{marginTop:10,borderRadius:spacing.small}}
+                        onPress={handlePurchase}
+                    />
+                }
             </View>
             
         </ScrollView>

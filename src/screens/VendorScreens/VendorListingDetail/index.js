@@ -1,21 +1,17 @@
 import auth from '@react-native-firebase/auth'
 import firestore, { firebase } from '@react-native-firebase/firestore'
 import axios from 'axios'
-import { Center, HStack, Icon, Link, ScrollView } from 'native-base'
+import { HStack, ScrollView } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Share from 'react-native-share'
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import { useDispatch, useSelector } from 'react-redux'
-import fonts from '../../../../assets/fonts'
 import images from '../../../assets/images'
 import Helper from '../../../common/Helper'
 import { spacing } from '../../../common/variables'
 import Header from '../../../components/Header'
-import MyButton from '../../../components/MyButton'
 import { setFavorites } from '../../../store/userSlice'
-import colors from '../../../theme/colors'
 import styles from './styles'
 export default function VendorListingDetail(props) {
     const { route , navigation} = props
@@ -51,7 +47,7 @@ export default function VendorListingDetail(props) {
             to:fcmToken,
                 notification:{
                     title:"Hey",
-                    body:`Someone just viewed your one of the listing(${item.title}).`
+                    body:`Someone just viewed one of your listings (${item.title}).`
                 }
         }
        })

@@ -137,14 +137,11 @@ export default function AddListing(props) {
       Util.showMessage('error', 'Please provide a valid description');
     } else if (!locationAllState.address) {
       Util.showMessage('error', 'Please add a valid location');
-    } else if (!purchaseUrl.trim().length) {
-      Util.showMessage('error', 'Please add a valid purchase link.');
-    }
+    } 
     else {
       try {
         setLoaderVisibility(true);
         const uid = auth().currentUser.uid;
-        let spaceImages = [];
         const hash = geohashForLocation([
           locationAllState.location.latitude,
           locationAllState.location.longitude,
@@ -154,10 +151,9 @@ export default function AddListing(props) {
         const res = await functions()
             .httpsCallable('compareIfListingAlreadyExists')({
               imageUrl: base64image,
-              supplierId: uid,
+              supplierId: "m05jCmoUiDTFLyD2I2dNupw7S5c2",
             })
             const compareData = res.data
-            console.log("ress",compareData)
             if(compareData.status == 1){
               Util.showMessage("error","This listing already exists.")
               setLoaderVisibility(false)
@@ -196,7 +192,6 @@ export default function AddListing(props) {
               about:about.trim(),
               category,
               geohash: hash,
-              purchaseUrl:purchaseUrl.trim(),
               listingType,
               _geoloc: {
                 lat: locationAllState?.location?.latitude ?? '',
@@ -210,6 +205,9 @@ export default function AddListing(props) {
             }
             if(supplierTag){
               obj.supplierTag = supplierTag
+            }
+            if(purchaseUrl.trim().length){
+              obj.purchaseUrl = purchaseUrl.trim()
             }
             await ref.set(obj);
             Util.showMessage(
@@ -248,7 +246,7 @@ export default function AddListing(props) {
       nestedScrollEnabled={false}
       bounces={false}
       keyboardShouldPersistTaps={"always"}>
-      <Header navigation={navigation} title="Add Listing" back />
+      <Header navigation={navigation} title="Add Listing" />
       <View style={styles.mainView}>
         <TouchableOpacity
           style={styles.thumbnailView}

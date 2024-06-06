@@ -27,7 +27,7 @@ const styles =  StyleSheet.create({
         fontSize:fontSizes.extraSmall,
     },
     pageTitle:{
-        color:colors.white,
+        color:colors.black,
         fontFamily:fonts.medium,
         fontSize:fontSizes.small,
         marginLeft:spacing.large,

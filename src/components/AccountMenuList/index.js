@@ -1,30 +1,26 @@
-import firestore, { firebase } from '@react-native-firebase/firestore'
-import axios from "axios"
-import React, { useState } from "react"
-import { Alert, Image, Linking, Text, TouchableOpacity, View } from "react-native"
-import images from "../../assets/images"
-import linkingUtil from "../../common/linkingUtil"
-import { ACCOUNT_LINK, CREATE_ACCOUNT, PAYMENT_TRANSFER, SOFTMENT } from "../../config/Networksettings"
-import AppConstant from "../../config/Constants"
-import styles from "./styles"
-import Util from '../../common/util'
-import { Icon } from 'native-base'
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useDispatch, useSelector } from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
+import { Icon } from 'native-base'
+import React, { useState } from "react"
+import { Alert, Linking, Platform, Text, TouchableOpacity, View } from "react-native"
+import Share from 'react-native-share'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+import { useSelector } from 'react-redux'
+import linkingUtil from "../../common/linkingUtil"
+import Util from '../../common/util'
+import { SOFTMENT } from "../../config/Networksettings"
+import { navigateAndReset } from '../../navigators/RootNavigation'
 import LoaderComponent from '../LoaderComponent'
 import PopupMessage from '../PopupMessage'
-import { setUserData } from '../../store/userSlice'
-import colors from '../../theme/colors'
-import { GoogleSignin } from '@react-native-google-signin/google-signin'
-import { navigateAndReset } from '../../navigators/RootNavigation'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import styles from "./styles"
 export default AccountMenuList = (props) => {
     const { navigation, isUser } = props
     const [loaderVisibility, setLoaderVisibility] = useState(false)
     const [successPopup, setSuccessPopup] = useState(false)
-    const { accountStatus, accountId, balance,userType } = useSelector(state => state.user.userData)
+    // const { accountStatus, accountId, balance,userType } = useSelector(state => state.user.userData)
     const uid = auth().currentUser.uid
     const deleteAccount = async() => {
         Alert.alert(
@@ -43,22 +39,21 @@ export default AccountMenuList = (props) => {
                         try {
                             const uid = auth().currentUser.uid
                            //  await auth().currentUser.delete()
-                           await AsyncStorage.removeItem("userType")
-                            await firestore()
-                            .collection("Users")
-                            .doc(uid)
-                            .update({
-                               isDeleted:true,
-                               status:"deleted"
-                            })
-                            if (auth().currentUser.providerData[0].providerId == "google.com") {
-                                //await GoogleSignin.revokeAccess();
-                                await GoogleSignin.signOut();
-                            }
-                            await auth()
-                                .signOut()
-                            Util.showMessage("success","Account Deleted")
-                            navigateAndReset("OnboardingScreen")
+                            const val = await AsyncStorage.removeItem("userType")
+                            console.log(val)
+                            // await firestore()
+                            // .collection("Users")
+                            // .doc(uid)
+                            // .delete()
+                            // await auth().currentUser.delete()
+                            // // if (auth().currentUser.providerData[0].providerId == "google.com") {
+                            // //     //await GoogleSignin.revokeAccess();
+                            // //     await GoogleSignin.signOut();
+                            // // }
+                            // // await auth()
+                            // //     .signOut()
+                            // Util.showMessage("success","Account Deleted")
+                            // navigateAndReset("OnboardingScreen")
                            } catch (error) {
                                 Util.showMessage("error","Error",error.message)
                            }
@@ -109,6 +104,22 @@ export default AccountMenuList = (props) => {
             Linking.openURL(
                 `itms-apps://itunes.apple.com/us/app/apple-store/6448141803?mt=8`
             ).catch(err => alert('Please check for the App Store'));
+        }
+    }
+    const shareApp = () => {
+        if (Platform.OS != 'ios') {
+            //To open the Google Play Store
+            Share.open({
+                title:"SiteSii",
+                message:"Download SiteSii to explore diverse listings from suppliers, perform image searches, and effortlessly connect for purchases. With SiteSii, finding and buying products is simple, secure, and convenient.",
+                url:"https://play.google.com/store/apps/details?id=in.softment.sitesee"
+            })
+        } else {
+            Share.open({
+                title:"SiteSii",
+                message:"Download SiteSii to explore diverse listings from suppliers, perform image searches, and effortlessly connect for purchases. With SiteSii, finding and buying products is simple, secure, and convenient.",
+                url:"https://apps.apple.com/us/app/sitesii/id6468927601"
+            })
         }
     }
     const handleSuccess = () => {
@@ -224,7 +235,7 @@ export default AccountMenuList = (props) => {
                 {
                     label: "Share App",
                     icon: "share-circle",
-                    onClick: rateUs,
+                    onClick: shareApp,
                     asMaterial:true
                 },
                

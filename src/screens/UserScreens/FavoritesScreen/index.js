@@ -28,7 +28,6 @@ export default function FavoritesScreen(props) {
   const getFavoritesData = async () => {
     try {
       setLoading(true);
-      console.log(favorites.entries())
       const favouritesData = [];
       for (const [index, obj] of favorites.entries()) {
         const docSnap = await firestore()
@@ -89,7 +88,7 @@ export default function FavoritesScreen(props) {
         <NoResults />
       ) : (
         <FlatList
-          style={{paddingHorizontal: spacing.medium, flex: 1}}
+          style={{paddingHorizontal: spacing.medium, flex: 1,marginBottom:10}}
           data={filteredData}
           numColumns={2}
           renderItem={renderCard}

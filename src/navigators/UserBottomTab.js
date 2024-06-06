@@ -45,6 +45,7 @@ const MyFavoriteStack = () => {
         >
             <FavoriteStack.Screen name='Favorite' component={FavoritesScreen}/>
             <FavoriteStack.Screen name='ListingDetail' component={ListingDetail}/>
+            <FavoriteStack.Screen name='PersonalChat' component={Chat}/>
         </FavoriteStack.Navigator>
     )
 }

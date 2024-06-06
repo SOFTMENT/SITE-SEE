@@ -50,7 +50,9 @@ function hashFeatures(features) {
   return hash.digest('hex');
 }
 
-exports.compareIfListingAlreadyExists = functions.https.onCall(async (data, context) => {
+exports.compareIfListingAlreadyExists = functions
+.runWith({ memory: '8GB' })
+.https.onCall(async (data, context) => {
   try {
     if (!model) {
       await loadModel();
@@ -80,8 +82,9 @@ exports.compareIfListingAlreadyExists = functions.https.onCall(async (data, cont
         const features2 = model.predict(processedImage2);
 
         const sim = cosineSimilarity(features1, features2).dataSync()[0];
-
-        if (sim >= 0.2) {
+        console.log(sim+" ",listingImageURL)
+        if (sim >= 0.3) {
+          console.log(listingImageURL)
           return {status:1}; // Images are similar, return 1
         }
       } catch (error) {
@@ -99,7 +102,9 @@ exports.compareIfListingAlreadyExists = functions.https.onCall(async (data, cont
   }
 });
 
-exports.compareImagePhashes = functions.https.onCall(async (data, context) => {
+exports.compareImagePhashes = functions
+.runWith({ memory: '8GB' })
+.https.onCall(async (data, context) => {
   try {
     if (!model) {
       await loadModel();

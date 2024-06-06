@@ -188,7 +188,6 @@ export default function EditListing(props) {
       filters: 'membershipActive:true',
       // restrictSearchableAttributes: ['name']
     })
-    console.log(txt,"  ",res.hits)
     setUsers(res.hits.filter(hit=>hit.uid!=auth().currentUser.uid))
     setLoading(false)
 }, [query]);

@@ -41,7 +41,6 @@ export default function UserHome(props) {
   const {latitude, longitude} =
     useSelector(state => state.user.currentPosition) ?? {};
   const location = useSelector(state => state.user.currentLocation) ?? {};
-  console.log('vaibajv', location);
   useEffect(() => {
     subscribeBranchIO();
     getFavorites();

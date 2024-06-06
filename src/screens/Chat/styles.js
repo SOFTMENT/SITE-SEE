@@ -16,16 +16,16 @@ const styles = StyleSheet.create({
         alignSelf:"flex-end",
         width:200,
         aspectRatio:16/9,
-        borderWidth:2,
-        borderColor:colors.black,
+        // borderWidth:2,
+        // borderColor:colors.black,
         borderRadius:spacing.small,
+        marginTop:5
     },
     leftImage:{
         alignSelf:"flex-start",
         width:200,
         aspectRatio:16/9,
-        borderWidth:2,
-        borderColor:colors.black,
+        marginTop:5,
         borderRadius:spacing.small
     },
     inputBox:{

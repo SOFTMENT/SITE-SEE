@@ -22,6 +22,7 @@ export default function VendorHome(props) {
   const inset = useSafeAreaInsets();
   const dispatch = useDispatch();
   const [locationModal, setLocationModal] = useState(false);
+  const location = useSelector(state => state.user.currentLocation) ?? "";
   useEffect(() => {
     getCategories()
     callLocationPermission()
@@ -121,77 +122,12 @@ export default function VendorHome(props) {
         }}>
         Use Current Location
       </Link>
+      <Text style={styles.location}>{location}</Text>
       <View style={styles.borderViewContainer}>
         <View style={styles.borderView}></View>
         <Text style={styles.or}> OR </Text>
         <View style={styles.borderView}></View>
       </View>
-      {/* <View style={styles.searchContainer}>
-        <Icon
-          as={MaterialCommunityIcons}
-          size="lg"
-          name="map-marker-radius"
-          color={'black'}
-          alignSelf={"center"}
-        />
-        <GooglePlacesAutocomplete
-          keyboardShouldPersistTaps={'always'}
-          textInputProps={{
-            //   onChangeText: (txt) => setAddress(txt),
-            //   value: address,
-            placeholderTextColor: 'gray',
-            //value:address
-          }}
-          fetchDetails={true}
-          styles={{
-            textInput: {
-              padding: 0,
-              backgroundColor: "transparent",
-              alignItems:'center',
-            },
-            container: {
-              padding: 0,
-              alignItems:'center',
-              backgroundColor: "transparent",
-            },
-            textInputContainer: {
-              padding: 0,
-              alignItems:'center',
-              backgroundColor: "transparent",
-            },
-          }}
-          placeholder={'Search address'}
-          onPress={(data, details = null) => {
-            dispatch(
-              setCurrentPosition({
-                latitude: details.geometry.location.lat,
-                longitude: details.geometry.location.lng,
-              }),
-            );
-            dispatch(setCurrentLocation(data.description));
-            navigation.navigate("MyListingScreen")
-            //console.log(data.description)
-            //   setAddress(data.description);
-            //   setLoc({
-            //     latitude: details.geometry.location.lat,
-            //     longitude: details.geometry.location.lng,
-            //   });
-            //   const location = {
-            //     latitude: details.geometry.location.lat,
-            //     longitude: details.geometry.location.lng,
-            //     latitudeDelta: 0.01,
-            //     longitudeDelta: 0.01,
-            //   };
-            //   setLocaLocation(location);
-            //   mapRef.current.animateToRegion(location, 2000);
-          }}
-          query={{
-            key: 'AIzaSyA0s1sqV20wmXHfso3aF1Zl9b2Skw53SsY',
-            language: 'en',
-            //components: 'country:us',
-          }}
-        />
-      </View> */}
        <Pressable
           style={[styles.searchBox, {marginRight: 10}]}
           onPress={() => navigation.navigate('LocationSelectorScreen',{isVendor:true})}>

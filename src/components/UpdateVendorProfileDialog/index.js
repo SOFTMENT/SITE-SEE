@@ -1,4 +1,4 @@
-import { AlertDialog, Button, Input, useToast } from "native-base";
+import { AlertDialog, Button, Input, Text, Toast, useToast } from "native-base";
 import React, { useEffect, useState } from "react";
 import Util from "../../common/util";
 import firestore from '@react-native-firebase/firestore'
@@ -6,11 +6,13 @@ import auth from '@react-native-firebase/auth'
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../store/userSlice";
 import { Keyboard } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 const UpdateVendorProfileDialog = ({visible,setMenuOpen,title}) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const {businessName,webUrl:webUrll} = useSelector(state => state.user.userData)??{};
+  const {businessName,webUrl:webUrll,websiteName:webName} = useSelector(state => state.user.userData)??{};
   const [value,setValue] = useState(businessName??"")
   const [webUrl,setWebUrl] = useState(webUrll??'')
+  const [websiteName,setWebsiteName] = useState(webName??'')
   const dispatch = useDispatch()
   const [loading,setLoading] = useState(false)
   const toast = useToast();
@@ -42,12 +44,27 @@ const UpdateVendorProfileDialog = ({visible,setMenuOpen,title}) => {
   };
   const handleSubmit = async() => {
     if(!value.trim().length){
-      Util.showMessage("error","Please add a Business name.")
+      Toast.show({
+        description:"Please add a Business name.",
+        style:{marginBottom:30}
+      })
       return
     }
-    else if(!webUrl.trim().length){
-      Util.showMessage("error","Please add a website url.")
+    if (websiteName.trim().length && !webUrl.trim().length) {
+      Keyboard.dismiss()
+      Toast.show({
+          description:"Please provide Website Name with Website Url",
+          style:{marginBottom:30}
+      })
       return
+    }
+    if (!websiteName.trim().length && webUrl.trim().length) {
+        Keyboard.dismiss()
+        Toast.show({
+            description:"Please provide Website Name with Website Url",
+            style:{marginBottom:30}
+        })
+        return
     }
     setLoading(true)
     const res = await checkForDuplicateUsername()
@@ -63,12 +80,28 @@ const UpdateVendorProfileDialog = ({visible,setMenuOpen,title}) => {
       })
     }
     else{
+      const obj = {
+        name:value.trim(),
+        webUrl:webUrl.trim(),
+        websiteName:websiteName.trim()
+      }
+      if(webUrl.trim().length){
+        obj.webUrl = webUrl.trim()
+      }
+      if(websiteName.trim().length){
+          obj.websiteName = websiteName.trim()
+      }
       await firestore()
       .collection("Users")
       .doc(auth().currentUser.uid)
-      .update({
-        name:value.trim(),
-        webUrl:webUrl.trim()
+      .update(obj)
+      toast.show({
+        avoidKeyboard:true,
+        description:"Profile updated!",
+        style:{
+          marginBottom:30,
+        },
+        duration:3000
       })
       getUserData()
       onClose()
@@ -97,20 +130,31 @@ const UpdateVendorProfileDialog = ({visible,setMenuOpen,title}) => {
         <AlertDialog.Content>
           <AlertDialog.CloseButton />
           <AlertDialog.Header>{`Update ${title}`}</AlertDialog.Header>
+          <KeyboardAwareScrollView>
+
           <AlertDialog.Body>
+            <Text>Business Name</Text>
             <Input
                 placeholder={"Business Name"}
                 value={value}
                 onChangeText={(txt)=>setValue(txt)}
             />
+            <Text mt={2}>Website Name</Text>
+            <Input
+                placeholder={"Website Name"}
+                value={websiteName}
+                onChangeText={(txt)=>setWebsiteName(txt)}
+            />
+            <Text mt={2}>Website Url</Text>
             <Input
                 placeholder={"Website Url"}
                 value={webUrl}
                 onChangeText={(txt)=>setWebUrl(txt)}
-                mt={2}
+                
                 keyboardType="url"
             />
           </AlertDialog.Body>
+          </KeyboardAwareScrollView>
           <AlertDialog.Footer>
             <Button.Group space={2}>
               <Button variant="unstyled" colorScheme="coolGray" onPress={onClose} ref={cancelRef}>
@@ -122,7 +166,8 @@ const UpdateVendorProfileDialog = ({visible,setMenuOpen,title}) => {
             </Button.Group>
           </AlertDialog.Footer>
         </AlertDialog.Content>
-      </AlertDialog>)
+      </AlertDialog>
+    )
 };
 export default UpdateVendorProfileDialog
     

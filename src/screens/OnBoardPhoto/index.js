@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
-import { HStack, KeyboardAvoidingView, useDisclose, VStack } from "native-base"
+import { HStack, KeyboardAvoidingView, Toast, useDisclose, VStack } from "native-base"
 import React, { useEffect, useState } from "react"
 import { Keyboard, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 import FastImage from "react-native-fast-image"
@@ -21,6 +21,7 @@ const OnBoardPhoto = (props) => {
     const [profilePic, setProfilePic] = useState(null)
     const [loading, setLoading] = useState(null)
     const [userType,setUserType] = useState("User")
+    const [websiteName,setWebsiteName] = useState("")
     const [webUrl,setWebUrl] = useState("")
     useEffect(()=>{
         AsyncStorage.getItem('userType')
@@ -43,12 +44,20 @@ const OnBoardPhoto = (props) => {
     // },[profilePic])
     const handleNavigation = async() => {
         const uid = auth().currentUser.uid
-        // if (profilePic == null) {
-        //     Util.showMessage("error", "Please select a profile pic", "")
-        // }
-        // else{
-            // Util.showMessage("error", "Something went wrong!", "The server encountered an error and could not complete your request.")
-            // return
+        if (websiteName.trim().length && !webUrl.trim().length) {
+            Keyboard.dismiss()
+            Toast.show({
+                description:"Please provide Website Name with Website Url"
+            })
+            return
+        }
+        if (!websiteName.trim().length && webUrl.trim().length) {
+            Keyboard.dismiss()
+            Toast.show({
+                description:"Please provide Website Name with Website Url"
+            })
+            return
+        }
             try {
                 setLoading(true)
                 const obj = {
@@ -60,6 +69,9 @@ const OnBoardPhoto = (props) => {
                 }
                 if(webUrl.trim().length){
                     obj.webUrl = webUrl.trim()
+                }
+                if(websiteName.trim().length){
+                    obj.websiteName = websiteName.trim()
                 }
                 firestore()
                 .collection("Users")
@@ -147,6 +159,15 @@ const OnBoardPhoto = (props) => {
                         />
                     </VStack>
                 </HStack>
+                {
+                    userType == "Supplier" &&
+                    <MyTextInput
+                        containerStyle={{marginTop:15}}
+                        placeholder={"Enter Your Website Name"}
+                        value={websiteName}
+                        onChangeText={(txt)=>setWebsiteName(txt)}
+                    />
+                }
                 {
                     userType == "Supplier" &&
                     <MyTextInput

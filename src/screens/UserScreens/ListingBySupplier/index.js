@@ -15,6 +15,7 @@ import { setFavorites } from '../../../store/userSlice';
 import colors from '../../../theme/colors';
 import styles from './styles';
 import CenteredLoader from '../../../components/CenteredLoader';
+import linkingUtil from '../../../common/linkingUtil';
 
 export default function ListingBySupplier(props) {
   const {route, navigation} = props;
@@ -140,7 +141,7 @@ export default function ListingBySupplier(props) {
     return item.id;
   };
   const openWebUrl = () => {
-
+    linkingUtil.openBrowser(supplierData.webUrl)
   }
   return (
     <View
@@ -162,13 +163,16 @@ export default function ListingBySupplier(props) {
             {' '}
             Joined {format(supplierData?.createdAt.toDate(), 'Lo MMMM')}
           </Text> */}
-           <Link
-            href={supplierData.webUrl}
-            isUnderlined={true}
-             _text={{color:"blue.500"}}
-            >
-            {supplierData.webUrl}
-          </Link>
+           {
+              supplierData?.webUrl && supplierData?.websiteName &&
+              <Link
+                onPress={openWebUrl}
+                isUnderlined={true}
+                _text={{color:"blue.500"}}
+                >
+                {supplierData.websiteName}
+              </Link>
+           }
         </VStack>
       )}
       <HStack

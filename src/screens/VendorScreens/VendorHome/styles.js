@@ -122,5 +122,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  location:{
+    textAlign:'center',
+    marginTop:5
+  }
 });
 export default styles;

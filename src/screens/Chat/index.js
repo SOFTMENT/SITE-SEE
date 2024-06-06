@@ -27,6 +27,9 @@ import AvatarHeader from '../../components/AvatarHeader';
 import PhotoPicker from '../../components/PhotoPicker';
 import styles from './styles';
 import colors from '../../theme/colors';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { spacing } from '../../common/variables';
+import LoaderComponent from '../../components/LoaderComponent';
 const Chat = props => {
   const {userData, navigation, route} = props;
   const {params} = route;
@@ -35,6 +38,7 @@ const Chat = props => {
   const [chats, setChats] = useState([]);
   const uid = auth().currentUser.uid;
   const {isOpen, onToggle, onClose, onOpen} = useDisclose();
+  const [loader,setLoader] = useState(false)
   const handleImage = index => {
     onToggle();
   };
@@ -75,7 +79,7 @@ const Chat = props => {
     });
   };
   const navigateToListing = (item) => {
-    console.log(item)
+    //console.log(item)
     try {
       firestore()
       .collection("Listing")
@@ -195,6 +199,7 @@ const Chat = props => {
   };
   const sendImage = async (img,isUri) => {
     try {
+      setLoader(true)
       let docId = firestore().collection('Chats').doc().id;
       const imgUri = isUri ? img:await Helper.uploadImage(
         `ChatImage/${uid}/${docId.png}`,
@@ -210,23 +215,7 @@ const Chat = props => {
       };
       setMessage(docId, uid, lastMessage.senderUid, messageObj);
       setMessage(docId, lastMessage.senderUid, uid, messageObj);
-      // setMessage(lastMessage.senderUid, uid, "LastMessage", {
-      //     message: chatText.trim(),
-      //     senderUid: lastMessage.senderUid,
-      //     isRead: true,
-      //     //senderImage:lastMessage.senderImage,
-      //     //senderName: lastMessage.senderName,
-      //     date: firebase.firestore.FieldValue.serverTimestamp(),
-      // })
-      // setMessage(uid, lastMessage.senderUid, "LastMessage", {
-      //     message: chatText.trim(),
-      //     senderUid: uid,
-      //     isRead: false,
-      //     //senderImage:profilePic,
-      //     //senderName: name,
-      //     date: firebase.firestore.FieldValue.serverTimestamp(),
-      // })
-      //setChatText("")
+     setLoader(false)
     } catch (error) {
       console.log(error);
     }
@@ -309,8 +298,11 @@ const Chat = props => {
   //console.log(lastMessage)
   const RenderHeader = () => {
     const [chatText, setChatText] = useState('');
+    const insets = useSafeAreaInsets()
     return (
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''}>
+      <KeyboardAvoidingView 
+        keyboardVerticalOffset={insets.top}
+        behavior={Platform.OS === 'ios' ? 'padding' : ''}>
         <HStack style={styles.inputBox} alignItems={'center'}>
           <TextInput
             style={{flex: 1, color: 'black',maxHeight:100}}
@@ -389,6 +381,7 @@ const Chat = props => {
         setImage={selectImage}
         isCover={true}
       />
+      <LoaderComponent title={"Sending..."} visible={loader}/>
     </View>
   );
 };
