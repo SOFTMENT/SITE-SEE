@@ -113,7 +113,7 @@ const App = () => {
             <AutocompleteDropdownContextProvider>
                 <NativeBaseProvider theme={theme}>
                 
-                <View style={{flex:1,paddingTop: Platform.OS == "ios"?insets.top:insets.top+15}}>
+                <View style={{flex:1,paddingTop: Platform.OS == "ios"?insets.top:insets.top}}>
                 <AppRoot />
                 </View>
                

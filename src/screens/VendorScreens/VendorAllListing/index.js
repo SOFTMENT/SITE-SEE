@@ -33,7 +33,6 @@ const VendorAllListing = props => {
     .where('supplierId', '==', auth().currentUser.uid)
     .orderBy('createTime',"desc")
     .onSnapshot(querySnapshot => {
-      console.log(querySnapshot)
         const newArray = querySnapshot.docs.map(doc => ({...doc.data()}))
         setListings(newArray);
         if (newArray.length == 0) setNoData(true);

@@ -19,6 +19,7 @@ import EditListing from '../screens/VendorScreens/EditListing';
 import NotificationScreen from '../screens/NotificationScreen';
 import VendorAllListing from '../screens/VendorScreens/VendorAllListing';
 import VendorListingDetail from '../screens/VendorScreens/VendorListingDetail';
+import AddQuestionsSupplier from '../screens/VendorScreens/AddQuestionsSupplier';
 const Tab = createBottomTabNavigator();
 const VendorSpacesStack = createNativeStackNavigator();
 const InboxStack = createNativeStackNavigator();
@@ -43,6 +44,10 @@ const MyVendorProfileStack = () => {
       <VendorProfileStack.Screen
         name="VendorAccountDetail"
         component={AccountDetailsScreen}
+      />
+      <VendorProfileStack.Screen
+        name="AddQuestionsSupplier"
+        component={AddQuestionsSupplier}
       />
     </VendorProfileStack.Navigator>
   );

@@ -68,7 +68,7 @@ export default function ListingDetail(props) {
             to:fcmToken,
                 data:{
                     title:"Hey",
-                    body:`Someone just viewed your one of the listing(${item.title}).`,
+                    body:`Someone just viewed one of your listings (${item.title}).`,
                     uid:userId
                 },
                 content_available:true,
@@ -139,7 +139,7 @@ export default function ListingDetail(props) {
           //let {channel, completed, error} = await buo.showShareSheet(shareOptions, linkProperties, controlParams)
     }
     const handlePurchase = ()=> {
-        linkingUtil.openBrowser('www.softment.com')
+        linkingUtil.openBrowser(item.purchaseUrl)
     }
     return (
         <ScrollView style={styles.container} bounces={false} showsVerticalScrollIndicator={false}>

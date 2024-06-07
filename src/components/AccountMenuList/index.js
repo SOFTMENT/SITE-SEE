@@ -3,7 +3,7 @@ import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { Icon } from 'native-base'
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Alert, Linking, Platform, Text, TouchableOpacity, View } from "react-native"
 import Share from 'react-native-share'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -20,8 +20,16 @@ export default AccountMenuList = (props) => {
     const { navigation, isUser } = props
     const [loaderVisibility, setLoaderVisibility] = useState(false)
     const [successPopup, setSuccessPopup] = useState(false)
-    // const { accountStatus, accountId, balance,userType } = useSelector(state => state.user.userData)
+    const { membershipActive } = useSelector(state => state.user.userData)
     const uid = auth().currentUser.uid
+    const [userType,setUserType] = useState("User")
+    useEffect(()=>{
+        AsyncStorage.getItem("userType")
+        .then(val=>{
+            if(val!=null)
+            setUserType(val)
+        })
+    },[])
     const deleteAccount = async() => {
         Alert.alert(
             "Delete Account",
@@ -127,49 +135,64 @@ export default AccountMenuList = (props) => {
     }
     
    
-    const driverMenu = [
-        
-        // {
-        //     id: "about",
-        //     label: "About Us",
-        //     subMenu: [
-        //         // {
-        //         //     label:"Privacy Policy",
-        //         //     icon:images.privacyPolicy
-        //         // },
-        //         // {
-        //         //     label: "Terms & Conditions",
-        //         //     icon: "file-document-outline",
-        //         //     onClick: () => {
-        //         //         linkingUtil.openBrowser("https://www.softment.in/about-us/")
-        //         //     }
-        //         // },
-        //         // {
-        //         //     label: "App Developer",
-        //         //     icon: "code-tags",
-        //         //     onClick: () => {
-        //         //         linkingUtil.openBrowser(SOFTMENT)
-        //         //     }
-        //         // }
-        //     ]
-        // },
+    const supplierMenu = [
         {
-            id: "other",
-            label: "Legal Agreements",
+            id: "Settings",
+            label: "",
             subMenu: [
+                {
+                    label: "Pre Populated Questions / Response",
+                    icon: "message",
+                    //onClick: rateUs,
+                    asMaterial:true,
+                    onClick:()=>{
+                        navigation.navigate("AddQuestionsSupplier")
+                    }
+                },
+                {
+                    label: "Notifications",
+                    icon: "bell",
+                    //onClick: rateUs,
+                    asMaterial:true,
+                    onClick:()=>{
+                        navigation.navigate("NotificationScreen")
+                    }
+                },
+                {
+                    label: "Share App",
+                    icon: "share-circle",
+                    onClick: shareApp,
+                    asMaterial:true
+                },
+               
                 {
                     label: "Rate App",
                     icon: "star-half-full",
                     onClick: rateUs,
                     asMaterial:true
                 },
-                // {
-                //     label: "Contact Us",
-                //     icon: "email-outline",
-                //     onClick: () => {
-                //         linkingUtil.openMail(AppConstant.MAIL)
-                //     }
-                // },
+            ]
+        },
+        {
+            id: "other",
+            label: "Legal Agreements",
+            subMenu: [
+                {
+                    label: "Privacy Policy",
+                    icon: "file-document-edit",
+                    asMaterial:true,
+                    onClick: () => {
+                        linkingUtil.openBrowser(SOFTMENT)
+                    }
+                },
+                {
+                    label: "Terms & Conditions",
+                    icon: "text-box",
+                    asMaterial:true,
+                    onClick: () => {
+                        linkingUtil.openBrowser(SOFTMENT)
+                    }
+                },
                 {
                     label: "Logout",
                     icon: "log-out",
@@ -188,36 +211,10 @@ export default AccountMenuList = (props) => {
                     //disabled:true
                 },
             ]
-        },
-
+        }
 
     ]
     const menu = [
-        
-        // {
-        //     id: "about",
-        //     label: "About Us",
-        //     subMenu: [
-        //         // {
-        //         //     label:"Privacy Policy",
-        //         //     icon:images.privacyPolicy
-        //         // },
-        //         {
-        //             label: "Terms & Conditions",
-        //             icon: "file-document-outline",
-        //             onClick: () => {
-        //                 //linkingUtil.openBrowser("https://www.cheap-skate.us/")
-        //             }
-        //         },
-        //         // {
-        //         //     label: "App Developer",
-        //         //     icon: "code-tags",
-        //         //     onClick: () => {
-        //         //         linkingUtil.openBrowser(SOFTMENT)
-        //         //     }
-        //         // }
-        //     ]
-        // },
         {
             id: "Settings",
             label: "",
@@ -288,7 +285,7 @@ export default AccountMenuList = (props) => {
         }
 
     ]
-    const activeMenu = menu
+    const activeMenu = userType == "User"?menu:supplierMenu
     return (
         <View>
             {

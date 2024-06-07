@@ -151,7 +151,7 @@ export default function AddListing(props) {
         const res = await functions()
             .httpsCallable('compareIfListingAlreadyExists')({
               imageUrl: base64image,
-              supplierId: "m05jCmoUiDTFLyD2I2dNupw7S5c2",
+              supplierId: uid,
             })
             const compareData = res.data
             if(compareData.status == 1){

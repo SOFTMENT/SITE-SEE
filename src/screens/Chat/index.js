@@ -2,6 +2,7 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import TimeAgo from 'javascript-time-ago';
 import {
+  Center,
   HStack,
   Icon,
   IconButton,
@@ -30,8 +31,11 @@ import colors from '../../theme/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { spacing } from '../../common/variables';
 import LoaderComponent from '../../components/LoaderComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import CenteredLoader from '../../components/CenteredLoader';
 const Chat = props => {
   const {userData, navigation, route} = props;
+  const {userType} = userData
   const {params} = route;
   const timeAgo = new TimeAgo('en-US');
   const [lastMessage, setLastMessage] = useState(params.lastMessage);
@@ -39,6 +43,10 @@ const Chat = props => {
   const uid = auth().currentUser.uid;
   const {isOpen, onToggle, onClose, onOpen} = useDisclose();
   const [loader,setLoader] = useState(false)
+  const [supplierData,setSupplierData] = useState(null)
+  const [questions,setQuestions] = useState([])
+  const [loading,setLoading] = useState(false)
+  const [noData,setNoData] = useState(false)
   const handleImage = index => {
     onToggle();
   };
@@ -47,6 +55,104 @@ const Chat = props => {
       sendImage(img);
     }
   };
+  useEffect(()=>{
+    if(userType == "User")
+    getPreDeterminedQuetionsAndResponses()
+  },[])
+  useEffect(()=>{
+    console.log('sss')
+    let timer = null;
+    const updateAutoResponse = async() =>{
+      if(supplierData?.autoChatMode){
+        if(supplierData?.autoChatMode == "questions"){
+          console.log('asdas')
+          if(chats.length % 2 == 1){
+            timer = setTimeout(()=>{
+              let questionLength = questions.length
+              let questionIndex = Math.floor(chats.length / 2 )
+              console.log(questions,questionIndex)
+              if(questionIndex+1>questionLength)
+              return
+              let docId = firestore().collection('Chats').doc().id;
+              console.log(
+                questions[questionIndex]?.title,
+                supplierData.uid,
+              )
+              const messageObj = {
+                message: questions[questionIndex]?.title,
+                senderUid: supplierData.uid,
+                messageId: docId,
+                //senderImage:profilePic,
+                date: firebase.firestore.FieldValue.serverTimestamp(),
+                //senderName: name
+              };
+              setMessage(docId, uid, supplierData?.uid, messageObj);
+              setMessage(docId, supplierData?.uid, uid, messageObj);
+              setMessage(supplierData?.uid, uid, 'LastMessage', {
+                message: questions[questionIndex]?.title,
+                senderUid: supplierData?.uid,
+                isRead: false,
+                //senderImage:lastMessage.senderImage,
+                //senderName: lastMessage.senderName,
+                date: firebase.firestore.FieldValue.serverTimestamp(),
+              });
+              setMessage(uid, supplierData.uid, 'LastMessage', {
+                message: questions[questionIndex]?.title,
+                senderUid: uid,
+                isRead: true,
+                //senderImage:profilePic,
+                //senderName: name,
+                date: firebase.firestore.FieldValue.serverTimestamp(),
+              });
+              },2000)
+          }
+        }
+        else if(supplierData?.autoChatMode == "response"){
+          if(chats.length == 1){
+            try {
+              timer = setTimeout(()=>{
+                let docId = firestore().collection('Chats').doc().id;
+                const messageObj = {
+                  message: supplierData.autoResponse,
+                  senderUid: supplierData.uid,
+                  messageId: docId,
+                  //senderImage:profilePic,
+                  date: firebase.firestore.FieldValue.serverTimestamp(),
+                  //senderName: name
+                };
+                setMessage(docId, uid, supplierData?.uid, messageObj);
+                setMessage(docId, supplierData?.uid, uid, messageObj);
+                setMessage(supplierData?.uid, uid, 'LastMessage', {
+                  message: supplierData?.autoResponse,
+                  senderUid: supplierData?.uid,
+                  isRead: false,
+                  //senderImage:lastMessage.senderImage,
+                  //senderName: lastMessage.senderName,
+                  date: firebase.firestore.FieldValue.serverTimestamp(),
+                });
+                setMessage(uid, supplierData.uid, 'LastMessage', {
+                  message: supplierData?.autoResponse,
+                  senderUid: uid,
+                  isRead: true,
+                  //senderImage:profilePic,
+                  //senderName: name,
+                  date: firebase.firestore.FieldValue.serverTimestamp(),
+                });
+                },2000)
+              //setChatText("")
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        }
+      }
+    }
+    if(userType == "User")
+    updateAutoResponse()
+    return () => {
+      if(timer)clearTimeout(timer)
+    }
+  },[chats])
   useEffect(() => {
     if (lastMessage) {
       const {senderUid} = lastMessage;
@@ -54,21 +160,54 @@ const Chat = props => {
        handleImageWithText(lastMessage)
       }
       getRecipientData(senderUid);
+      setLoading(true)
       const unsubscribe = firestore()
         .collection('Chats')
         .doc(uid)
         .collection(senderUid)
         .orderBy('date', 'desc')
         .onSnapshot(querySnapshot => {
-          const chats = [];
+          const newArray = [];
           querySnapshot.forEach(doc => {
-            chats.push({...doc.data(), id: doc.id});
+            newArray.push({...doc.data(), id: doc.id});
           });
-          setChats(chats);
+          setChats(newArray);
+          if (newArray.length == 0) setNoData(true);
+          else setNoData(false);
+          setLoading(false);
         });
       return unsubscribe;
     }
   }, []);
+  const getPreDeterminedQuetionsAndResponses = () => {
+    const {senderUid} = lastMessage;
+    AsyncStorage.getItem("userType")
+    .then(async val=>{
+      if(val && val == "User"){
+        const res = await firestore()
+        .collection("Users")
+        .doc(senderUid)
+        .get()
+        if(res.exists)
+          setSupplierData(res.data())
+        const res1 = await firestore()
+          .collection("Users")
+          .doc(senderUid)
+          .collection("Questions")
+          .orderBy("createDate","asc")
+          .get()
+          if(!res1.empty)
+            {
+              const localData = []
+              res1.docs.map(doc=>{
+                localData.push(doc.data())
+              })
+              console.log(localData)
+              setQuestions(localData)
+            }
+      }
+    })
+  }
   const getRecipientData = async senderUid => {
     const res = await firestore().collection('Users').doc(senderUid).get();
     const data = res.data();
@@ -86,7 +225,6 @@ const Chat = props => {
       .doc(item.listingId)
       .get()
       .then((res)=>{
-        console.log("here",item)
         if(res.exists){
           navigation.navigate("VendorListingDetail",{item:res.data()})
         }
@@ -222,7 +360,7 @@ const Chat = props => {
   };
   const handleImageWithText = async () => {
     try {
-      console.log(lastMessage)
+      //console.log(lastMessage)
       let docId = firestore().collection('Chats').doc().id;
       const messageObj = {
         img: lastMessage.imageUri,
@@ -360,19 +498,31 @@ const Chat = props => {
         navigation={navigation}
         icon={lastMessage.senderImage}
       />
-
-      <FlatList
-        inverted
-        renderItem={renderChats}
-        data={chats}
-        //style={{flex:1}}
-        keyExtractor={keyExtractor}
-        style={styles.flatList}
-        bounces={false}
-        showsVerticalScrollIndicator={false}
-        //ListHeaderComponent={<RenderHeader/>}
-        keyboardShouldPersistTaps={'handled'}
-      />
+      {
+        loading?
+        (<CenteredLoader/>):
+        noData ? (
+          <Center flex={1} p={3}>
+          <Text style={styles.noItem}>
+            {`No chats found`}
+          </Text>
+        </Center>
+        ):(
+          <FlatList
+            inverted
+            renderItem={renderChats}
+            data={chats}
+            //style={{flex:1}}
+            keyExtractor={keyExtractor}
+            style={styles.flatList}
+            bounces={false}
+            showsVerticalScrollIndicator={false}
+            //ListHeaderComponent={<RenderHeader/>}
+            keyboardShouldPersistTaps={'handled'}
+          />
+        )
+      }
+      
       <RenderHeader />
       <PhotoPicker
         isOpen={isOpen}

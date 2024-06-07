@@ -52,6 +52,7 @@ const Inbox = (props) => {
         for( let data of tempData){
             const res = await firestore().collection("Users").doc(data.senderUid).get()
             const senderData = res.data()
+            if(senderData)
             newTempData.push({
                 ...data,
                 senderImage:senderData.profilePic,senderName:senderData.name
