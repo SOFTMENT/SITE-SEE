@@ -8,7 +8,7 @@ import { Alert, Linking, Platform, Text, TouchableOpacity, View } from "react-na
 import Share from 'react-native-share'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import linkingUtil from "../../common/linkingUtil"
 import Util from '../../common/util'
 import { SOFTMENT } from "../../config/Networksettings"
@@ -16,20 +16,16 @@ import { navigateAndReset } from '../../navigators/RootNavigation'
 import LoaderComponent from '../LoaderComponent'
 import PopupMessage from '../PopupMessage'
 import styles from "./styles"
+import { setUserData } from '../../store/userSlice'
+import functions from '@react-native-firebase/functions'
+import storage from '@react-native-firebase/storage'
 export default AccountMenuList = (props) => {
     const { navigation, isUser } = props
     const [loaderVisibility, setLoaderVisibility] = useState(false)
     const [successPopup, setSuccessPopup] = useState(false)
-    const { membershipActive } = useSelector(state => state.user.userData)
+    const { membershipActive,businessName,userType } = useSelector(state => state.user.userData)
     const uid = auth().currentUser.uid
-    const [userType,setUserType] = useState("User")
-    useEffect(()=>{
-        AsyncStorage.getItem("userType")
-        .then(val=>{
-            if(val!=null)
-            setUserType(val)
-        })
-    },[])
+    const dispatch = useDispatch()
     const deleteAccount = async() => {
         Alert.alert(
             "Delete Account",
@@ -44,31 +40,126 @@ export default AccountMenuList = (props) => {
                 {
                     text: "Yes",
                     onPress: async () => {
-                        try {
-                            const uid = auth().currentUser.uid
-                           //  await auth().currentUser.delete()
-                            const val = await AsyncStorage.removeItem("userType")
-                            console.log(val)
-                            // await firestore()
-                            // .collection("Users")
-                            // .doc(uid)
-                            // .delete()
-                            // await auth().currentUser.delete()
-                            // // if (auth().currentUser.providerData[0].providerId == "google.com") {
-                            // //     //await GoogleSignin.revokeAccess();
-                            // //     await GoogleSignin.signOut();
-                            // // }
-                            // // await auth()
-                            // //     .signOut()
-                            // Util.showMessage("success","Account Deleted")
-                            // navigateAndReset("OnboardingScreen")
-                           } catch (error) {
-                                Util.showMessage("error","Error",error.message)
-                           }
+                        if(userType == "Users"){
+                            handleUserDelete()
+                        }
+                        else{
+                            handleSupplierDelete()
+                        }
+                    //     try {
+                    //         const uid = auth().currentUser.uid
+                    //         await AsyncStorage.removeItem("userType")
+                    //         if(businessName){
+                    //             deleteSupplierPosts()
+                    //         }
+                    //         await firestore()
+                    //         .collection("Users")
+                    //         .doc(uid)
+                    //         .delete()
+                    //         await auth().currentUser.delete()
+                    //         Util.showMessage("success","Account Deleted")
+                    //         navigateAndReset("OnboardingScreen")
+                    //        } catch (error) {
+                    //             Util.showMessage("error","Error",error.message)
+                    //        }
                     }
                 }
             ]
         )
+    }
+    const handleUserDelete = () => {
+        setLoaderVisibility(true)
+        functions()
+        .httpsCallable('handleUserDelete')()
+        .then(async()=>{
+            await AsyncStorage.removeItem("userType")
+            Util.showMessage("success","Account Deleted!")
+            navigateAndReset("OnboardingScreen")
+        })
+        .finally(()=>[
+            setLoaderVisibility(false)
+        ])
+        // const uid = auth().currentUser.uid
+        // const doc = await firestore()
+        // .collection("Suppliers")
+        // .doc(uid)
+        // .get()
+        // if(!doc.exists){
+        //     await AsyncStorage.removeItem("userType")
+        //     await firestore()
+        //     .collection("Users")
+        //     .doc(uid)
+        //     .delete()
+        //     await auth().currentUser.delete()
+        //     Util.showMessage("success","Account Deleted!")
+        //     navigateAndReset("OnboardingScreen")
+        // }
+        // else{
+        //     await AsyncStorage.removeItem("userType")
+        //     await firestore()
+        //     .collection("Users")
+        //     .doc(uid)
+        //     .delete()
+        //     Util.showMessage("success","Account Deleted!")
+        //     navigateAndReset("OnboardingScreen")
+        // }
+    }
+    const handleSupplierDelete = async() => {
+        setLoaderVisibility(true)
+        functions()
+        .httpsCallable('handleSupplierDelete')()
+        .then(async()=>{
+            await AsyncStorage.removeItem("userType")
+            Util.showMessage("success","Account Deleted!")
+            navigateAndReset("OnboardingScreen")
+        })
+        .finally(()=>{
+            setLoaderVisibility(false)
+        })
+        // const uid = auth().currentUser.uid
+        // const doc = await firestore()
+        // .collection("Users")
+        // .doc(uid)
+        // .get()
+        // if(!doc.exists){
+        //     deleteListingsAndImages()
+        //     await AsyncStorage.removeItem("userType")
+        //     await firestore()
+        //     .collection("Suppliers")
+        //     .doc(uid)
+        //     .delete()
+        //     await auth().currentUser.delete()
+        //     Util.showMessage("success","Account Deleted!")
+        //     navigateAndReset("OnboardingScreen")
+        // }
+        // else{
+        //     deleteListingsAndImages()
+        //     await AsyncStorage.removeItem("userType")
+        //     await firestore()
+        //     .collection("Suppliers")
+        //     .doc(uid)
+        //     .delete()
+        //     Util.showMessage("success","Account Deleted!")
+        //     navigateAndReset("OnboardingScreen")
+        // }
+    }
+    const deleteListingsAndImages = async() => {
+        const docs = await firestore()
+        .collection("Listing")
+        .where("supplierId","==",auth().currentUser.uid)
+        .get()
+        docs.docs.map(doc=>{
+            const data = doc.data()
+            const listingImages = data.listingImages
+            listingImages.map((image,ind)=>{
+                const storeageRef = storage().ref(`ListingImage/${doc.id}_${ind + 1}.png`)
+                storeageRef.delete()
+            })
+            firestore()
+            .collection("Listing")
+            .doc(doc.id)
+            .delete()
+        })
     }
     const logout = async () => {
         try {
@@ -285,7 +376,8 @@ export default AccountMenuList = (props) => {
         }
 
     ]
-    const activeMenu = userType == "User"?menu:supplierMenu
+    console.log("vvaa",userType)
+    const activeMenu = userType == "Users"?menu:supplierMenu
     return (
         <View>
             {

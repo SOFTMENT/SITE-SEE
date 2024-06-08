@@ -30,6 +30,7 @@ const SearchScreen = props => {
   const [noData, setNoData] = useState(false);
   const [loading, setLoading] = useState(false);
   const {favorites,userData} = useSelector(state => state.user);
+  const {userType} = userData
   const [isFocus,setIsFocus] = useState(true)
   const dispatch = useDispatch()
   const {latitude, longitude} = useSelector(
@@ -42,7 +43,7 @@ const SearchScreen = props => {
       .doc(auth().currentUser.uid)
       .get()
       .then(res => {
-        dispatch(setUserData(res.data()));
+        dispatch(setUserData({...res.data(),userType}));
       })
       .catch(error => {
         console.log(error);

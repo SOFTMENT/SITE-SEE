@@ -25,8 +25,23 @@ const tf = require('@tensorflow/tfjs-node');
 const fs = require('fs');
 const sharp = require('sharp');
 const crypto = require('crypto');
-admin.initializeApp();
-const storage = admin.storage();
+const serviceAccount = {
+  "type": "service_account",
+  "project_id": "site-see-32c16",
+  "private_key_id": "5c1943538feb9b4d236df63f74d087ebbeea713a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCyQeLIqlNuGY5H\nY1vxryqGfMbd4p68UpkpKG1MMpDsru7ycGUT3D2CzHPxqzatN2Gi1ss+jqVdDWvq\nTNNWi0D/KVPbY3kMf46xW44Y6Ev+evUzO7A3jrO+WjSH6xPd1py785BE/vVHmqvt\nkh+E5fqasiuimPkvKXiiJApzIwNhzWCY7GBqU1KIOpO4mUDQ0FAQCudDodkrTST/\nLt28iYHmmbWB9aeeaM/rCGrz6M+Lh9dKITf3ZnWNpYnN4mN5EMRI9jhVcKpKaFyr\n1N0bpfjmej1xOkzqX+HJad/2QCcjmTTlSGWGanmdKvIfS2XXFcTpR8D05kxqW1CG\naeICJo2lAgMBAAECggEAA6x6nArGmrz0GGHigeH2TRHtQfgVsBPpDCwadI47kQ/Z\n5NfkKBCgmT2AIORCcDd1T6yAQSh3cqoq0IgHeFUjtcky7Tvo7BUE6oAp4YwyuhVB\nUG5T0hFNgF145QQ3Q0R/s8VFR+a+mgcvW+oTCY4j0rmxTzHlO3pDU4l38v+EZlOT\nHGXALzBdQs2ewe/YPzMgpAbIp2YggdEm3tdW0wM2rePfaszJBy/mJGLSkwbKv5ZO\npuvAHJIehSYF6gG27ZgsvnO+Ivg2r7RlFz/toSIDARybcVuXHgDdUjLpYO9oP2Nu\nm5UNKyF8f0CJ69HERvcFuY7ArBOgHrwlviG9OKf1UQKBgQDboUeVwgZ+wdV12pLr\nFA1EJKMjNkFYvQrryDxBysh2fERmwNHXWyKqOI/a2io1tCNGwCgxrumV/Bd1mdSr\nP4yvxhrtPEEQzxQO5fjXLApQ5wIJpfGSPKvTbt6xANVApzdc+fze3BP/Abl9HxoM\nz7Q0DTWwNAF1ub7vv4MPPsh7DwKBgQDPxrTa5+FWlhX5Tr9p4geP/znlP+Xz7pN3\novGJDOnqmyEAKLbtE9c0zlbla54rdaUWf2intPwpP1Hblu94KoXpTfJueERC0OvI\nJ3eHYKO3lGRireZVSmPSIeQ4Fd5rY61HjZo7EbNLtwuksim/fgl9ixyCcbzfVxlh\nm8kgJTJ8CwKBgHthDqXCaYOrwA6EyyPkD8/IBR0yzWLcT9ZElhUfpZ1qEcLnbvpb\n6A1X2PhIto2UtHx6VhoS+IWZKFSYJjBNcusLjvTWdHbM3afA6Rl3VBQ+sZZZ8msE\nSkJsdg1ZOnMnfKJujO9lEpaekWUIo8mupLzY7uAdVvSbc/eazjUyP81hAoGBALNu\nEjkJDpxLuGY4Dy1NOOKtsj271MW3PjqOyK9mK4uis/kDMBXEkJDVsE0nhsxZKFwp\nYyORNEIaoIJV8i9/6Wz1F2s3CRv6d+O90YdjeX7L83UUYFk/iLyq7/9PQ2jSB45H\nRu3D92ZniPKNuWfZXDDCtbggqM7m1NBqTGIqPVLJAoGAOzh8uZYoD51SlFvAXN3u\n4iHyjNZ6ITsM3KBmpSQ1FZLdPlZ/X06mdeCIBlZR30RneZVWg95+r0PglXwN0T8o\nLigB+3gm8tMPVnOt6CiVEIb0zwW8oxHPsaVl4lZjLgrmD6w9ovjzHhTAJTUTee8A\nosXFaiRwZBg1V+iBy72qaAk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-gs3s9@site-see-32c16.iam.gserviceaccount.com",
+  "client_id": "115613708109334042536",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-gs3s9%40site-see-32c16.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+const storage = admin.storage().bucket('gs://site-see-32c16.appspot.com');
 const db = admin.firestore();
 const axios = require('axios');
 const { geohashQueryBounds } = require('geofire-common');
@@ -246,3 +261,113 @@ function preprocessImage(imageBuffer) {
 //   }
 //   return 1 - distance / hash1.length;
 // }
+exports.handleUserDelete = functions.https.onCall(async (data, context) => {
+  const uid = context.auth.uid;
+
+  try {
+      const doc = await admin.firestore().collection('Suppliers').doc(uid).get();
+
+      await admin.firestore().collection('Users').doc(uid).delete();
+
+      if (!doc.exists) {
+          await admin.auth().deleteUser(uid);
+      }
+      deleteSubcolletions("Users","Favorites",uid)
+      deleteSubcolletions("Users","SearchHistory",uid)
+      deleteAllMessage(uid)
+      return { success: true, message: 'Account Deleted!' };
+  } catch (error) {
+      return { success: false, message: error.message };
+  }
+});
+
+exports.handleSupplierDelete = functions.https.onCall(async (data, context) => {
+  const uid = context.auth.uid;
+
+  try {
+      const doc = await admin.firestore().collection('Users').doc(uid).get();
+
+     
+
+      await admin.firestore().collection('Suppliers').doc(uid).delete();
+
+      if (!doc.exists) {
+          await admin.auth().deleteUser(uid);
+      }
+       // Placeholder for the deleteListingsAndImages function.
+      // Implement the deleteListingsAndImages function as needed.
+      deleteSubcolletions("Suppliers","Questions",uid)
+      deleteListingsAndImages(uid);
+      deleteAllMessage(uid)
+      return { success: true, message: 'Account Deleted!' };
+  } catch (error) {
+      return { success: false, message: error.message };
+  }
+});
+// Delete listings and images function
+async function deleteListingsAndImages(uid) {
+  const listingCollection = await admin.firestore()
+      .collection('Listing')
+      .where('supplierId', '==', uid)
+      .get();
+  listingCollection.docs.forEach(doc => {
+      const data = doc.data();
+      const listingImages = data.listingImages || [];
+
+      listingImages.forEach((image, index) => {
+          const storageRef = storage.file(`ListingImage/${doc.id}_${index + 1}.png`);
+          storageRef.delete()
+      });
+      firestore.collection('Listing').doc(doc.id).delete()
+  });
+
+  await Promise.all(deletePromises);
+}
+async function deleteSubcolletions(collection,subcollection,uid){
+  const docs = await admin.firestore().collection(collection).doc(uid)
+      .collection(subcollection)
+      .get()
+      docs.docs.map(doc=>{
+         admin.firestore().collection(collection).doc(uid)
+         .collection(subcollection)
+         .doc(doc.id)
+         .delete()
+      })
+}
+const deleteAllMessage = async(uid) => {
+  const lastMessages = await admin.firestore().collection("Chats").doc(uid)
+  .collection("LastMessage")
+  .get()
+  const allChatsDocIds = []
+  lastMessages.docs.map(doc=>{
+    allChatsDocIds.push(doc.id)
+    admin.firestore().collection("Chats").doc(uid)
+    .collection("LastMessage")
+    .doc(doc.id)
+    .delete()
+  })
+  const promises = []
+  allChatsDocIds.map(id=>{
+    
+   promises.push( admin.firestore().collection("Chats").doc(uid)
+   .collection(id)
+   .get())
+  })
+  const snapshots = await Promise.all(promises);
+ // Collect promises for deleting all chat documents
+ const deleteChatDocsPromises = snapshots.flatMap((snap, index) => {
+  return snap.docs.map(doc => {
+    return admin.firestore().collection("Chats").doc(uid)
+      .collection(allChatsDocIds[index])
+      .doc(doc.id)
+      .delete();
+    });
+  });
+await Promise.all(deleteChatDocsPromises);
+}
+// subChats.docs.map(doc=>{
+//   admin.firestore().collection("Chats").doc(uid)
+//   .collection()
+//   .doc(doc.id)
+//   .delete()
+// })

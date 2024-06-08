@@ -11,7 +11,7 @@ import fonts from "../../../../assets/fonts"
 import { setUserData } from "../../../store/userSlice"
 import { useDispatch, useSelector } from "react-redux"
 const AddQuestionsSupplier = ({navigation}) => {
-    const {autoResponse:myAutoResponse,autoChatMode:autoChatModee} = useSelector(state=>state.user.userData) ?? {}
+    const {autoResponse:myAutoResponse,autoChatMode:autoChatModee,userType} = useSelector(state=>state.user.userData) ?? {}
     const [questions,setQuestions] = useState([])
     const [menuOpen,setMenuOpen] = useState(false)
     const [autoChatMode,setAutoChatMode] = useState(autoChatModee??"none")
@@ -27,7 +27,7 @@ const AddQuestionsSupplier = ({navigation}) => {
     const getQuestions = async() => {
         try {
             const res = await firestore()
-            .collection("Users")
+            .collection("Suppliers")
             .doc(auth().currentUser.uid)
             .collection("Questions")
             .orderBy('createDate',"asc")
@@ -60,7 +60,7 @@ const AddQuestionsSupplier = ({navigation}) => {
     const deleteQuestion = async(id) => {
         try {
             await firestore()
-            .collection("Users")
+            .collection("Suppliers")
             .doc(auth().currentUser.uid)
             .collection("Questions")
             .doc(id)
@@ -75,7 +75,7 @@ const AddQuestionsSupplier = ({navigation}) => {
         if(!isSelected){
             setAutoChatMode("none")
             firestore()
-            .collection("Users")
+            .collection("Suppliers")
             .doc(auth().currentUser.uid)
             .update({
                 autoChatMode:"none"
@@ -84,7 +84,7 @@ const AddQuestionsSupplier = ({navigation}) => {
         else{
             setAutoChatMode(type)
             firestore()
-            .collection("Users")
+            .collection("Suppliers")
             .doc(auth().currentUser.uid)
             .update({
                 autoChatMode:type
@@ -97,7 +97,7 @@ const AddQuestionsSupplier = ({navigation}) => {
             try {
                 setUpdateLoader(true)
                 await firestore()
-                .collection("Users")
+                .collection("Suppliers")
                 .doc(auth().currentUser.uid)
                 .update({
                     autoResponse:autoResponse.trim()
@@ -127,7 +127,7 @@ const AddQuestionsSupplier = ({navigation}) => {
           .doc(auth().currentUser.uid)
           .get()
           .then(res => {
-            dispatch(setUserData(res.data()));
+            dispatch(setUserData({...res.data(),userType}));
           })
           .catch(error => {
             console.log(error);

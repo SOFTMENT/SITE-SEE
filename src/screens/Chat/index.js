@@ -56,16 +56,16 @@ const Chat = props => {
     }
   };
   useEffect(()=>{
-    if(userType == "User")
+    
+    if(userType == "Users")
     getPreDeterminedQuetionsAndResponses()
   },[])
   useEffect(()=>{
-    console.log('sss')
     let timer = null;
     const updateAutoResponse = async() =>{
       if(supplierData?.autoChatMode){
-        if(supplierData?.autoChatMode == "questions"){
-          console.log('asdas')
+        if(supplierData?.autoChatMode == "questions" && questions.length){
+          console.log("adsa")
           if(chats.length % 2 == 1){
             timer = setTimeout(()=>{
               let questionLength = questions.length
@@ -107,7 +107,7 @@ const Chat = props => {
               },2000)
           }
         }
-        else if(supplierData?.autoChatMode == "response"){
+        else if(supplierData?.autoChatMode == "response" && supplierData?.autoResponse?.length){
           if(chats.length == 1){
             try {
               timer = setTimeout(()=>{
@@ -147,7 +147,7 @@ const Chat = props => {
         }
       }
     }
-    if(userType == "User")
+    if(userType == "Users")
     updateAutoResponse()
     return () => {
       if(timer)clearTimeout(timer)
@@ -179,37 +179,36 @@ const Chat = props => {
       return unsubscribe;
     }
   }, []);
-  const getPreDeterminedQuetionsAndResponses = () => {
+  const getPreDeterminedQuetionsAndResponses = async() => {
     const {senderUid} = lastMessage;
-    AsyncStorage.getItem("userType")
-    .then(async val=>{
-      if(val && val == "User"){
-        const res = await firestore()
-        .collection("Users")
+    if(userType && userType == "Users"){
+      
+      const res = await firestore()
+      .collection("Suppliers")
+      .doc(senderUid)
+      .get()
+      console.log(res.data())
+      if(res.exists)
+        setSupplierData(res.data())
+      const res1 = await firestore()
+        .collection("Suppliers")
         .doc(senderUid)
+        .collection("Questions")
+        .orderBy("createDate","asc")
         .get()
-        if(res.exists)
-          setSupplierData(res.data())
-        const res1 = await firestore()
-          .collection("Users")
-          .doc(senderUid)
-          .collection("Questions")
-          .orderBy("createDate","asc")
-          .get()
-          if(!res1.empty)
-            {
-              const localData = []
-              res1.docs.map(doc=>{
-                localData.push(doc.data())
-              })
-              console.log(localData)
-              setQuestions(localData)
-            }
-      }
-    })
+        if(!res1.empty)
+          {
+            const localData = []
+            res1.docs.map(doc=>{
+              localData.push(doc.data())
+            })
+            console.log(localData)
+            setQuestions(localData)
+          }
+    }
   }
   const getRecipientData = async senderUid => {
-    const res = await firestore().collection('Users').doc(senderUid).get();
+    const res = await firestore().collection(userType == "Suppliers"?"Users":"Suppliers").doc(senderUid).get();
     const data = res.data();
     setLastMessage({
       ...lastMessage,

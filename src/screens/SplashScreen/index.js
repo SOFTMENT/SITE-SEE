@@ -6,6 +6,7 @@ import { navigateAndReset } from "../../navigators/RootNavigation";
 import styles from "./styles";
 import firestore from '@react-native-firebase/firestore';
 import colors from '../../theme/colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const SplashScreen = (props) => {
     const { navigation } = props
     let authState = true
@@ -20,8 +21,10 @@ const SplashScreen = (props) => {
                 authState = false
                 if (user) {
                     // auth().signOut()
-                    await firestore()
-                        .collection("Users")
+                    const val = await AsyncStorage.getItem('userType')
+                    if(val){
+                        await firestore()
+                        .collection(val)
                         .doc(user.uid)
                         .get()
                         .then(async doc => {
@@ -59,6 +62,11 @@ const SplashScreen = (props) => {
                                 }
                             }
                         })
+                    }
+                    else{
+                        await auth().signOut()
+                        navigateAndReset("OnboardingScreen")
+                    }
                 }
                 else
                     navigateAndReset("OnboardingScreen")

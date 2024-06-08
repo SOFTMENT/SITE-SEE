@@ -92,9 +92,7 @@ export default function EditListing(props) {
       Util.showMessage('error', 'Please provide a valid description');
     } else if (!locationAllState.address) {
       Util.showMessage('error', 'Please add a valid location');
-    } else if (!purchaseUrl.trim()) {
-      Util.showMessage('error', 'Please add a valid purchase link.');
-    }else {
+    } else {
       try {
         setLoaderVisibility(true);
         const uid = auth().currentUser.uid;
@@ -119,7 +117,6 @@ export default function EditListing(props) {
               category,
               geohash: hash,
               listingType,
-              purchaseUrl:purchaseUrl.trim(),
               _geoloc: {
                 lat: locationAllState?.location?.latitude ?? '',
                 lng: locationAllState?.location?.longitude ?? '',
@@ -132,6 +129,9 @@ export default function EditListing(props) {
             }
             if(supplierTag){
               obj.supplierTag = supplierTag
+            }
+            if(purchaseUrl.trim().length){
+              obj.purchaseUrl = purchaseUrl.trim()
             }
             await ref.update(obj);
             Util.showMessage(
@@ -194,7 +194,6 @@ export default function EditListing(props) {
 
 const debouncedGetUserNamesData = useMemo(() => debounce(getUserNamesData, 1000), [getUserNamesData]);
 const callDebounceFuntion = (txt) => {
-  setQuery(txt)
   if (txt.trim().length) {
     debouncedGetUserNamesData(txt);
   }

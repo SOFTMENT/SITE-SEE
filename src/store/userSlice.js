@@ -33,12 +33,17 @@ export const userSlice = createSlice({
     reducers:{
         setUserData:(state,action)=>{
             let data = action.payload
-            data ={
-                ...data,
-                createdAt : data.createdAt.toDate().toDateString(),
-                subscriptionDate : data?.subscriptionDate?.toDate()?.toDateString() ?? ""
+            console.log(data)
+            if(data){
+                data ={
+                    ...data,
+                    createdAt : data.createdAt.toDate().toDateString(),
+                    subscriptionDate : data?.subscriptionDate?.toDate()?.toDateString() ?? ""
+                }
+                state.userData = data
             }
-            state.userData = data
+            else
+            state.userData = null
         },
         setCurrentPosition:(state,action)=>{
             let data = action.payload

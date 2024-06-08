@@ -17,7 +17,7 @@ import styles from './styles';
 
 const VendorProfile = props => {
   const {navigation, userData, state} = props;
-  const {profilePic, name, uid} = userData;
+  const {profilePic, name, uid,userType} = userData;
   const [profileImage, setProfileImage] = useState(null);
   const [menuOpen,setMenuOpen] = useState(false)
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ const VendorProfile = props => {
       .doc(uid)
       .get()
       .then(res => {
-        dispatch(setUserData(res.data()));
+        dispatch(setUserData({...res.data(),userType}));
       })
       .catch(error => {
         console.log(error);
@@ -97,7 +97,7 @@ const VendorProfile = props => {
         <VStack ml={5}>
           <HStack alignItems={"center"} 
         >
-            <Text style={styles.name}>{userData.name}</Text>
+            <Text style={styles.name}>{userData.businessName}</Text>
             <IconButton 
               onPress={()=>setMenuOpen(true)}
               icon={

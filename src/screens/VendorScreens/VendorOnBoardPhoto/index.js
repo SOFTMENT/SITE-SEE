@@ -36,7 +36,7 @@ const VendorOnBoardPhoto = (props) => {
                 setLoading(true)
                 const profileUrl = await Helper.uploadImage(`ProfilePic/${uid}`, profilePic)
                 firestore()
-                .collection("Users")
+                .collection("Suppliers")
                 .doc(uid)
                 .update(
                     {

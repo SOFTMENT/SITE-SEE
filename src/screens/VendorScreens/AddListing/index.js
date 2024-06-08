@@ -30,7 +30,7 @@ const algoliaClient = algoliasearch(
   'MOMHBUJFM8',
   '110bf4874cab087690527dec42643d51',
 );
-const searchIndex = algoliaClient.initIndex('name');
+const searchIndex = algoliaClient.initIndex('businessName');
 export default function AddListing(props) {
   const {navigation} = props;
   const {isOpen, onToggle, onClose, onOpen} = useDisclose();
@@ -81,7 +81,6 @@ export default function AddListing(props) {
 
   const debouncedGetUserNamesData = useMemo(() => debounce(getUserNamesData, 1000), [getUserNamesData]);
   const callDebounceFuntion = (txt) => {
-    setQuery(txt)
     if (txt.trim().length) {
       debouncedGetUserNamesData(txt);
     }
@@ -118,13 +117,6 @@ export default function AddListing(props) {
   };
 
   const handleAddSpace = async () => {
-    // const labels = await ImageLabeling.label("https://firebasestorage.googleapis.com/v0/b/site-see-32c16.appspot.com/o/ListingIma);
-    //     console.log(labels)
-    //     return
-    //const labels = await ImageLabeling.label(Platform.OS=="ios"?`file:///${img.path}`:img.path)
-    //  const labels = await generateLabels()
-    //  console.log(labels)
-    //return
     if (!images[0]) {
       Util.showMessage('error', 'First image is compulsory');
     } else if (!title.trim().length) {

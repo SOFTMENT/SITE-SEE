@@ -11,6 +11,7 @@ import NoResults from "../../components/NoResults";
 import colors from "../../theme/colors";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import { useSelector } from "react-redux";
 TimeAgo.addDefaultLocale(en)
 const Inbox = (props) => {
     const {navigation} = props
@@ -18,6 +19,7 @@ const Inbox = (props) => {
     const [lastChats, setLastChats] = useState([])
     const uid = auth().currentUser.uid
     const insets = useSafeAreaInsets()
+    const {userType} = useSelector(state=>state.user.userData)
     useEffect(() => {
         // const q = query(collection(db, "Chats",uid,"LastMessage"), orderBy("date","desc"));
         // const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -50,7 +52,7 @@ const Inbox = (props) => {
     const combineRecipentData = async (tempData) => {
         const newTempData = []
         for( let data of tempData){
-            const res = await firestore().collection("Users").doc(data.senderUid).get()
+            const res = await firestore().collection(userType=="Suppliers"?"Users":"Suppliers").doc(data.senderUid).get()
             const senderData = res.data()
             if(senderData)
             newTempData.push({

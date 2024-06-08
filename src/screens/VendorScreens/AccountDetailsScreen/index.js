@@ -21,7 +21,7 @@ export default function AccountDetailsScreen(props) {
     const { navigation } = props
     const [loaderVisibility, setLoaderVisibility] = useState(false)
     const [successPopup, setSuccessPopup] = useState(false)
-    const { accountStatus, accountId, balance, uid } = useSelector(state => state.user.userData)
+    const { userType, accountId, balance, uid } = useSelector(state => state.user.userData)
     const [transactions,setTransactions] = useState([])
     const dispatch = useDispatch()
     useEffect(()=>{
@@ -57,7 +57,7 @@ export default function AccountDetailsScreen(props) {
             .get()
             .then(userData => {
                 if (userData.exists)
-                    dispatch(setUserData(userData.data()))
+                    dispatch(setUserData({...userData.data(),userType}))
             })
     }
     const handleWithdraw = async () => {

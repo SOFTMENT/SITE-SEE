@@ -16,34 +16,42 @@ import MyTextInput from "../../components/MyTextInput"
 import PhotoPicker from "../../components/PhotoPicker"
 import { navigateAndReset } from "../../navigators/RootNavigation"
 import styles from "./styles"
+import { useSelector } from "react-redux"
 const OnBoardPhoto = (props) => {
     const { navigation, route } = props
     const [profilePic, setProfilePic] = useState(null)
     const [loading, setLoading] = useState(null)
-    const [userType,setUserType] = useState("User")
+    const {userType} = useSelector(state=>state.user.userData)
     const [websiteName,setWebsiteName] = useState("")
     const [webUrl,setWebUrl] = useState("")
-    useEffect(()=>{
-        AsyncStorage.getItem('userType')
-        .then(val=>{
-            if(val!=null){
-                setUserType(val)
-            }
-        })
-    },[])
+    const [businessName,setBusinessName] = useState('')
     const {
         isOpen,
         onToggle,
         onClose,
         onOpen
     } = useDisclose();
-    // useEffect(()=>{
-    //     if(profilePic){
-    //         handleNavigation()
-    //     }
-    // },[profilePic])
     const handleNavigation = async() => {
         const uid = auth().currentUser.uid
+        if(userType == "Suppliers"){
+            if(businessName.trim().length){
+                const res = await checkForDuplicateUsername()
+                if(res){
+                    Keyboard.dismiss()
+                    Toast.show({
+                        description:"This business name is already taken."
+                    })
+                    return
+                }
+            }
+            else{
+                Keyboard.dismiss()
+                Toast.show({
+                    description:"Please enter a valid business name."
+                })
+            }
+            
+        }
         if (websiteName.trim().length && !webUrl.trim().length) {
             Keyboard.dismiss()
             Toast.show({
@@ -67,6 +75,9 @@ const OnBoardPhoto = (props) => {
                 const profileUrl = await Helper.uploadImage(`ProfilePic/${uid}`, profilePic)
                     obj.profilePic = profileUrl
                 }
+                if(businessName.trim().length){
+                    obj.businessName = businessName.trim()
+                }
                 if(webUrl.trim().length){
                     obj.webUrl = webUrl.trim()
                 }
@@ -74,7 +85,7 @@ const OnBoardPhoto = (props) => {
                     obj.websiteName = websiteName.trim()
                 }
                 firestore()
-                .collection("Users")
+                .collection(userType)
                 .doc(uid)
                 .update(
                     obj
@@ -90,34 +101,30 @@ const OnBoardPhoto = (props) => {
             }
         // }
     }
-    // const handleSkip = async() => {
-    //     const uid = auth().currentUser.uid
-    //     try {
-    //         setLoading(true)
-    //         firestore()
-    //         .collection("Users")
-    //         .doc(uid)
-    //         .update(
-    //             {
-    //                 profileCompleted: true,
-    //             }
-    //         )
-    //         .then(() => {
-    //             setLoading(false)
-    //             navigateAndReset("HomeScreen")
-    //         })
-            
-    //     } catch (error) {
-    //         setLoading(false)
-    //         //console.log(error)
-    //     }
-    // }
+    const checkForDuplicateUsername = async() => {
+        const docs = await firestore()
+          .collection("Suppliers")
+          .where("businessName","==",businessName)
+          .get()
+          if(docs.empty){
+            return false
+          }
+          else{
+            return true
+          }
+      }
+    const onBackPress = () => {
+        auth().signOut()
+        .then(()=>{
+            navigateAndReset("OnboardingScreen")
+        })
+    }
     return (
         <View
             style={styles.container}
             // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-            <Header navigation={navigation} title="Let's complete your profile" />
+            <Header back onBackPress={onBackPress} navigation={navigation} title="Let's complete your profile" />
             {/* <Text style={styles.subText}>Personal Information</Text> */}
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.mainView}>
@@ -148,10 +155,7 @@ const OnBoardPhoto = (props) => {
                                 alignSelf:"flex-start",
                                 width:"auto",
                                 marginTop:16
-                                //marginTop:32,
-                                //width:"70%"
-                                // position: "absolute",
-                                // bottom: spacing.large
+
                             }}
                             //loa
                             //icon={"chevron-right"}
@@ -160,7 +164,16 @@ const OnBoardPhoto = (props) => {
                     </VStack>
                 </HStack>
                 {
-                    userType == "Supplier" &&
+                    userType == "Suppliers" &&
+                    <MyTextInput
+                        containerStyle={{marginTop:15}}
+                        placeholder={"Enter Your Business Name"}
+                        value={businessName}
+                        onChangeText={(txt)=>setBusinessName(txt)}
+                    />
+                }
+                {
+                    userType == "Suppliers" &&
                     <MyTextInput
                         containerStyle={{marginTop:15}}
                         placeholder={"Enter Your Website Name"}
@@ -169,7 +182,7 @@ const OnBoardPhoto = (props) => {
                     />
                 }
                 {
-                    userType == "Supplier" &&
+                    userType == "Suppliers" &&
                     <MyTextInput
                         containerStyle={{marginTop:15}}
                         placeholder={"Enter Your Website URL"}

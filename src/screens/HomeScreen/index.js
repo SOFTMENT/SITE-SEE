@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {View, useDisclose} from 'native-base';
 import MemberShipActionSheet from '../../components/MembershipActionSheet';
 import branch from 'react-native-branch';
+import Util from '../../common/util';
 const HomeScreen = props => {
   const {route, navigation} = props;
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const HomeScreen = props => {
     //   }
     let {url} = await buo.generateShortUrl(linkProperties,controlParams);
     firestore()
-      .collection('Users')
+      .collection('Suppliers')
       .doc(uid)
       .update({
         membershipActive: true,
@@ -48,8 +49,8 @@ const HomeScreen = props => {
         shareLink:url
       })
       .then(async () => {
-        const user = await firestore().collection('Users').doc(uid).get();
-        dispatch(setUserData({...user.data(), userType: 'Supplier'}));
+        const user = await firestore().collection('Suppliers').doc(uid).get();
+        dispatch(setUserData({...user.data(), userType: 'Suppliers'}));
         navigateAndReset('VendorBottomTab');
       });
   };
@@ -67,58 +68,66 @@ const HomeScreen = props => {
       .then(() => console.log('Subscribed to topic!'));
   }
   useEffect(() => {
+    getUserData()
+  }, []);
+  const getUserData = async() => {
     try {
       requestUserPermission();
+      const userType = await AsyncStorage.getItem('userType');
       firestore()
-        .collection('Users')
+        .collection(userType)
         .doc(uid)
         .get()
         .then(async user => {
           if (user.exists) {
             // await messaging().registerDeviceForRemoteMessages()
+            
             const token = await messaging().getToken()
             firestore()
-            .collection("Users")
+            .collection(userType)
             .doc(user.id)
             .update({
               fcmToken:token
             })
-            const val = await AsyncStorage.getItem('userType');
-            if (user.data().profileCompleted) {
-              if (val == null || val == 'User') {
-                dispatch(setUserData({...user.data(), userType: 'User'}));
-                navigateAndReset('UserBottomTab');
-              } else if (val == 'Supplier') {
-                if (user.data().membershipActive) {
-                  dispatch(setUserData({...user.data(), userType: 'Supplier'}));
-                  navigateAndReset('VendorBottomTab');
-                } else {
-                  onOpen();
+              if (userType == null || userType == 'Users') {
+                if(user.data().profileCompleted)
+                {
+                  console.log("hereeeeeeee")
+                  dispatch(setUserData({...user.data(), userType: 'Users'}));
+                  navigateAndReset('UserBottomTab');
+                }
+                else{
+                  dispatch(setUserData({...user.data(), userType: 'Users'}));
+                  navigateAndReset('OnBoardPhoto');
+                }
+              } else if (userType == 'Suppliers') {
+                console.log("supplier2")
+                if(user.data().profileCompleted)
+                {
+                  if (user.data().membershipActive) {
+                    dispatch(setUserData({...user.data(), userType: 'Suppliers'}));
+                    navigateAndReset('VendorBottomTab');
+                  } else {
+                    onOpen();
+                  }
+                }
+                else{
+                  dispatch(setUserData({...user.data(), userType: 'Suppliers'}));
+                  navigateAndReset('OnBoardPhoto');
                 }
               }
-            } else {
-              if (val == null || val == 'User') {
-                dispatch(setUserData({...user.data(), userType: 'User'}));
-                navigateAndReset('OnBoardPhoto');
-              } else if (val == 'Supplier') {
-                dispatch(setUserData({...user.data(), userType: 'Supplier'}));
-                navigateAndReset('OnBoardPhoto');
+              else{
+                auth().signOut()
+                .then(()=>{
+                  navigateAndReset('OnboardingScreen');
+                })
               }
-              // if (user.data().userType == AppConstant.advertiser) {
-              //     navigateAndReset("MyAdvertiserOnBoardStack")
-              // }
-              // else if(user.data().userType == AppConstant.vendor)
-              //     navigateAndReset("MyVendorOnBoardStack")
-              // else
-              //     navigateAndReset("MyServiceProviderOnBoardStack")
-            }
-            //setLoading(false)
           }
         });
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }
   return (
     <View style={{flex: 1}}>
       <CenteredLoader />

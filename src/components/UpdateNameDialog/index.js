@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import Util from "../../common/util";
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../store/userSlice";
 const UpdateNameDialog = ({visible,setMenuOpen,title}) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [value,setValue] = useState("")
+  const {userType,name} = useSelector(state=>state.user.userData)
+  const [value,setValue] = useState(name??"")
   const dispatch = useDispatch()
   const [loading,setLoading] = useState(false)
   const onClose = () => {
@@ -20,11 +21,11 @@ const UpdateNameDialog = ({visible,setMenuOpen,title}) => {
   },[visible])
   const getUserData = () => {
     firestore()
-      .collection('Users')
+      .collection(userType)
       .doc(auth().currentUser.uid)
       .get()
       .then(res => {
-        dispatch(setUserData(res.data()));
+        dispatch(setUserData({...res.data(),userType}));
       })
       .catch(error => {
         console.log(error);
@@ -37,12 +38,13 @@ const UpdateNameDialog = ({visible,setMenuOpen,title}) => {
     }
     setLoading(true)
     firestore()
-    .collection("Users")
+    .collection(userType)
     .doc(auth().currentUser.uid)
     .update({
       name:value
     })
     .then(()=>{
+      setValue(value)
       getUserData()
       onClose()
     })

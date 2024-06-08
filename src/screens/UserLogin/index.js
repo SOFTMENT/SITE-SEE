@@ -63,7 +63,7 @@ const UserLogin = (props) => {
             .then(async () => {
                 const user = auth().currentUser
                 await firestore()
-                    .collection("Users")
+                    .collection(Util.getUserType(tab))
                     .doc(user.uid)
                     .get()
                     .then(async doc => {
@@ -184,7 +184,7 @@ const UserLogin = (props) => {
         const userData = auth().currentUser
         setLoading(true)
         await firestore()
-            .collection("Users")
+            .collection(Util.getUserType(tab))
             .doc(userData.uid)
             .get()
             .then(async(user) => {
@@ -228,15 +228,17 @@ const UserLogin = (props) => {
             })
     }
     const setUserData = async (fullName) => {
-        console.log(fullName)
         const user = auth().currentUser
         //console.log(user)
         try {
             setLoading(true)
             await firestore()
-                .collection('Users')
+                .collection(Util.getUserType(tab))
                 .doc(user.uid)
                 .set({
+                    ...(Util.getUserType(tab) == "Suppliers" && {
+                        membershipActive:false
+                    }),
                     name: fullName ? fullName : user.displayName,
                     email: user.providerData[0].email,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -327,7 +329,7 @@ const UserLogin = (props) => {
             keyboardShouldPersistTaps={"handled"}
         // stickyHeaderHiddenOnScroll
         >
-            <Header back extraStyle={{paddingVertical:0}} navigation={navigation}/>
+            <Header back extraStyle={{paddingTop:10}} navigation={navigation}/>
             <View
                 style={styles.container}>
                 {/* <Header navigation={navigation} back /> */}

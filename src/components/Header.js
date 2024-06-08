@@ -92,6 +92,7 @@ const Header = ({
           <TextInput
             placeholder="Search wishlist"
             style={[styles.txtInput,{flex:1}]}
+            placeholderTextColor={"gray"}
             autoCapitalize="none"
             autoComplete={'off'}
             onChangeText={handleSearch}
@@ -179,6 +180,5 @@ const styles = StyleSheet.create({
   txtInput: {
     color: 'black',
     fontFamily: fonts.regular,
-    
   },
 });

@@ -2,9 +2,11 @@ import auth from '@react-native-firebase/auth';
 import firestore, { firebase } from '@react-native-firebase/firestore';
 import { AlertDialog, Button, Input, Toast } from "native-base";
 import React, { useState } from "react";
+import { useSelector } from 'react-redux';
 const AddQuestionsDialog = ({visible,onClose}) => {
   const [value,setValue] = useState('')
   const [loading,setLoading] = useState(false)
+  const {userType} = useSelector(state=>state.user.userData)
   const cancelRef = React.useRef(null);
   const handleSubmit = async() => {
     if(!value.trim().length){
@@ -16,7 +18,7 @@ const AddQuestionsDialog = ({visible,onClose}) => {
     }
     setLoading(true)
     await firestore()
-    .collection("Users")
+    .collection(userType)
     .doc(auth().currentUser.uid)
     .collection("Questions") 
     .add({

@@ -17,7 +17,7 @@ const UserProductCard = ({item,navigation,favorites}) => {
     const [favIsSelected,setFavIsSelected] = useState(isSelected)
     useEffect(()=>{
     firestore()
-    .collection("Users")
+    .collection("Suppliers")
     .doc(item.supplierId)
     .get()
     .then(doc=>{

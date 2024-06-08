@@ -28,24 +28,24 @@ export default function ListingDetail(props) {
     const [favIsSelected,setFavIsSelected] = useState(isSelected)
     const [supplierData,setSupplierData] = useState(null)
     const [taggedSupplierData,setTaggedSupplierData] = useState(null)
+    console.log(taggedSupplierData)
     const [selectedImage,setSelectedImage] = useState(item.listingImages[0])
     const dispatch = useDispatch()
     useEffect(()=>{
         firestore()
-        .collection("Users")
+        .collection("Suppliers")
         .doc(item.supplierId)
         .get()
         .then(doc=>{
             notifySupplier(doc.data().fcmToken,doc.data().uid)
             setSupplierData(doc.data())
         })
-        if(item?.supplierTag && typeof(item?.supplier) == 'string'){
+        if(item?.supplierTag && typeof(item?.supplierTag) == 'string'){
             firestore()
-            .collection("Users")
+            .collection("Suppliers")
             .doc(item?.supplierTag)
             .get()
             .then(doc=>{
-                console.log("here")
                 // notifySupplier(doc.data().fcmToken)
                 setTaggedSupplierData(doc.data())
             })
@@ -189,7 +189,7 @@ export default function ListingDetail(props) {
                         <HStack mt={2}>
                             <Text style={styles.supplier}>Supplier - </Text>
                             <Link onPress={()=>navigation.navigate("ListingBySupplier",{supplierId:item.supplierId,supplierData})}>
-                                <Text style={[styles.supplier,{color:colors.appDefaultColor,fontFamily:fonts.medium,marginLeft:3}]}>{startCase(supplierData?.name)}</Text>
+                                <Text style={[styles.supplier,{color:colors.appDefaultColor,fontFamily:fonts.medium,marginLeft:3}]}>{supplierData?.name}</Text>
                             </Link>
                         </HStack>
                         {
@@ -229,21 +229,23 @@ export default function ListingDetail(props) {
                 <View style={styles.desView}>
                     <Text style={styles.about}>{item.about}</Text>
                 </View>
-                <MyButton
-                    title={"Message"}
-                    txtStyle={{color:"white"}}
-                    containerStyle={{marginTop:20,borderRadius:spacing.small,backgroundColor:"black"}}
-                    onPress={handleChat}
-                />
-                {
-                    item.purchaseUrl && 
+                <HStack alignItems={"center"} mt={5} justifyContent={"space-between"} flex={1} space={2}>
                     <MyButton
-                        title={"Purchase Now"}
+                        title={"Message"}
                         txtStyle={{color:"white"}}
-                        containerStyle={{marginTop:10,borderRadius:spacing.small}}
-                        onPress={handlePurchase}
+                        containerStyle={{borderRadius:spacing.small,backgroundColor:"black",flex:1}}
+                        onPress={handleChat}
                     />
-                }
+                    {
+                        item.purchaseUrl && 
+                        <MyButton
+                            title={"Purchase Now"}
+                            txtStyle={{color:"white"}}
+                            containerStyle={{borderRadius:spacing.small,flex:1}}
+                            onPress={handlePurchase}
+                        />
+                    }
+                </HStack>
             </View>
             
         </ScrollView>

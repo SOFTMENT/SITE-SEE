@@ -18,7 +18,7 @@ import UpdateNameDialog from '../../../components/UpdateNameDialog';
 
 const AdvertiserProfile = props => {
   const {navigation, userData, state} = props;
-  const {profilePic, name, uid} = userData;
+  const {profilePic, name, uid, userType} = userData;
   const {favorites, orderCount} = useSelector(state => state.user);
   const [profileImage, setProfileImage] = useState(null);
   const [menuOpen,setMenuOpen] = useState(false)
@@ -60,7 +60,7 @@ const AdvertiserProfile = props => {
       .doc(uid)
       .get()
       .then(res => {
-        dispatch(setUserData(res.data()));
+        dispatch(setUserData({...res.data(),userType}));
       })
       .catch(error => {
         console.log(error);

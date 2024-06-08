@@ -3,21 +3,19 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
-import { Button, Stack, useDisclose } from 'native-base';
 import React, { useRef, useState } from 'react';
-import { Image, Platform, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import images from "../../assets/images";
 import Util from '../../common/util';
 import { spacing } from "../../common/variables";
+import Header from '../../components/Header';
 import MyButton from "../../components/MyButton";
 import MyTextInput from "../../components/MyTextInput";
 import { navigateAndReset } from '../../navigators/RootNavigation';
 import colors from '../../theme/colors';
 import styles from "./styles";
-import Header from '../../components/Header';
-import MemberShipActionSheet from '../../components/MembershipActionSheet';
 const UserRegister = (props) => {
     const { navigation, route } = props
     const [name, setName] = useState("")
@@ -85,7 +83,7 @@ const UserRegister = (props) => {
             )
             const user = auth().currentUser
             await firestore()
-                .collection('Users')
+                .collection(Util.getUserType(tab))
                 .doc(user.uid)
                 .set({
                     ...(tab == 2 && {membershipActive:false}),
@@ -225,7 +223,7 @@ const UserRegister = (props) => {
     const handleUser = async (fullName) => {
         const userData = auth().currentUser
         await firestore()
-            .collection("Users")
+            .collection(Util.getUserType(tab))
             .doc(userData.uid)
             .get()
             .then(async(user) => {
@@ -265,20 +263,20 @@ const UserRegister = (props) => {
         //console.log(fullName)
         try {
             await firestore()
-                .collection('Users')
+                .collection(Util.getUserType(tab))
                 .doc(user.uid)
                 .set({
                     name: fullName ? fullName : user.displayName,
                     email: user.providerData[0].email,
-                    ...(tab == 2 && {membershipActive:false}),
+                    ...(Util.getUserType(tab) == "Suppliers" && {
+                        membershipActive:false
+                    }),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     //lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
-                    userType: Util.getUserType(tab),
                     profileCompleted: false,
                     // phoneVerified: false,
                     uid: user.uid,
                     //...(tab == 2 && { accountStatus:false,balance:0 }),
-                    accountStatus:false,balance:0,
                     // status: "pending"
                 })
             // if (tab != 1)
@@ -322,7 +320,7 @@ const UserRegister = (props) => {
             keyboardShouldPersistTaps={"handled"}
         // stickyHeaderHiddenOnScroll
         >
-            <Header back extraStyle={{paddingVertical:0}} navigation={navigation}/>
+            <Header back extraStyle={{paddingTop:10}} navigation={navigation}/>
             <View
                 style={styles.container}>
                 <View

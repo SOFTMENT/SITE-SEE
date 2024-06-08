@@ -25,7 +25,7 @@ export default function VendorListingDetail(props) {
     const dispatch = useDispatch()
     useEffect(()=>{
         firestore()
-        .collection("Users")
+        .collection("Suppliers")
         .doc(item.supplierId)
         .get()
         .then(doc=>{

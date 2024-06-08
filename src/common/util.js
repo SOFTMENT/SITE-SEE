@@ -106,10 +106,10 @@ const Util = {
     getUserType : (tab) => {
         switch(tab){
             case 1 : {
-                return "User"
+                return "Users"
             }
             case 2 : {
-                return "Supplier"
+                return "Suppliers"
             }
             // case 3 : {
             //     return "Service Provider"

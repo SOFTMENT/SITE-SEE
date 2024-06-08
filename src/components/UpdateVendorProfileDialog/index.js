@@ -9,7 +9,7 @@ import { Keyboard } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 const UpdateVendorProfileDialog = ({visible,setMenuOpen,title}) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const {businessName,webUrl:webUrll,websiteName:webName} = useSelector(state => state.user.userData)??{};
+  const {businessName,webUrl:webUrll,websiteName:webName,userType} = useSelector(state => state.user.userData)??{};
   const [value,setValue] = useState(businessName??"")
   const [webUrl,setWebUrl] = useState(webUrll??'')
   const [websiteName,setWebsiteName] = useState(webName??'')
@@ -32,11 +32,11 @@ const UpdateVendorProfileDialog = ({visible,setMenuOpen,title}) => {
   },[visible])
   const getUserData = () => {
     firestore()
-      .collection('Users')
+      .collection('Suppliers')
       .doc(auth().currentUser.uid)
       .get()
       .then(res => {
-        dispatch(setUserData(res.data()));
+        dispatch(setUserData({...res.data(),userType}));
       })
       .catch(error => {
         console.log(error);
@@ -81,7 +81,7 @@ const UpdateVendorProfileDialog = ({visible,setMenuOpen,title}) => {
     }
     else{
       const obj = {
-        name:value.trim(),
+        businessName:value.trim(),
         webUrl:webUrl.trim(),
         websiteName:websiteName.trim()
       }
@@ -92,7 +92,7 @@ const UpdateVendorProfileDialog = ({visible,setMenuOpen,title}) => {
           obj.websiteName = websiteName.trim()
       }
       await firestore()
-      .collection("Users")
+      .collection("Suppliers")
       .doc(auth().currentUser.uid)
       .update(obj)
       toast.show({
@@ -112,7 +112,7 @@ const UpdateVendorProfileDialog = ({visible,setMenuOpen,title}) => {
   const checkForDuplicateUsername = async() => {
     if(businessName != value.trim()){
       const docs = await firestore()
-      .collection("Users")
+      .collection("Suppliers")
       .where("businessName","==",value)
       .get()
       if(docs.empty){
