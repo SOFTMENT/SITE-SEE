@@ -20,20 +20,20 @@ import NotificationScreen from '../screens/NotificationScreen';
 import VendorAllListing from '../screens/VendorScreens/VendorAllListing';
 import VendorListingDetail from '../screens/VendorScreens/VendorListingDetail';
 import AddQuestionsSupplier from '../screens/VendorScreens/AddQuestionsSupplier';
+import { createStackNavigator } from '@react-navigation/stack';
 const Tab = createBottomTabNavigator();
-const VendorSpacesStack = createNativeStackNavigator();
-const InboxStack = createNativeStackNavigator();
-const VendorHomeStack = createNativeStackNavigator();
-const VendorAddListing = createNativeStackNavigator();
-const VendorProfileStack = createNativeStackNavigator();
+const VendorSpacesStack = createStackNavigator();
+const InboxStack = createStackNavigator();
+const VendorHomeStack = createStackNavigator();
+const VendorAddListing = createStackNavigator();
+const VendorProfileStack = createStackNavigator();
 const MyVendorProfileStack = () => {
   return (
     <VendorProfileStack.Navigator
       screenOptions={{
         headerShown: false,
         gestureEnabled:true,
-                gestureDirection: 'horizontal',
-                fullScreenGestureEnabled:true 
+        gestureDirection: 'horizontal',
       }}>
       <VendorProfileStack.Screen
         name="VendorProfile"
@@ -58,8 +58,7 @@ const MyVendorAddListing = () => {
       screenOptions={{
         headerShown: false,
         gestureEnabled:true,
-                gestureDirection: 'horizontal',
-                fullScreenGestureEnabled:true 
+        gestureDirection: 'horizontal',
       }}>
       <VendorAddListing.Screen name="AddListing" component={AddListing} />
     </VendorAddListing.Navigator>
@@ -72,7 +71,6 @@ const MyVendorHomeStack = () => {
         headerShown: false,
         gestureEnabled:true,
         gestureDirection: 'horizontal',
-        fullScreenGestureEnabled:true 
       }}>
       <VendorHomeStack.Screen name="HomeScreen" component={VendorHome} />
       <VendorHomeStack.Screen name="PersonalChat" component={Chat} />
@@ -90,8 +88,7 @@ const MyInboxStack = () => {
       screenOptions={{
         headerShown: false,
         gestureEnabled:true,
-                gestureDirection: 'horizontal',
-                fullScreenGestureEnabled:true 
+        gestureDirection: 'horizontal',
       }}>
       <InboxStack.Screen name="Inbox" component={Inbox} />
       <InboxStack.Screen name="PersonalChat" component={Chat} />

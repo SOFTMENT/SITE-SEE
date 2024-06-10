@@ -1,5 +1,4 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 // import AdminScreen from '../screens/AdminScreen';
 // import HomeScreen from '../screens/HomeScreen';
@@ -28,11 +27,12 @@ import SplashScreen from '../screens/SplashScreen';
 import UserLogin from '../screens/UserLogin';
 import UserRegister from '../screens/UserRegister';
 // import UserSelectScreen from '../screens/UserSelectScreen';
+import { createStackNavigator } from '@react-navigation/stack';
 import { navigationRef } from './RootNavigation';
 import UserBottomTab from './UserBottomTab';
 import VendorBottomTab from './VendorBottomTab';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 // const ServiceStack = createNativeStackNavigator()
 // const MyServiceStack = () => {
 //     return(
@@ -97,8 +97,8 @@ const AppNavigator = () => {
                 screenOptions={{
                     headerShown: false,
                     gestureEnabled:true,
-                    gestureDirection: 'horizontal',
-                    fullScreenGestureEnabled:true 
+                    gestureDirection: 'horizontal', 
+                    //fullScreenGestureEnabled:true 
             }}>
                 <Stack.Screen name="SplashScreen" component={SplashScreen} />
                 <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />

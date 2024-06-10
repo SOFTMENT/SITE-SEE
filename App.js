@@ -1,18 +1,17 @@
 import notifee from '@notifee/react-native';
+import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { StripeProvider } from '@stripe/stripe-react-native';
 import { extendTheme, NativeBaseProvider, View } from 'native-base';
 import React, { useEffect } from 'react';
+import { Platform } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
+import fonts from './assets/fonts';
 import AppRoot from './src';
 import { store } from './src/store';
-import fonts from './assets/fonts';
-import auth from '@react-native-firebase/auth'
-import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Platform } from 'react-native';
 GoogleSignin.configure({
   iosClientId: "236456769546-hbphvbuod79njv10uba6ocf62gc01gj2.apps.googleusercontent.com",
   webClientId:"236456769546-6kto9osph04hr0mjr3i2jf07h7rpjkjp.apps.googleusercontent.com"
@@ -110,7 +109,6 @@ const App = () => {
     >
         
             <Provider store={store}>
-            <AutocompleteDropdownContextProvider>
                 <NativeBaseProvider theme={theme}>
                 
                 <View style={{flex:1,paddingTop: Platform.OS == "ios"?insets.top:insets.top}}>
@@ -118,7 +116,6 @@ const App = () => {
                 </View>
                
                 </NativeBaseProvider>
-                </AutocompleteDropdownContextProvider> 
             </Provider>
             
     </StripeProvider >

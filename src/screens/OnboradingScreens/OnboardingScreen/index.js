@@ -7,10 +7,38 @@ import { spacing } from '../../../common/variables';
 import MyButton from '../../../components/MyButton';
 import styles from './styles';
 import colors from '../../../theme/colors';
+import firestore from '@react-native-firebase/firestore'
 export default function OnboardingScreen(props) {
   const {navigation} = props;
   const inset = useSafeAreaInsets();
   const handleNavigation = tab => {
+    // firestore()
+    // .collection("Users")
+    // .get()
+    // .then(res=>{
+    //   res.docs.map(doc=>{
+    //     if(doc.data().businessName){
+    //       firestore()
+    //       .collection("Suppliers")
+    //       .doc(doc.id)
+    //       .set({
+    //         ...doc.data()
+    //       })
+    //       firestore()
+    //       .collection("Users")
+    //       .doc(doc.id)
+    //       .set({
+    //         createdAt:doc.data().createdAt,
+    //         email:doc.data().email,
+    //         fcmToken:doc.data().fcmToken,
+    //         name:doc.data().name,
+    //         profileCompleted:doc.data().profileCompleted,
+    //         uid:doc.data().uid
+    //       })
+    //     }
+    //   })
+    // })
+    // return
     navigation.navigate("LoginScreen",{tab})
   }
   return (

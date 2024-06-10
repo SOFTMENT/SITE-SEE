@@ -3,36 +3,33 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Icon } from 'native-base';
 import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
-import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import fonts from '../../assets/fonts';
+import HomeIcon from '../assets/svgs/home.svg';
 import { fontSizes } from '../common/variables';
 import Chat from '../screens/Chat';
 import Inbox from '../screens/Inbox';
+import NotificationScreen from '../screens/NotificationScreen';
 import SearchScreen from '../screens/SearchScreen';
-import AdvertiserDetail from '../screens/UserScreens/ListingDetail';
 import UserHome from '../screens/UserScreens/AdvertiserHome';
-import AdvertiserOrderDetails from '../screens/UserScreens/AdvertiserOrderDetails';
-import AdvertiserOrders from '../screens/UserScreens/AdvertiserOrders';
 import AdvertiserProfile from '../screens/UserScreens/AdvertiserProfile';
 import CategoryScreen from '../screens/UserScreens/CartegoryScreen';
 import FavoritesScreen from '../screens/UserScreens/FavoritesScreen';
-import PaymentScreen from '../screens/UserScreens/PaymentScreen';
-import ServiceProviderProfiles from '../screens/UserScreens/ServiceProviderProfiles';
-import colors from '../theme/colors';
-import HomeIcon from '../assets/svgs/home.svg'
+import ListingBySupplier from '../screens/UserScreens/ListingBySupplier';
+import ListingDetail from '../screens/UserScreens/ListingDetail';
 import LocationSelectorScreen from '../screens/UserScreens/LocationSelectorScreen';
 import MyListingScreenUser from '../screens/UserScreens/MyListingScreenUser';
-import ListingDetail from '../screens/UserScreens/ListingDetail';
-import ListingBySupplier from '../screens/UserScreens/ListingBySupplier';
-import NotificationScreen from '../screens/NotificationScreen';
+import PaymentScreen from '../screens/UserScreens/PaymentScreen';
+import ServiceProviderProfiles from '../screens/UserScreens/ServiceProviderProfiles';
 import UserSearchHistory from '../screens/UserScreens/UserSearchHistory';
+import colors from '../theme/colors';
+import { createStackNavigator } from '@react-navigation/stack';
 const Tab = createBottomTabNavigator();
-const AdHomeStack = createNativeStackNavigator()
-const AdOrderStack = createNativeStackNavigator()
-const InboxStack = createNativeStackNavigator()
-const ProfileStack = createNativeStackNavigator()
-const FavoriteStack = createNativeStackNavigator()
+const AdHomeStack = createStackNavigator()
+const AdOrderStack = createStackNavigator()
+const InboxStack = createStackNavigator()
+const ProfileStack = createStackNavigator()
+const FavoriteStack = createStackNavigator()
 const MyFavoriteStack = () => {
     return(
         <FavoriteStack.Navigator
@@ -40,7 +37,6 @@ const MyFavoriteStack = () => {
                 headerShown:false,
                 gestureEnabled:true,
                 gestureDirection: 'horizontal',
-                fullScreenGestureEnabled:true 
             }}
         >
             <FavoriteStack.Screen name='Favorite' component={FavoritesScreen}/>
@@ -56,7 +52,6 @@ const MyProfileStack = () => {
                 headerShown:false,
                 gestureEnabled:true,
                 gestureDirection: 'horizontal',
-                fullScreenGestureEnabled:true 
             }}
         >
             <ProfileStack.Screen name='ProfileScreen' component={AdvertiserProfile}/>
@@ -71,7 +66,6 @@ const MyInboxStack = () => {
                 headerShown:false,
                 gestureEnabled:true,
                 gestureDirection: 'horizontal',
-                fullScreenGestureEnabled:true 
             }}
         >
             <InboxStack.Screen name='Inbox' component={Inbox}/>
@@ -86,7 +80,6 @@ const MyAdHomeStack = () => {
                 headerShown:false,
                 gestureEnabled:true,
                 gestureDirection: 'horizontal',
-                fullScreenGestureEnabled:true 
             }}
         >
             <AdHomeStack.Screen name='AdHome' component={UserHome}/>
@@ -103,19 +96,7 @@ const MyAdHomeStack = () => {
         </AdHomeStack.Navigator>
     )
 }
-const MyAdOrderStack = () => {
-    return(
-        <AdOrderStack.Navigator
-            screenOptions={{
-                headerShown:false
-            }}
-        >
-            <AdOrderStack.Screen name='AdOrder' component={AdvertiserOrders}/>
-            
-            <AdOrderStack.Screen name='AdvertiserOrderDetails' component={AdvertiserOrderDetails}/>
-        </AdOrderStack.Navigator>
-    )
-}
+
 function UserBottomTab() {
     return (
         <Tab.Navigator

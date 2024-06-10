@@ -640,9 +640,6 @@ PODS:
     - FirebaseAuth (~> 10.3.0)
   - Firebase/CoreOnly (10.3.0):
     - FirebaseCore (= 10.3.0)
-  - Firebase/DynamicLinks (10.3.0):
-    - Firebase/CoreOnly
-    - FirebaseDynamicLinks (~> 10.3.0)
   - Firebase/Firestore (10.3.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 10.3.0)
@@ -670,8 +667,6 @@ PODS:
     - FirebaseCore (~> 10.0)
   - FirebaseCoreInternal (10.25.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseDynamicLinks (10.3.0):
-    - FirebaseCore (~> 10.0)
   - FirebaseFirestore (10.3.0):
     - abseil/algorithm (~> 1.20211102.0)
     - abseil/base (~> 1.20211102.0)
@@ -721,27 +716,10 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30911.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleMLKit/ImageLabeling (4.0.0):
-    - GoogleMLKit/MLKitCore
-    - MLKitImageLabeling (~> 3.0.0)
-  - GoogleMLKit/MLKitCore (4.0.0):
-    - MLKitCommon (~> 9.0.0)
   - GoogleSignIn (6.2.4):
     - AppAuth (~> 1.5)
     - GTMAppAuth (~> 1.3)
     - GTMSessionFetcher/Core (< 3.0, >= 1.1)
-  - GoogleToolboxForMac/DebugUtils (2.3.2):
-    - GoogleToolboxForMac/Defines (= 2.3.2)
-  - GoogleToolboxForMac/Defines (2.3.2)
-  - GoogleToolboxForMac/Logger (2.3.2):
-    - GoogleToolboxForMac/Defines (= 2.3.2)
-  - "GoogleToolboxForMac/NSData+zlib (2.3.2)":
-    - GoogleToolboxForMac/Defines (= 2.3.2)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.3.2)":
-    - GoogleToolboxForMac/DebugUtils (= 2.3.2)
-    - GoogleToolboxForMac/Defines (= 2.3.2)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.2)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.3.2)"
   - GoogleUtilities/AppDelegateSwizzler (7.13.3):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -767,8 +745,6 @@ PODS:
   - GoogleUtilities/UserDefaults (7.13.3):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - GoogleUtilitiesComponents (1.1.0):
-    - GoogleUtilities/Logger
   - "gRPC-C++ (1.44.0)":
     - "gRPC-C++/Implementation (= 1.44.0)"
     - "gRPC-C++/Interface (= 1.44.0)"
@@ -849,45 +825,12 @@ PODS:
   - lottie-react-native (5.1.6):
     - lottie-ios (~> 3.4.0)
     - React-Core
-  - MLImage (1.0.0-beta4)
-  - MLKitCommon (9.0.0):
-    - GoogleDataTransport (~> 9.0)
-    - GoogleToolboxForMac/Logger (~> 2.1)
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
-    - GoogleUtilities/UserDefaults (~> 7.0)
-    - GoogleUtilitiesComponents (~> 1.0)
-    - GTMSessionFetcher/Core (< 3.0, >= 1.1)
-  - MLKitImageLabeling (3.0.0):
-    - MLKitCommon (~> 9.0)
-    - MLKitImageLabelingCommon (~> 5.0)
-    - MLKitVision (~> 5.0)
-    - MLKitVisionKit (~> 6.0)
-  - MLKitImageLabelingCommon (5.0.0):
-    - MLKitCommon (~> 9.0)
-    - MLKitVision (~> 5.0)
-  - MLKitObjectDetectionCommon (5.0.0):
-    - MLKitCommon (~> 9.0)
-    - MLKitVision (~> 5.0)
-  - MLKitVision (5.0.0):
-    - GoogleToolboxForMac/Logger (~> 2.1)
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-    - GTMSessionFetcher/Core (< 3.0, >= 1.1)
-    - MLImage (= 1.0.0-beta4)
-    - MLKitCommon (~> 9.0)
-  - MLKitVisionKit (6.0.0):
-    - MLKitCommon (~> 9.0)
-    - MLKitImageLabelingCommon (~> 5.0)
-    - MLKitObjectDetectionCommon (~> 5.0)
-    - MLKitVision (~> 5.0)
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
     - nanopb/encode (= 2.30909.1)
   - nanopb/decode (2.30909.1)
   - nanopb/encode (2.30909.1)
   - PromisesObjC (2.4.0)
-  - PurchasesHybridCommon (4.18.0):
-    - RevenueCat (= 4.21.0)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -1138,7 +1081,7 @@ PODS:
     - React-Core
   - react-native-geolocation-service (5.3.1):
     - React
-  - react-native-maps (1.15.6):
+  - react-native-maps (1.15.1):
     - React-Core
   - react-native-safe-area-context (3.4.1):
     - React-Core
@@ -1212,7 +1155,6 @@ PODS:
     - React-jsi (= 0.70.8)
     - React-logger (= 0.70.8)
     - React-perflogger (= 0.70.8)
-  - RevenueCat (4.21.0)
   - RNAppleAuthentication (2.3.0):
     - React-Core
   - RNCAsyncStorage (1.23.1):
@@ -1226,11 +1168,6 @@ PODS:
     - React-Core
   - RNFBAuth (16.7.0):
     - Firebase/Auth (= 10.3.0)
-    - React-Core
-    - RNFBApp
-  - RNFBDynamicLinks (16.7.0):
-    - Firebase/DynamicLinks (= 10.3.0)
-    - GoogleUtilities/AppDelegateSwizzler
     - React-Core
     - RNFBApp
   - RNFBFirestore (16.7.0):
@@ -1267,16 +1204,10 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
-  - RNMLKitImageLabeling (1.4.0):
-    - GoogleMLKit/ImageLabeling (= 4.0.0)
-    - React
   - RNNotifee (7.8.2):
     - React-Core
     - RNNotifee/NotifeeCore (= 7.8.2)
   - RNNotifee/NotifeeCore (7.8.2):
-    - React-Core
-  - RNPurchases (5.16.0):
-    - PurchasesHybridCommon (= 4.18.0)
     - React-Core
   - RNReanimated (2.17.0):
     - DoubleConversion
@@ -1409,7 +1340,6 @@ DEPENDENCIES:
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
-  - "RNFBDynamicLinks (from `../node_modules/@react-native-firebase/dynamic-links`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBFunctions (from `../node_modules/@react-native-firebase/functions`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
@@ -1418,9 +1348,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
-  - "RNMLKitImageLabeling (from `../node_modules/@react-native-ml-kit/image-labeling`)"
   - "RNNotifee (from `../node_modules/@notifee/react-native`)"
-  - RNPurchases (from `../node_modules/react-native-purchases`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNShare (from `../node_modules/react-native-share`)
@@ -1447,7 +1375,6 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreExtension
     - FirebaseCoreInternal
-    - FirebaseDynamicLinks
     - FirebaseFirestore
     - FirebaseFunctions
     - FirebaseInstallations
@@ -1457,11 +1384,8 @@ SPEC REPOS:
     - FirebaseStorage
     - fmt
     - GoogleDataTransport
-    - GoogleMLKit
     - GoogleSignIn
-    - GoogleToolboxForMac
     - GoogleUtilities
-    - GoogleUtilitiesComponents
     - "gRPC-C++"
     - gRPC-Core
     - GTMAppAuth
@@ -1471,17 +1395,8 @@ SPEC REPOS:
     - Libuv-gRPC
     - libwebp
     - lottie-ios
-    - MLImage
-    - MLKitCommon
-    - MLKitImageLabeling
-    - MLKitImageLabelingCommon
-    - MLKitObjectDetectionCommon
-    - MLKitVision
-    - MLKitVisionKit
     - nanopb
     - PromisesObjC
-    - PurchasesHybridCommon
-    - RevenueCat
     - SDWebImage
     - SDWebImageWebPCoder
     - Stripe
@@ -1593,8 +1508,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
     :path: "../node_modules/@react-native-firebase/auth"
-  RNFBDynamicLinks:
-    :path: "../node_modules/@react-native-firebase/dynamic-links"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
   RNFBFunctions:
@@ -1611,12 +1524,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-google-signin/google-signin"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
-  RNMLKitImageLabeling:
-    :path: "../node_modules/@react-native-ml-kit/image-labeling"
   RNNotifee:
     :path: "../node_modules/@notifee/react-native"
-  RNPurchases:
-    :path: "../node_modules/react-native-purchases"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -1653,7 +1562,6 @@ SPEC CHECKSUMS:
   FirebaseCore: 988754646ab3bd4bdcb740f1bfe26b9f6c0d5f2a
   FirebaseCoreExtension: 93d252fabdc9696bf14a73b04d84877ab9b3a832
   FirebaseCoreInternal: 910a81992c33715fec9263ca7381d59ab3a750b7
-  FirebaseDynamicLinks: 51c81d07bd63155bb56d76b0abdda79c8a3d8d02
   FirebaseFirestore: 244f71ff14ef44f39e00b44d356eac708ce03103
   FirebaseFunctions: d8415d2237cc807d05fa0a921d645f50a0d9d803
   FirebaseInstallations: 91950fe859846fff0fbd296180909dd273103b09
@@ -1664,11 +1572,8 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
-  GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
-  GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
-  GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
@@ -1680,16 +1585,8 @@ SPEC CHECKSUMS:
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   lottie-ios: 8f97d3271e155c2d688875c29cd3c74908aef5f8
   lottie-react-native: 8f9d4be452e23f6e5ca0fdc11669dc99ab52be81
-  MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
-  MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
-  MLKitImageLabeling: 9fcdbbfbc454f22009c10015c403ac6319385cdf
-  MLKitImageLabelingCommon: 79ffbc10bd0c3a6407aa423aeb076f76a8883e15
-  MLKitObjectDetectionCommon: 424e43365d7ef7dd7005a4799e5303eeb4287fec
-  MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
-  MLKitVisionKit: 5b5472d40ffc143bda693ba20a3cff44fe627d41
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  PurchasesHybridCommon: 6b510d4965166df2137347a414d6a8e2906d5a5e
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: 35a7977a5a3cb2d3830c3fef7352b7b116115829
   RCTTypeSafety: 259790fb8b16c94e57e0d3d1e2479e69a2b93f50
@@ -1710,7 +1607,7 @@ SPEC CHECKSUMS:
   react-native-document-picker: cd4d6b36a5207ad7a9e599ebb9eb0c2e84fa0b87
   react-native-fbsdk-next: 16e652b5f1236492631185c58ec2ae15b029119d
   react-native-geolocation-service: 608e1da71a1ac31b4de64d9ef2815f697978c55b
-  react-native-maps: 7b2c2cee95271592a92ba485eea1dec66a363a6e
+  react-native-maps: 4c07b21deac3ac3579558956b63e288efb8725bb
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   react-native-slider: bc212e8d10ee28f51cd0db28c7f23827e6adec0a
   react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1
@@ -1726,13 +1623,11 @@ SPEC CHECKSUMS:
   React-RCTVibration: 19d21a3ed620352180800447771f68a101f196e9
   React-runtimeexecutor: f795fd426264709901c09432c6ce072f8400147e
   ReactCommon: c440e7f15075e81eb29802521c58a1f38b1aa903
-  RevenueCat: 465a9dc1fff60b09f29792082e5d5d5aeed01122
   RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNCAsyncStorage: 826b603ae9c0f88b5ac4e956801f755109fa4d5c
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
   RNFBApp: 1ee535dcb7773ca612d3a2e53a1f78f8f2fb6abf
   RNFBAuth: 58ab8f774f9ff45707f2bfbf4fd74e8f7b4220b9
-  RNFBDynamicLinks: 7c409b3d7f0fdad7aaf96837db627a6c554e58aa
   RNFBFirestore: 4fcf5ea5a3c8db867a5fc789322fb7abf53a7652
   RNFBFunctions: ddf76513cc57c5f4965ef899d0d389f00efbffb5
   RNFBMessaging: 04ecf12bae7543cd8df145f1b26d89d867594be7
@@ -1741,9 +1636,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 7d8bc16a05220fa1827ff734e418d9044b0cce3d
   RNGoogleSignin: 81521697b2c8f97f9a586ac7257b1a1d9b51b115
   RNImageCropPicker: 14fe1c29298fb4018f3186f455c475ab107da332
-  RNMLKitImageLabeling: 76c9525ac012dd7486693ebfc358c38cfab91995
   RNNotifee: 8e2d3df3f0e9ce8f5d1fe4c967431138190b6175
-  RNPurchases: 6744af10718d9bd85b9daaa6c1b47196e295b6b4
   RNReanimated: bec7736122a268883bdede07f1bf9cf4b40158db
   RNScreens: b940b46ae5987e138c4fadb6b264d09177932b4d
   RNShare: 32e97adc8d8c97d4a26bcdd3c45516882184f8b6
