@@ -1,18 +1,26 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
-import { geohashForLocation } from 'geofire-common';
-import { Icon, ScrollView, Select, VStack, useDisclose } from 'native-base';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Platform, Pressable, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import {geohashForLocation} from 'geofire-common';
+import {Icon, ScrollView, Select, VStack, useDisclose} from 'native-base';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {
+  ActivityIndicator,
+  Platform,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import Helper from '../../../common/Helper';
 import Util from '../../../common/util';
-import { spacing } from '../../../common/variables';
+import {fontSizes, spacing} from '../../../common/variables';
 import Header from '../../../components/Header';
 import LoaderComponent from '../../../components/LoaderComponent';
 import MyButton from '../../../components/MyButton';
@@ -21,9 +29,10 @@ import PhotoPicker from '../../../components/PhotoPicker';
 import colors from '../../../theme/colors';
 import styles from './styles';
 import algoliasearch from 'algoliasearch';
-import { debounce } from 'lodash';
-import { listingTypes } from '../../../config/appConfig';
+import {debounce} from 'lodash';
+import {listingTypes} from '../../../config/appConfig';
 import UserNameActionSheet from '../../../components/UserNameActionSheet';
+import fonts from '../../../../assets/fonts';
 const algoliaClient = algoliasearch(
   'MOMHBUJFM8',
   '110bf4874cab087690527dec42643d51',
@@ -33,7 +42,11 @@ export default function EditListing(props) {
   const {navigation, route} = props;
   const {item} = route.params;
   const {isOpen, onToggle, onClose, onOpen} = useDisclose();
-  const {isOpen:isUserNameSheetOpen, onToggle:onUserNameSheetToggle, onClose:onUserNameSheetOnClose, } = useDisclose();
+  const {
+    isOpen: isUserNameSheetOpen,
+    onToggle: onUserNameSheetToggle,
+    onClose: onUserNameSheetOnClose,
+  } = useDisclose();
   const [locationAllState, setLocationAllState] = useState({
     address: item.location.address,
     location: {latitude: item.location.lat, longitude: item.location.lng},
@@ -44,7 +57,9 @@ export default function EditListing(props) {
     ref.current?.setAddressText(item.location.address);
   }, []);
   const [purchaseUrl, setPurchaseUrl] = useState(item?.purchaseUrl ?? '');
-  const [listingType,setListingType] = useState(item?.listingType ?? "Permanent")
+  const [listingType, setListingType] = useState(
+    item?.listingType ?? 'Permanent',
+  );
   const [about, setAbout] = useState(item.about);
   const [title, setTitle] = useState(item.title);
   const [images, setImages] = useState(item.listingImages);
@@ -52,10 +67,24 @@ export default function EditListing(props) {
   const categories = useSelector(state => state.user.categories);
   const [category, setCategory] = useState(item.category);
   const [loaderVisibility, setLoaderVisibility] = useState(false);
-  const [loading,setLoading] = useState(false)
-  const [query,setQuery] = useState(item?.supplierTag?.name ?? "")
-  const [users,setUsers] = useState([])
-  const [supplierTag,setSupplierTag] = useState(item?.supplierTag ?? null)
+  const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useState('');
+  const [users, setUsers] = useState([]);
+  const [supplierTag, setSupplierTag] = useState(item?.supplierTag ?? null);
+  useEffect(() => {
+    if (item?.supplierTag) getSupplierData();
+  }, []);
+  const getSupplierData = async () => {
+    try {
+      await firestore()
+        .collection('Suppliers')
+        .doc(item?.supplierTag)
+        .get()
+        .then(res => {
+          setQuery(res.data()?.businessName);
+        });
+    } catch (error) {}
+  };
   const handleImage = index => {
     setIndex(index);
     onToggle();
@@ -70,10 +99,10 @@ export default function EditListing(props) {
       address: null,
       location: {},
     });
-    setQuery('')
-    setSupplierTag(null)
-    setListingType('')
-    setPurchaseUrl('')
+    setQuery('');
+    setSupplierTag(null);
+    setListingType('');
+    setPurchaseUrl('');
   };
   const selectImage = img => {
     if (img) {
@@ -83,7 +112,6 @@ export default function EditListing(props) {
     }
   };
   const handleAddSpace = async () => {
-
     if (!images[0]) {
       Util.showMessage('error', 'First image is compulsory');
     } else if (!title.trim().length) {
@@ -112,8 +140,8 @@ export default function EditListing(props) {
           .then(async listingImages => {
             const obj = {
               listingImages,
-              title:title.trim(),
-              about:about.trim(),
+              title: title.trim(),
+              about: about.trim(),
               category,
               geohash: hash,
               listingType,
@@ -126,12 +154,12 @@ export default function EditListing(props) {
                 lat: locationAllState?.location?.latitude ?? '',
                 lng: locationAllState?.location?.longitude ?? '',
               },
+            };
+            if (supplierTag) {
+              obj.supplierTag = supplierTag;
             }
-            if(supplierTag){
-              obj.supplierTag = supplierTag
-            }
-            if(purchaseUrl.trim().length){
-              obj.purchaseUrl = purchaseUrl.trim()
+            if (purchaseUrl.trim().length) {
+              obj.purchaseUrl = purchaseUrl.trim();
             }
             await ref.update(obj);
             Util.showMessage(
@@ -181,39 +209,43 @@ export default function EditListing(props) {
       );
     } catch (error) {}
   };
-  const getUserNamesData = useCallback(async(txt) => {
-    setLoading(true)
-    const res = await searchIndex
-    .search(txt, {
-      filters: 'membershipActive:true',
-      // restrictSearchableAttributes: ['name']
-    })
-    setUsers(res.hits.filter(hit=>hit.uid!=auth().currentUser.uid))
-    setLoading(false)
-}, [query]);
+  const getUserNamesData = useCallback(
+    async txt => {
+      setLoading(true);
+      const res = await searchIndex.search(txt, {
+        filters: 'membershipActive:true',
+        // restrictSearchableAttributes: ['name']
+      });
+      setUsers(res.hits.filter(hit => hit.uid != auth().currentUser.uid));
+      setLoading(false);
+    },
+    [query],
+  );
 
-const debouncedGetUserNamesData = useMemo(() => debounce(getUserNamesData, 1000), [getUserNamesData]);
-const callDebounceFuntion = (txt) => {
-  if (txt.trim().length) {
-    debouncedGetUserNamesData(txt);
-  }
-  else{
-    setUsers([])
-  }
-}
-const handleTag = (uid, name) => {
-  onUserNameSheetOnClose()
-  setQuery(name)
-  setUsers([]) 
-  setSupplierTag(uid)
-}
+  const debouncedGetUserNamesData = useMemo(
+    () => debounce(getUserNamesData, 1000),
+    [getUserNamesData],
+  );
+  const callDebounceFuntion = txt => {
+    if (txt.trim().length) {
+      debouncedGetUserNamesData(txt);
+    } else {
+      setUsers([]);
+    }
+  };
+  const handleTag = (uid, name) => {
+    onUserNameSheetOnClose();
+    setQuery(name);
+    setUsers([]);
+    setSupplierTag(uid);
+  };
 
   return (
     <KeyboardAwareScrollView
       style={styles.container}
       nestedScrollEnabled={false}
       bounces={false}
-      keyboardShouldPersistTaps={"always"}>
+      keyboardShouldPersistTaps={'always'}>
       <Header
         navigation={navigation}
         title="Edit Listing"
@@ -289,7 +321,7 @@ const handleTag = (uid, name) => {
           //isPass
           placeholder={'Listing Name'}
           value={title}
-          autoCapitalize={"words"}
+          autoCapitalize={'words'}
           onChangeText={txt => setTitle(txt)}
           //keyboardType={"number-pad"}
         />
@@ -309,6 +341,16 @@ const handleTag = (uid, name) => {
             textInput: {
               borderRadius: 20,
               backgroundColor: colors.whiteDark,
+              color: colors.black,
+              fontSize: fontSizes.extraExtraSmall,
+              fontFamily: fonts.regular,
+            },
+            listView: {
+              backgroundColor: colors.whiteDark,
+            },
+            description: {
+              color: colors.grey,
+              fontFamily: fonts.regular,
             },
           }}
           //styles={styles.autoCompleteStyles}
@@ -384,27 +426,26 @@ const handleTag = (uid, name) => {
           })}
         </Select>
         <Pressable onPress={onUserNameSheetToggle}>
-         <View pointerEvents='none'>
-         <MyTextInput
-          endIconButton={"chevron-down"}
-          containerStyle={{marginTop: 20}}
-          nonEditable={true}
-          placeholder={'Tag Supplier'}
-          value={query}
-          onChangeText={txt => callDebounceFuntion(txt)}  
-          />
-         </View>
+          <View pointerEvents="none">
+            <MyTextInput
+              endIconButton={'chevron-down'}
+              containerStyle={{marginTop: 20}}
+              nonEditable={true}
+              placeholder={'Tag Supplier'}
+              value={query}
+              onChangeText={txt => callDebounceFuntion(txt)}
+            />
+          </View>
         </Pressable>
-       
-          
+
         <MyTextInput
-         containerStyle={{marginTop: 20}}
-         //iconName={"lock-outline"}
-         //isPass
-         placeholder={'Purchase Link'}
-         value={purchaseUrl}
-         onChangeText={txt => setPurchaseUrl(txt)}
-        keyboardType={"url"}
+          containerStyle={{marginTop: 20}}
+          //iconName={"lock-outline"}
+          //isPass
+          placeholder={'Purchase Link'}
+          value={purchaseUrl}
+          onChangeText={txt => setPurchaseUrl(txt)}
+          keyboardType={'url'}
         />
         <MyTextInput
           numberOfLines={2}
@@ -413,7 +454,7 @@ const handleTag = (uid, name) => {
           multiline={true}
           //iconName={"lock-outline"}
           //isPass
-          autoCapitalize={"words"}
+          autoCapitalize={'words'}
           placeholder={'Listing Description'}
           value={about}
           onChangeText={txt => setAbout(txt)}
@@ -438,8 +479,8 @@ const handleTag = (uid, name) => {
         setImage={selectImage}
         isTF={true}
       />
-      <UserNameActionSheet 
-        isOpen={isUserNameSheetOpen} 
+      <UserNameActionSheet
+        isOpen={isUserNameSheetOpen}
         onClose={onUserNameSheetOnClose}
         callDebounceFuntion={callDebounceFuntion}
         query={query}

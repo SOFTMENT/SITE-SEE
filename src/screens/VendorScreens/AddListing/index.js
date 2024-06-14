@@ -1,20 +1,29 @@
-import auth, { firebase } from '@react-native-firebase/auth';
+import auth, {firebase} from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import algoliasearch from 'algoliasearch';
-import { geohashForLocation } from 'geofire-common';
-import { debounce } from 'lodash';
-import { Icon, ScrollView, Select, VStack, useDisclose } from 'native-base';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Keyboard, Platform, Pressable, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import {geohashForLocation} from 'geofire-common';
+import {debounce} from 'lodash';
+import {Icon, ScrollView, Select, VStack, useDisclose} from 'native-base';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {
+  ActivityIndicator,
+  Keyboard,
+  Platform,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import branch from 'react-native-branch';
 import FastImage from 'react-native-fast-image';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import Helper from '../../../common/Helper';
 import Util from '../../../common/util';
-import { spacing } from '../../../common/variables';
+import {fontSizes, spacing} from '../../../common/variables';
 import Header from '../../../components/Header';
 import LoaderComponent from '../../../components/LoaderComponent';
 import MyButton from '../../../components/MyButton';
@@ -22,10 +31,11 @@ import MyTextInput from '../../../components/MyTextInput';
 import PhotoPicker from '../../../components/PhotoPicker';
 import colors from '../../../theme/colors';
 import styles from './styles';
-import functions from '@react-native-firebase/functions'
+import functions from '@react-native-firebase/functions';
 import RNFS from 'react-native-fs';
-import { listingTypes } from '../../../config/appConfig';
+import {listingTypes} from '../../../config/appConfig';
 import UserNameActionSheet from '../../../components/UserNameActionSheet';
+import fonts from '../../../../assets/fonts';
 const algoliaClient = algoliasearch(
   'MOMHBUJFM8',
   '110bf4874cab087690527dec42643d51',
@@ -34,7 +44,11 @@ const searchIndex = algoliaClient.initIndex('businessName');
 export default function AddListing(props) {
   const {navigation} = props;
   const {isOpen, onToggle, onClose, onOpen} = useDisclose();
-  const {isOpen:isUserNameSheetOpen, onToggle:onUserNameSheetToggle, onClose:onUserNameSheetOnClose, } = useDisclose();
+  const {
+    isOpen: isUserNameSheetOpen,
+    onToggle: onUserNameSheetToggle,
+    onClose: onUserNameSheetOnClose,
+  } = useDisclose();
   const [locationAllState, setLocationAllState] = useState({
     address: null,
     location: {},
@@ -47,12 +61,12 @@ export default function AddListing(props) {
   const [images, setImages] = useState([]);
   const [index, setIndex] = useState(0);
   const [category, setCategory] = useState('');
-  const [listingType,setListingType] = useState('')
+  const [listingType, setListingType] = useState('');
   const [loaderVisibility, setLoaderVisibility] = useState(false);
-  const [loading,setLoading] = useState(false)
-  const [query,setQuery] = useState("")
-  const [users,setUsers] = useState([])
-  const [supplierTag,setSupplierTag] = useState(null)
+  const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useState('');
+  const [users, setUsers] = useState([]);
+  const [supplierTag, setSupplierTag] = useState(null);
   const {latitude, longitude} =
     useSelector(state => state.user.currentPosition) ?? {};
   const location = useSelector(state => state.user.currentLocation) ?? {};
@@ -68,26 +82,31 @@ export default function AddListing(props) {
       });
     }
   }, [location]);
-  const getUserNamesData = useCallback(async(txt) => {
-      setLoading(true)
-      const res = await searchIndex
-      .search(txt, {
+  const getUserNamesData = useCallback(
+    async txt => {
+      setLoading(true);
+      const res = await searchIndex.search(txt, {
         filters: 'membershipActive:true',
         // restrictSearchableAttributes: ['name']
-      })
-      setUsers(res.hits.filter(hit=>hit.uid!=auth().currentUser.uid))
-      setLoading(false)
-  }, [query]);
+      });
+      console.log(res.hits);
+      setUsers(res.hits.filter(hit => hit.uid != auth().currentUser.uid));
+      setLoading(false);
+    },
+    [query],
+  );
 
-  const debouncedGetUserNamesData = useMemo(() => debounce(getUserNamesData, 1000), [getUserNamesData]);
-  const callDebounceFuntion = (txt) => {
+  const debouncedGetUserNamesData = useMemo(
+    () => debounce(getUserNamesData, 1000),
+    [getUserNamesData],
+  );
+  const callDebounceFuntion = txt => {
     if (txt.trim().length) {
       debouncedGetUserNamesData(txt);
+    } else {
+      setUsers([]);
     }
-    else{
-      setUsers([])
-    }
-  }
+  };
   const handleImage = index => {
     Keyboard.dismiss();
     setIndex(index);
@@ -99,10 +118,10 @@ export default function AddListing(props) {
     setImages([]);
     setIndex(0);
     setCategory('');
-    setQuery('')
-    setSupplierTag(null)
-    setListingType('')
-    setPurchaseUrl('')
+    setQuery('');
+    setSupplierTag(null);
+    setListingType('');
+    setPurchaseUrl('');
     // setLocationAllState({
     //     address: null,
     //     location: {},
@@ -123,14 +142,13 @@ export default function AddListing(props) {
       Util.showMessage('error', 'Please provide a valid title');
     } else if (!category) {
       Util.showMessage('error', 'Please select a category');
-    }else if (!listingType) {
+    } else if (!listingType) {
       Util.showMessage('error', 'Please select a listing type');
-    }else if (!about.trim().length) {
+    } else if (!about.trim().length) {
       Util.showMessage('error', 'Please provide a valid description');
     } else if (!locationAllState.address) {
       Util.showMessage('error', 'Please add a valid location');
-    } 
-    else {
+    } else {
       try {
         setLoaderVisibility(true);
         const uid = auth().currentUser.uid;
@@ -139,18 +157,22 @@ export default function AddListing(props) {
           locationAllState.location.longitude,
         ]);
         const ref = firestore().collection('Listing').doc();
-        const base64image = await RNFS.readFile(decodeURI(images[0].uri), 'base64');
-        const res = await functions()
-            .httpsCallable('compareIfListingAlreadyExists')({
-              imageUrl: base64image,
-              supplierId: uid,
-            })
-            const compareData = res.data
-            if(compareData.status == 1){
-              Util.showMessage("error","This listing already exists.")
-              setLoaderVisibility(false)
-              return
-            }
+        const base64image = await RNFS.readFile(
+          decodeURI(images[0].uri),
+          'base64',
+        );
+        const res = await functions().httpsCallable(
+          'compareIfListingAlreadyExists',
+        )({
+          imageUrl: base64image,
+          supplierId: uid,
+        });
+        const compareData = res.data;
+        if (compareData.status == 1) {
+          Util.showMessage('error', 'This listing already exists.');
+          setLoaderVisibility(false);
+          return;
+        }
         Promise.all(
           images.map((image, ind) => {
             return Helper.uploadImage(
@@ -160,7 +182,6 @@ export default function AddListing(props) {
           }),
         )
           .then(async listingImages => {
-            
             let buo = await branch.createBranchUniversalObject(
               `item/${ref.id}`,
               {
@@ -177,11 +198,11 @@ export default function AddListing(props) {
             const obj = {
               id: ref.id,
               listingImages,
-              shareUrl:url,
+              shareUrl: url,
               createTime: firebase.firestore.FieldValue.serverTimestamp(),
-              title:title.trim(),
+              title: title.trim(),
               supplierId: uid,
-              about:about.trim(),
+              about: about.trim(),
               category,
               geohash: hash,
               listingType,
@@ -194,12 +215,12 @@ export default function AddListing(props) {
                 lat: locationAllState?.location?.latitude ?? '',
                 lng: locationAllState?.location?.longitude ?? '',
               },
+            };
+            if (supplierTag) {
+              obj.supplierTag = supplierTag;
             }
-            if(supplierTag){
-              obj.supplierTag = supplierTag
-            }
-            if(purchaseUrl.trim().length){
-              obj.purchaseUrl = purchaseUrl.trim()
+            if (purchaseUrl.trim().length) {
+              obj.purchaseUrl = purchaseUrl.trim();
             }
             await ref.set(obj);
             Util.showMessage(
@@ -208,16 +229,14 @@ export default function AddListing(props) {
               'Listing added successfully',
             );
             clearData();
-            if(location)
-              navigation.navigate('MyListingScreen');
-            else
-              navigation.navigate('VendorAllListing');
+            if (location) navigation.navigate('MyListingScreen');
+            else navigation.navigate('VendorAllListing');
           })
           .finally(() => {
             setLoaderVisibility(false);
           });
       } catch (error) {
-        setLoaderVisibility(false)
+        setLoaderVisibility(false);
         console.log(error);
       }
     }
@@ -227,17 +246,17 @@ export default function AddListing(props) {
     setImages(images.filter((img, i) => index != i));
   };
   const handleTag = (uid, name) => {
-    onUserNameSheetOnClose()
-    setQuery(name)
-    setUsers([]) 
-    setSupplierTag(uid)
-  }
+    onUserNameSheetOnClose();
+    setQuery(name);
+    setUsers([]);
+    setSupplierTag(uid);
+  };
   return (
     <KeyboardAwareScrollView
       style={styles.container}
       nestedScrollEnabled={false}
       bounces={false}
-      keyboardShouldPersistTaps={"always"}>
+      keyboardShouldPersistTaps={'always'}>
       <Header navigation={navigation} title="Add Listing" />
       <View style={styles.mainView}>
         <TouchableOpacity
@@ -307,7 +326,7 @@ export default function AddListing(props) {
           //isPass
           placeholder={'Listing Name'}
           value={title}
-          autoCapitalize={"words"}
+          autoCapitalize={'words'}
           onChangeText={txt => setTitle(txt)}
           //keyboardType={"number-pad"}
         />
@@ -325,7 +344,17 @@ export default function AddListing(props) {
           styles={{
             textInput: {
               borderRadius: 20,
-              backgroundColor:colors.whiteDark
+              backgroundColor: colors.whiteDark,
+              color: colors.black,
+              fontSize: fontSizes.extraExtraSmall,
+              fontFamily: fonts.regular,
+            },
+            listView: {
+              backgroundColor: colors.whiteDark,
+            },
+            description: {
+              color: colors.grey,
+              fontFamily: fonts.regular,
             },
           }}
           //styles={styles.autoCompleteStyles}
@@ -369,7 +398,7 @@ export default function AddListing(props) {
           selectedValue={category}
           color={'black'}
           onValueChange={itemValue => setCategory(itemValue)}>
-          {categories.map((item, index) => {
+          {categories.sortmap((item, index) => {
             return <Select.Item key={index} value={item} label={item} />;
           })}
         </Select>
@@ -401,19 +430,19 @@ export default function AddListing(props) {
           })}
         </Select>
         <Pressable onPress={onUserNameSheetToggle}>
-         <View pointerEvents='none'>
-         <MyTextInput
-          endIconButton={"chevron-down"}
-          containerStyle={{marginTop: 20}}
-          nonEditable={true}
-          value={query}
-          placeholder={'Tag Supplier'}
-          onChangeText={txt => callDebounceFuntion(txt)}
-          />
-         </View>
+          <View pointerEvents="none">
+            <MyTextInput
+              endIconButton={'chevron-down'}
+              containerStyle={{marginTop: 20}}
+              nonEditable={true}
+              value={query}
+              placeholder={'Tag Supplier'}
+              onChangeText={txt => callDebounceFuntion(txt)}
+            />
+          </View>
         </Pressable>
-       
-          {/* {
+
+        {/* {
               loading &&
              <ActivityIndicator size={"small"}/>
           }
@@ -425,11 +454,11 @@ export default function AddListing(props) {
             )
           })} */}
         <MyTextInput
-         containerStyle={{marginTop: 20}}
-         placeholder={'Purchase Link'}
-         value={purchaseUrl}
-         onChangeText={txt => setPurchaseUrl(txt)}
-          keyboardType={"url"}
+          containerStyle={{marginTop: 20}}
+          placeholder={'Purchase Link'}
+          value={purchaseUrl}
+          onChangeText={txt => setPurchaseUrl(txt)}
+          keyboardType={'url'}
         />
         {/* <Text style={styles.title}>Brief Description</Text> */}
         <MyTextInput
@@ -442,7 +471,7 @@ export default function AddListing(props) {
           placeholder={'Listing Description'}
           value={about}
           onChangeText={txt => setAbout(txt)}
-          autoCapitalize={"words"}
+          autoCapitalize={'words'}
           //keyboardType={"number-pad"}
         />
 
@@ -468,8 +497,8 @@ export default function AddListing(props) {
         visible={loaderVisibility}
         title={'Uploading pictures'}
       />
-      <UserNameActionSheet 
-        isOpen={isUserNameSheetOpen} 
+      <UserNameActionSheet
+        isOpen={isUserNameSheetOpen}
         onClose={onUserNameSheetOnClose}
         callDebounceFuntion={callDebounceFuntion}
         query={query}

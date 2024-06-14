@@ -1,56 +1,61 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { useIsFocused } from '@react-navigation/native';
-import { Center, FlatList, Icon, Link, VStack } from 'native-base';
-import React, { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
+import {Center, FlatList, Icon, Link, VStack} from 'native-base';
+import React, {useEffect, useState} from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import images from '../../../assets/images';
-import { spacing } from '../../../common/variables';
+import {spacing} from '../../../common/variables';
 import CenteredLoader from '../../../components/CenteredLoader';
 import Header from '../../../components/Header';
 import colors from '../../../theme/colors';
 import styles from './styles';
-import { startCase } from 'lodash';
+import {startCase} from 'lodash';
 
-let unsubscribe
+let unsubscribe;
 const VendorAllListing = props => {
   const {navigation} = props;
   const [listings, setListings] = useState([]);
   const [noData, setNoData] = useState(false);
   const [loading, setLoading] = useState(false);
-  const {name} = useSelector(state=>state.user.userData)
+  const {name} = useSelector(state => state.user.userData);
   useEffect(() => {
     getDataNearBy();
-    return unsubscribe
+    return unsubscribe;
   }, []);
   const getDataNearBy = async () => {
     setLoading(true);
     unsubscribe = firestore()
-    .collection('Listing')
-    .where('supplierId', '==', auth().currentUser.uid)
-    .orderBy('createTime',"desc")
-    .onSnapshot(querySnapshot => {
-        const newArray = querySnapshot.docs.map(doc => ({...doc.data()}))
-        setListings(newArray);
-        if (newArray.length == 0) setNoData(true);
-        else setNoData(false);
-        setLoading(false);
-      },(error)=>{
-        console.log(error)
-      })
+      .collection('Listing')
+      .where('supplierId', '==', auth().currentUser.uid)
+      .orderBy('createTime', 'desc')
+      .onSnapshot(
+        querySnapshot => {
+          const newArray = querySnapshot.docs.map(doc => ({...doc.data()}));
+          setListings(newArray);
+          if (newArray.length == 0) setNoData(true);
+          else setNoData(false);
+          setLoading(false);
+        },
+        error => {
+          console.log(error);
+        },
+      );
   };
   const renderCard = ({item}) => {
     return (
-      <TouchableOpacity style={{flex:0.5,margin:5}} onPress={()=>navigation.navigate("EditListing",{item})}>
-          <FastImage
-            defaultSource={images.imagePlaceholder}
-            source={{uri: item.listingImages[0]}}
-            style={styles.img}
-            resizeMode="contain">
-            {/* <TouchableOpacity
+      <TouchableOpacity
+        style={{flex: 0.5, margin: 5}}
+        onPress={() => navigation.navigate('EditListing', {item})}>
+        <FastImage
+          defaultSource={images.imagePlaceholder}
+          source={{uri: item.listingImages[0]}}
+          style={styles.img}
+          resizeMode="contain">
+          {/* <TouchableOpacity
               onPress={()=>navigation.navigate("EditListing",{item})}
               style={{
                 position: 'absolute',
@@ -70,8 +75,8 @@ const VendorAllListing = props => {
                 color={colors.appDefaultColor}
               />
             </TouchableOpacity> */}
-          </FastImage>
-        <VStack direction={"column"} mt={2}>
+        </FastImage>
+        <VStack direction={'column'} mt={2}>
           <Text style={styles.title}>{startCase(item.title)}</Text>
           <Text style={styles.name}>{item?.location?.address}</Text>
         </VStack>
@@ -96,16 +101,14 @@ const VendorAllListing = props => {
         <CenteredLoader />
       ) : noData ? (
         <Center flex={1} p={3}>
-          <Text style={styles.noItem}>
-            {`No product found`}
-          </Text>
-          <Link 
-            onPress={()=>navigation.navigate('AddListings')}
+          <Text style={styles.noItem}>{`No product found`}</Text>
+          <Link
+            onPress={() => navigation.navigate('AddListings')}
             _text={{
-            color:colors.appDefaultColor,
-            textDecoration:"none",
-            fontWeight:"medium"
-          }}>
+              color: colors.appDefaultColor,
+              textDecoration: 'none',
+              fontWeight: 'medium',
+            }}>
             Add Product
           </Link>
         </Center>

@@ -50,23 +50,12 @@ export default StyleSheet.create({
     },
     listView: {
       height: 300,
+      backgroundColor: colors.whiteDark,
     },
-    //  separator:{
-    //  backgroundColor:"gray"
-    //  },
-    //  row:{
-    //    backgroundColor:"white",
-    //    color:"black",
-    //    borderRadius:spacing.extraSmall,
-    //    marginBottom:spacing.extraSmall,
-    //    paddingHorizontal:10,
-    //    zIndex:1000,
-    //  },
-    //  description:{
-    //      color:"black",
-    //      fontSize:responsiveSize(12),
-    //      noWrap:true
-    //  }
+    description: {
+      color: colors.grey,
+      fontFamily: fonts.regular,
+    },
   },
   markerFixed: {
     left: '50%',

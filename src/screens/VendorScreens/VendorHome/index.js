@@ -1,20 +1,24 @@
 import firestore from '@react-native-firebase/firestore';
-import { Icon, Link } from 'native-base';
-import React, { useEffect, useState } from 'react';
-import { AppState, Platform, Pressable, Text, View } from 'react-native';
+import {Icon, Link} from 'native-base';
+import React, {useEffect, useState} from 'react';
+import {AppState, Platform, Pressable, Text, View} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import images from '../../../assets/images';
-import { handleLocation } from '../../../common/LocationHelper';
-import { spacing } from '../../../common/variables';
+import {handleLocation} from '../../../common/LocationHelper';
+import {spacing} from '../../../common/variables';
 import AvatarIcon from '../../../components/AvatarIcon';
 import LocationRequiredModal from '../../../components/LocationRequiredModal';
-import { setCategories, setCurrentLocation, setCurrentPosition } from '../../../store/userSlice';
+import {
+  setCategories,
+  setCurrentLocation,
+  setCurrentPosition,
+} from '../../../store/userSlice';
 import styles from './styles';
 import colors from '../../../theme/colors';
-let sub = null
+let sub = null;
 export default function VendorHome(props) {
   const {navigation} = props;
   const {userData} = useSelector(state => state.user);
@@ -22,40 +26,43 @@ export default function VendorHome(props) {
   const inset = useSafeAreaInsets();
   const dispatch = useDispatch();
   const [locationModal, setLocationModal] = useState(false);
-  const location = useSelector(state => state.user.currentLocation) ?? "";
+  const location = useSelector(state => state.user.currentLocation) ?? '';
   useEffect(() => {
-    getCategories()
-    callLocationPermission()
+    getCategories();
+    callLocationPermission();
     // navigation.navigate('LocationSelectorScreen',{isVendor:true})
     return () => {
       //focusListener.remove();
-      if(sub)
-      sub.remove();
+      if (sub) sub.remove();
     };
   }, []);
   const getCategories = () => {
     firestore()
-    .collection("Category")
-    .get()
-    .then((res)=>{
-      const localData = []
-      res.docs.map(doc=>localData.push(doc.data().categoryName))
-      dispatch(setCategories(localData.sort((a,b)=>a-b)))
-    })
-  }
-  const callLocationPermission = (getCurrent) => {
-    handleLocation(()=>handleLocationAcceptance(getCurrent), handleLocationRejection);
+      .collection('Category')
+      .get()
+      .then(res => {
+        const localData = [];
+        res.docs.map(doc => localData.push(doc.data().categoryName));
+        localData.sort();
+        dispatch(setCategories(localData));
+      });
+  };
+  const callLocationPermission = getCurrent => {
+    handleLocation(
+      () => handleLocationAcceptance(getCurrent),
+      handleLocationRejection,
+    );
     sub = AppState.addEventListener('change', () => {
       handleLocation(handleLocationAcceptance, handleLocationRejection);
     });
-  }
+  };
   const handleNotNow = () => {
     setLocationModal(false);
   };
   const handleLocationRejection = () => {
     setLocationModal(true);
   };
-  const handleLocationAcceptance = (getCurrent) => {
+  const handleLocationAcceptance = getCurrent => {
     setLocationModal(false);
     Geolocation.getCurrentPosition(
       value => {
@@ -65,9 +72,9 @@ export default function VendorHome(props) {
         };
         dispatch(setCurrentPosition(location));
         getAddressFromCoordinates(location.latitude, location.longitude);
-        if(getCurrent){
-          console.log(getCurrent)
-          navigation.navigate("MyListingScreen")
+        if (getCurrent) {
+          console.log(getCurrent);
+          navigation.navigate('MyListingScreen');
         }
       },
       error => {},
@@ -88,10 +95,7 @@ export default function VendorHome(props) {
     }
   };
   return (
-    <View
-      style={[
-        styles.container,
-      ]}>
+    <View style={[styles.container]}>
       <View style={styles.topView}>
         <View>
           <Text style={styles.hello}>Dashboard</Text>
@@ -106,14 +110,14 @@ export default function VendorHome(props) {
       </View>
       <Link
         mt={5}
-        onPress={()=>{
-            callLocationPermission(true)
+        onPress={() => {
+          callLocationPermission(true);
         }}
         _text={{
           color: colors.appDefaultColor,
           textDecoration: 'none',
           fontWeight: '900',
-          fontSize:22
+          fontSize: 22,
         }}
         style={{
           alignSelf: 'center',
@@ -128,18 +132,20 @@ export default function VendorHome(props) {
         <Text style={styles.or}> OR </Text>
         <View style={styles.borderView}></View>
       </View>
-       <Pressable
-          style={[styles.searchBox, {marginRight: 10}]}
-          onPress={() => navigation.navigate('LocationSelectorScreen',{isVendor:true})}>
-          <Icon
-            as={MaterialCommunityIcons}
-            size="lg"
-            name="map-marker-radius"
-            mr={5}
-            color={'black'}
-          />
-          <Text style={styles.placeholder}>Search address</Text>
-        </Pressable>
+      <Pressable
+        style={[styles.searchBox, {marginRight: 10}]}
+        onPress={() =>
+          navigation.navigate('LocationSelectorScreen', {isVendor: true})
+        }>
+        <Icon
+          as={MaterialCommunityIcons}
+          size="lg"
+          name="map-marker-radius"
+          mr={5}
+          color={'black'}
+        />
+        <Text style={styles.placeholder}>Search address</Text>
+      </Pressable>
       <View style={styles.borderViewContainer}>
         <View style={styles.borderView}></View>
         <Text style={styles.or}> OR </Text>
@@ -147,14 +153,14 @@ export default function VendorHome(props) {
       </View>
       <Link
         mt={5}
-        onPress={()=>{
-            navigation.navigate("VendorAllListing")
+        onPress={() => {
+          navigation.navigate('VendorAllListing');
         }}
         _text={{
           color: colors.appDefaultColor,
           textDecoration: 'none',
           fontWeight: '900',
-          fontSize:22
+          fontSize: 22,
         }}
         style={{
           alignSelf: 'center',
@@ -163,7 +169,7 @@ export default function VendorHome(props) {
         }}>
         Show All Listings
       </Link>
-     
+
       <LocationRequiredModal
         handleNotNow={handleNotNow}
         visible={locationModal}

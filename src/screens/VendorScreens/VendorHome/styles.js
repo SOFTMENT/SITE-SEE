@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import fonts from '../../../../assets/fonts';
 import {fontSizes, spacing} from '../../../common/variables';
 import colors from '../../../theme/colors';
-import Util, { responsiveSize } from '../../../common/util';
+import Util, {responsiveSize} from '../../../common/util';
 
 const styles = StyleSheet.create({
   container: {
@@ -52,14 +52,14 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.extraExtraSmall,
     marginHorizontal: spacing.extraExtraSmall,
   },
-  searchContainer:{
-    backgroundColor:colors.white,
-    flexDirection:"row",
-    alignItems:"flex-start",
-    paddingHorizontal:10,
-    borderRadius:20,
-    borderWidth:1,
-    borderColor:colors.borderColor
+  searchContainer: {
+    backgroundColor: colors.white,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    paddingHorizontal: 10,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.borderColor,
   },
   autoCompleteStyles: {
     container: {
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
       marginRight: spacing.semiMedium,
       borderColor: colors.borderColor,
       zIndex: 1000,
-      height:100,
+      height: 100,
       //alignItems: "center",
     },
     textInput: {
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
       color: 'black',
       fontFamily: fonts.regular,
       fontSize: responsiveSize(12),
-      height:100,
+      height: 100,
     },
     listView: {
       width: Util.getWidth(82),
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
       fontSize: responsiveSize(12),
       noWrap: true,
     },
-    
+
     placeholder: {
       color: 'black',
       fontSize: fontSizes.extraExtraSmall,
@@ -122,9 +122,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  location:{
-    textAlign:'center',
-    marginTop:5
-  }
+  location: {
+    textAlign: 'center',
+    marginTop: 5,
+    fontFamily: fonts.regular,
+    color: colors.black,
+  },
+  placeholder: {
+    fontFamily: fonts.regular,
+    color: colors.grey,
+  },
 });
 export default styles;

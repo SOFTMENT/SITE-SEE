@@ -19,34 +19,32 @@ const HomeScreen = props => {
   const {isOpen, onOpen, onClose} = useDisclose();
   const memberShipCallback = async membershipDetails => {
     let buo = await branch.createBranchUniversalObject(`item/${uid}`, {
-        title:"Hey",
-        contentDescription: "Checkout this seller profile",
-        contentMetadata: {
-          customMetadata: {
-            key1: 'user',
-          },
+      title: 'Hey',
+      contentDescription: 'Checkout this seller profile',
+      contentMetadata: {
+        customMetadata: {
+          key1: 'user',
         },
-      },);
-      let linkProperties = {
-        
-      }
+      },
+    });
+    let linkProperties = {};
 
-      let controlParams = {
-        $desktop_url: 'https://example.com/home',
-        custom: 'user'
-      }
+    let controlParams = {
+      $desktop_url: 'https://example.com/home',
+      custom: 'user',
+    };
     //   let shareOptions = {
     //     messageHeader: 'Check this out',
     //     messageBody: 'No really, check this out!'
     //   }
-    let {url} = await buo.generateShortUrl(linkProperties,controlParams);
+    let {url} = await buo.generateShortUrl(linkProperties, controlParams);
     firestore()
       .collection('Suppliers')
       .doc(uid)
       .update({
         membershipActive: true,
         ...membershipDetails,
-        shareLink:url
+        shareLink: url,
       })
       .then(async () => {
         const user = await firestore().collection('Suppliers').doc(uid).get();
@@ -68,9 +66,9 @@ const HomeScreen = props => {
       .then(() => console.log('Subscribed to topic!'));
   }
   useEffect(() => {
-    getUserData()
+    getUserData();
   }, []);
-  const getUserData = async() => {
+  const getUserData = async () => {
     try {
       requestUserPermission();
       const userType = await AsyncStorage.getItem('userType');
@@ -81,53 +79,46 @@ const HomeScreen = props => {
         .then(async user => {
           if (user.exists) {
             // await messaging().registerDeviceForRemoteMessages()
-            
-            const token = await messaging().getToken()
-            firestore()
-            .collection(userType)
-            .doc(user.id)
-            .update({
-              fcmToken:token
-            })
-              if (userType == null || userType == 'Users') {
-                if(user.data().profileCompleted)
-                {
-                  console.log("hereeeeeeee")
-                  dispatch(setUserData({...user.data(), userType: 'Users'}));
-                  navigateAndReset('UserBottomTab');
-                }
-                else{
-                  dispatch(setUserData({...user.data(), userType: 'Users'}));
-                  navigateAndReset('OnBoardPhoto');
-                }
-              } else if (userType == 'Suppliers') {
-                console.log("supplier2")
-                if(user.data().profileCompleted)
-                {
-                  if (user.data().membershipActive) {
-                    dispatch(setUserData({...user.data(), userType: 'Suppliers'}));
-                    navigateAndReset('VendorBottomTab');
-                  } else {
-                    onOpen();
-                  }
-                }
-                else{
-                  dispatch(setUserData({...user.data(), userType: 'Suppliers'}));
-                  navigateAndReset('OnBoardPhoto');
-                }
+
+            const token = await messaging().getToken();
+            firestore().collection(userType).doc(user.id).update({
+              fcmToken: token,
+            });
+            if (userType == null || userType == 'Users') {
+              if (user.data().profileCompleted) {
+                dispatch(setUserData({...user.data(), userType: 'Users'}));
+                navigateAndReset('UserBottomTab');
+              } else {
+                dispatch(setUserData({...user.data(), userType: 'Users'}));
+                navigateAndReset('OnBoardPhoto');
               }
-              else{
-                auth().signOut()
-                .then(()=>{
+            } else if (userType == 'Suppliers') {
+              if (user.data().profileCompleted) {
+                if (user.data().membershipActive) {
+                  dispatch(
+                    setUserData({...user.data(), userType: 'Suppliers'}),
+                  );
+                  navigateAndReset('VendorBottomTab');
+                } else {
+                  onOpen();
+                }
+              } else {
+                dispatch(setUserData({...user.data(), userType: 'Suppliers'}));
+                navigateAndReset('OnBoardPhoto');
+              }
+            } else {
+              auth()
+                .signOut()
+                .then(() => {
                   navigateAndReset('OnboardingScreen');
-                })
-              }
+                });
+            }
           }
         });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   return (
     <View style={{flex: 1}}>
       <CenteredLoader />
