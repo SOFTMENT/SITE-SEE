@@ -150,19 +150,24 @@ export default LocationSelectorScreen = props => {
         initialRegion={{
           latitude: latitude,
           longitude: longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
         }}
         onRegionChangeComplete={event => {
           getAddressFromCoordinates(event.latitude, event.longitude);
         }}
         style={[styles.mapView]}>
         <Marker
-          image={images.locationIcon}
+          style={{width: 20, height: 20}}
           //draggable
           coordinate={currentLocation}
           //pinColor='blue'
-        />
+        >
+          <Image
+            source={images.locationIcon}
+            style={{width: 20, height: 20, resizeMode: 'contain'}}
+          />
+        </Marker>
         {/* <Marker
           //image={images.locationIcon}
           draggable
