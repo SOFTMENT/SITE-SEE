@@ -17,9 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.6</string>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<string>3.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -54,9 +52,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>8</string>
+	<string>13</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -71,15 +71,15 @@
 		</dict>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>SiteSii requires media library access to upload picture</string>
+	<string>SiteSii needs access to your media library so you can upload images for your profile picture, product listings, or image-based searches.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>SiteSii requires camera access to upload profile picture</string>
+	<string>SiteSii requires access to your camera to allow you to take photos for multiple purposes, such as uploading a profile picture, adding photos to your product listings, or performing image-based searches.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>SiteSii requires location access to show nearby vendors</string>
+	<string>SiteSii requires access to your location to show listings from nearby suppliers.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>SiteSii requires location access to show nearby vendors</string>
+	<string>SiteSii requires access to your location to show listings from nearby suppliers.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>SiteSii requires photo library access to upload picture</string>
+	<string>SiteSii needs access to your photo library so you can upload images for your profile picture, product listings, or image-based searches.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>
@@ -101,12 +101,6 @@
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIUserInterfaceStyle</key>
